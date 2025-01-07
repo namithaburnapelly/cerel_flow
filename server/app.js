@@ -10,32 +10,38 @@ app.use(cors());
 const PORT = 3000;
 
 //mock data of user
-const user = {
-  id: "1",
-  email: "aa@gmail.com",
-};
+// const user = {
+//   id: "1",
+//   email: "aa@gmail.com",
+// };
 
 //secret key for jwt
 const secretkey = "hyderabad_TS";
 
 //generate jwt access token
 function generateAccessToken(user) {
-  return jwt.sign({ id: user.id, email: user.email }, secretkey, {
-    expiresIn: "15d",
-  });
+  return jwt.sign(
+    { id: user.id, email: user.email, password: user.password },
+    secretkey,
+    {
+      expiresIn: "15s",
+    }
+  );
 }
 
 app.post("/auth/login", (req, res) => {
+  const user = {
+    id: 1,
+    email: req.body.email,
+    password: req.body.password,
+  };
   const accessToken = generateAccessToken(user);
 
   //tokens are generated and response is sent
   res.json({
     accessToken,
-    payload: {
-      id: user.id,
-      email: user.email,
-    },
-    expiresAt: "15d", // 1h in seconds
+    payload: user,
+    expiresAt: "15s", // 15days
   });
 });
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { IAuthInfo } from '../../Model/user';
+import { IAuthInfo, UserInfo } from '../../Model/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -22,12 +22,17 @@ export class AuthService {
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
 
   //login method
-  Login(username: string, password: string): Observable<IAuthInfo> {
+  Login(email: string, password: string): Observable<IAuthInfo> {
     return this.http
-      .post(`${this._loginurl}/auth/login`, { username, password })
+      .post(`${this._loginurl}/auth/login`, { email, password })
       .pipe(
         map((response: IAuthInfo) => {
-          const returnedUser: IAuthInfo = response;
+          const userData: IAuthInfo = response;
+
+          const returnedUser: UserInfo = {
+            accessToken: userData.accessToken ?? '',
+            email: userData.payload?.email ?? '',
+          };
 
           // //save in local storage
           if (returnedUser && returnedUser.accessToken) {
@@ -41,7 +46,7 @@ export class AuthService {
       );
   }
 
-  setState(item: IAuthInfo) {
+  setState(item: UserInfo) {
     this.stateItem.next(item);
   }
 

@@ -1,4 +1,4 @@
-import { IAuthInfo } from '../Model/user';
+import { UserInfo } from '../Model/user';
 import { AuthService } from '../Service/Auth/auth.service';
 
 //the below function returns a promise, as angular initializer expects a value to be resolved before an application starts
@@ -10,7 +10,7 @@ import { AuthService } from '../Service/Auth/auth.service';
 export const authFactory = (authService: AuthService): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
-      const _localuser: IAuthInfo = JSON.parse(
+      const _localuser: UserInfo = JSON.parse(
         localStorage.getItem('user') || '{}'
       );
 

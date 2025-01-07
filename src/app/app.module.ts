@@ -1,9 +1,4 @@
-import {
-  APP_INITIALIZER,
-  inject,
-  NgModule,
-  provideAppInitializer,
-} from '@angular/core';
+import { inject, NgModule, provideAppInitializer } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
