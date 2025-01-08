@@ -31,7 +31,7 @@ function generateAccessToken(user) {
 
 app.post("/auth/login", (req, res) => {
   const user = {
-    id: 1,
+    id: "id" + new Date().getMilliseconds(),
     email: req.body.email,
     password: req.body.password,
   };

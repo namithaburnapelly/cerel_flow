@@ -17,6 +17,7 @@ import { LoginResolve } from './Service/Auth/login-resolve.service';
 import { AuthGaurd } from './Service/Auth/auth-gaurd.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { JWT_Module_Options } from './Global variables/jwt_auth';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { JWT_Module_Options } from './Global variables/jwt_auth';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     JwtModule.forRoot(JWT_Module_Options),
   ],
