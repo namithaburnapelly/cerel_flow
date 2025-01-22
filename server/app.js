@@ -2,13 +2,18 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const app = express();
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 app.use(express.json());
 app.use(cors());
 
+//configure dotenv to read data from env file
+dotenv.config();
+
 //port where sever is running
 const PORT = 3000;
 
+users = [];
 //mock data of user
 // const user = {
 //   id: "1",
@@ -16,7 +21,7 @@ const PORT = 3000;
 // };
 
 //secret key for jwt
-const secretkey = "hyderabad_TS";
+const secretkey = process.env.JWT_SECRET_KEY;
 
 //generate jwt access token
 function generateAccessToken(user) {
@@ -43,6 +48,30 @@ app.post("/auth/login", (req, res) => {
     payload: user,
     expiresAt: "15s", // 15days
   });
+});
+
+//register a new user
+app.post("/auth/register", (req, res) => {
+  const newUser = {
+    id: "id" + new Date().getMilliseconds(),
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  users.push(newUser);
+  res.json({
+    users,
+  });
+});
+
+//login user after checking user exists
+app.post("/auth/logincheck", (req, res) => {
+  const user = {
+    email: req.body.email,
+    password: req.body.password,
+  };
+
+  res.json({});
 });
 
 function authenticateToken(req, res, next) {
