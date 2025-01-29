@@ -31,4 +31,5 @@
   </div>
   <!-- submit button (disabled if form is invalid) -->
   <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
 </form>

@@ -1,3 +1,4 @@
+//when user login
 //user model
 export interface IUser {
   id: string;
@@ -16,4 +17,12 @@ export interface IAuthInfo {
 export interface UserInfo {
   accessToken: string;
   email: string;
+}
+
+//when new user register
+//user model
+export interface NewUser {
+  username: string;
+  email: string;
+  password: string;
 }

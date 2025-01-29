@@ -19,6 +19,7 @@ app.post("/auth/register", async (req, res) => {
     const db = getDb();
     const data = {
       _id: "id" + new Date().getMilliseconds(),
+      username: req.body.username,
       email: req.body.email,
       password: req.body.password,
     };
@@ -29,7 +30,7 @@ app.post("/auth/register", async (req, res) => {
       .findOne({ email: data.email });
     if (existingUser) {
       //conflict - req conflicts with the current state of server.
-      return res.status(409).json({ message: "user already exists" });
+      return res.status(409).json({ message: "user already exists." });
     }
 
     //insert user into database
@@ -37,16 +38,14 @@ app.post("/auth/register", async (req, res) => {
 
     //response with success
     //201 - created - request sucess, new resource created
-    return res
-      .status(201)
-      .json({
-        message: "User created",
-        payload: { _id: data._id, email: data.email },
-      });
+    return res.status(201).json({
+      message: "User created",
+      payload: { _id: data._id, username: data.username, email: data.email },
+    });
   } catch (err) {
     console.log(err.message);
     //internal server error - server does not know how to handle the error
-    return res.status(500).json({ message: "Server error" });
+    return res.status(500).json({ message: "Server error." });
   }
 });
 
@@ -63,14 +62,14 @@ app.post("/auth/login", async (req, res) => {
     const user = await db.collection("users").findOne({ email: data.email });
     if (!user) {
       //not found - server cannot find requested resource
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User does not exist." });
     }
 
     //check if password matches
     const isMatch = compare(data.password, user.password);
     if (!isMatch) {
       //unauthorized access
-      return res.status(401).json({ message: "Wrong password" });
+      return res.status(401).json({ message: "Invalid username or password." });
     }
 
     const accessToken = generateAccessToken(user);
@@ -82,7 +81,7 @@ app.post("/auth/login", async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: "server error" }); //internal server error
+    return res.status(500).json({ message: "server error." }); //internal server error
   }
 });
 

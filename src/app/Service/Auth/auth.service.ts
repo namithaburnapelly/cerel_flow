@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { IAuthInfo, UserInfo } from '../../Model/user';
+import { IAuthInfo, NewUser, UserInfo } from '../../Model/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../../environment/environment';
 
@@ -10,6 +10,7 @@ import { environment } from '../../../environment/environment';
 })
 export class AuthService {
   private _loginurl = environment.loginUrl;
+  private _registerurl = environment.registerUrl;
 
   //  Rjx subject that holds the current value and emits it to new subscribers
   private stateItem: BehaviorSubject<IAuthInfo | null> =
@@ -24,7 +25,7 @@ export class AuthService {
 
   //login method
   Login(email: string, password: string): Observable<IAuthInfo> {
-    return this.http.post(`${this._loginurl}`, { email, password }).pipe(
+    return this.http.post(this._loginurl, { email, password }).pipe(
       map((response: IAuthInfo) => {
         const userData: IAuthInfo = response;
 
@@ -36,7 +37,6 @@ export class AuthService {
         // //save in local storage
         if (returnedUser && returnedUser.accessToken) {
           console.log('token saved to local storage');
-          // localStorage.setItem('Authtoken', returnedUser.accessToken);
           localStorage.setItem('user', JSON.stringify(returnedUser));
           this.stateItem.next(returnedUser); //updating the user state
         }
@@ -51,7 +51,6 @@ export class AuthService {
 
   removestate() {
     this.stateItem.next(null);
-    // localStorage.removeItem('Authtoken');
     localStorage.removeItem('user');
   }
 
@@ -61,5 +60,17 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  Register(
+    username: string,
+    email: string,
+    password: string
+  ): Observable<NewUser> {
+    return this.http.post<NewUser>(this._registerurl, {
+      username,
+      email,
+      password,
+    });
   }
 }

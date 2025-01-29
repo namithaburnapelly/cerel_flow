@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  GuardResult,
-  MaybeAsync,
   Route,
   Router,
   RouterStateSnapshot,

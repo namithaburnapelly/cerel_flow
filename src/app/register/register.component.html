@@ -1,1 +1,51 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <!-- username input field -->
+  <div>
+    <input
+      type="text"
+      id="username"
+      formControlName="username"
+      placeholder="username"
+    />
+    <!-- error message for invalid username -->
+    <div *ngIf="username?.invalid && username?.touched">
+      <div *ngIf="username?.hasError('required')">username is required.</div>
+      <div *ngIf="username?.hasError('username')">
+        Please enter valid username.
+      </div>
+    </div>
+  </div>
+  <!-- email input field -->
+  <div>
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      placeholder="email"
+    />
+    <!-- error message for invalid email -->
+    <div *ngIf="email?.invalid && email?.touched">
+      <div *ngIf="email?.hasError('required')">Email is required.</div>
+      <div *ngIf="email?.hasError('email')">Please enter valid email.</div>
+    </div>
+  </div>
+  <!-- password input field -->
+  <div>
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      placeholder="password"
+    />
+    <!-- error message for invalid password -->
+    <div *ngIf="password?.invalid && password?.touched">
+      <div *ngIf="password?.hasError('required')">Password is required.</div>
+      <div *ngIf="password?.hasError('minlength')">
+        Password must be atleast 6 characters long.
+      </div>
+    </div>
+  </div>
+  <!-- submit button (disabled if form is invalid) -->
+  <button type="submit" [disabled]="registerForm.invalid">Login</button>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+</form>

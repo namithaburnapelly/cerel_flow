@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../Service/Auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ErrorHandlerService } from '../ErrorHandling/error-handler';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  formSubmitted: boolean;
+  errorMessage: string | null;
 
   constructor(
+    private errorHandler: ErrorHandlerService,
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder
   ) {
-    //form submission initialization
-    this.formSubmitted = false;
     //define the form group with strictly typed controls and validation
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+    //set error message initially to null
+    this.errorMessage = null;
   }
 
   get email() {
@@ -39,8 +41,6 @@ export class LoginComponent {
 
   login(): void {
     if (this.loginForm.valid) {
-      console.log('Form submitted', this.loginForm.value);
-
       //login success
       this.authService
         .Login(this.loginForm.value.email, this.loginForm.value.password)
@@ -63,15 +63,15 @@ export class LoginComponent {
             //   console.log('forbidden access');
             //   this.router.navigateByUrl('');
             // }
-            console.log(result, ' from login component');
+            console.log(result, ' successfully login');
             this.router.navigateByUrl('/private/home');
           },
           error: (err) => {
-            console.error('login failed', err);
+            this.errorMessage = this.errorHandler.handleError(err);
           },
         });
     } else {
-      console.log('form invalid');
+      console.log('Invalid form');
     }
   }
 

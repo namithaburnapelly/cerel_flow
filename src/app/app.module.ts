@@ -1,4 +1,9 @@
-import { inject, NgModule, provideAppInitializer } from '@angular/core';
+import {
+  ErrorHandler,
+  inject,
+  NgModule,
+  provideAppInitializer,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +23,7 @@ import { AuthGaurd } from './Service/Auth/auth-gaurd.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { JWT_Module_Options } from './Global variables/jwt_auth';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ErrorHandlerService } from './ErrorHandling/error-handler';
 
 @NgModule({
   declarations: [
@@ -37,6 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     JwtModule.forRoot(JWT_Module_Options),
   ],
   providers: [
+    //provide custom error handler class to app module.
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
     AuthService,
     LoginResolve,
     AuthGaurd,
