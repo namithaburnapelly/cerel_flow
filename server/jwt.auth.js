@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
-//configure dotenv to read data from env file
 dotenv.config();
 
 //secret key for jwt
@@ -13,7 +12,7 @@ function generateAccessToken(user) {
     { _id: user._id, email: user.email, password: user.password },
     secretkey,
     {
-      expiresIn: "15s",
+      expiresIn: "15s", //1hour
     }
   );
 }

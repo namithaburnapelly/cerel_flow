@@ -24,6 +24,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { JWT_Module_Options } from './Global variables/jwt_auth';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerService } from './ErrorHandling/error-handler';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,9 @@ import { ErrorHandlerService } from './ErrorHandling/error-handler';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
     AppRoutingModule,
     JwtModule.forRoot(JWT_Module_Options),
   ],

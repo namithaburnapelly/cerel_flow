@@ -1,20 +1,15 @@
 const express = require("express");
-const app = express();
-const cors = require("cors");
-const { connectDB, getDb } = require("./db");
-const { generateAccessToken, compare, authenticateToken } = require("./auth");
+const router = express.Router();
 
-app.use(express.json());
-app.use(cors());
-
-//port where sever is running
-const PORT = 3000;
-
-//connecting to database
-connectDB();
+const { getDb } = require("../db");
+const {
+  generateAccessToken,
+  compare,
+  authenticateToken,
+} = require("../jwt.auth");
 
 //register a new user
-app.post("/auth/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const db = getDb();
     const data = {
@@ -50,7 +45,7 @@ app.post("/auth/register", async (req, res) => {
 });
 
 //login user after checking user exists
-app.post("/auth/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const db = getDb();
     const data = {
@@ -77,7 +72,7 @@ app.post("/auth/login", async (req, res) => {
     return res.status(200).json({
       accessToken,
       payload: user.email,
-      expiresAt: "15s", // 15days
+      expiresAt: "15s", // 15days //1hour
     });
   } catch (err) {
     console.log(err);
@@ -85,11 +80,11 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
-app.get("/private/home", authenticateToken, (req, res) => {
+router.get("/private/home", authenticateToken, (req, res) => {
   res.json({
     message: "this is protected route",
     user: req.user,
   });
 });
 
-app.listen(PORT, () => console.log(`server running at portno ${PORT}`));
+module.exports = router;

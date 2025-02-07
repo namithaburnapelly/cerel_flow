@@ -15,12 +15,17 @@
   </div>
   <!-- password input field -->
   <div>
-    <input
-      type="password"
-      id="password"
-      formControlName="password"
-      placeholder="password"
-    />
+    <div class="password_input">
+      <input
+        [type]="isPasswordVisible ? 'text' : 'password'"
+        id="password"
+        formControlName="password"
+        placeholder="password"
+      />
+      <button type="button" (click)="togglePasswordVisibility()">
+        see password
+      </button>
+    </div>
     <!-- error message for invalid password -->
     <div *ngIf="password?.invalid && password?.touched">
       <div *ngIf="password?.hasError('required')">Password is required.</div>
@@ -31,5 +36,6 @@
   </div>
   <!-- submit button (disabled if form is invalid) -->
   <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  <a routerLink="/register" routerLinkActive="active">Sign up</a>
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
 </form>

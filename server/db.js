@@ -1,6 +1,4 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const dotenv = require("dotenv");
-dotenv.config();
 
 const uri = process.env.MONGOURI;
 
@@ -22,7 +20,7 @@ const connectDB = async () => {
     db = client.db("CerelFlowDB");
     console.log("Connected to database");
   } catch (err) {
-    console.log(err.message);
+    console.log("Error connectiong to database", err.message);
     process.exit(1);
   }
 };

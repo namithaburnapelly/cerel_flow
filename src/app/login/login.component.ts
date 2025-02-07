@@ -13,6 +13,7 @@ import { ErrorHandlerService } from '../ErrorHandling/error-handler';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null;
+  isPasswordVisible: boolean = false;
 
   constructor(
     private errorHandler: ErrorHandlerService,
@@ -27,6 +28,10 @@ export class LoginComponent {
     });
     //set error message initially to null
     this.errorMessage = null;
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   get email() {

@@ -46,6 +46,7 @@
     </div>
   </div>
   <!-- submit button (disabled if form is invalid) -->
-  <button type="submit" [disabled]="registerForm.invalid">Login</button>
+  <button type="submit" [disabled]="registerForm.invalid">Sign up</button>
+  <a routerLink="/login" routerLinkActive="active">Login</a>
   <div *ngIf="errorMessage">{{ errorMessage }}</div>
 </form>
