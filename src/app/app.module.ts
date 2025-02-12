@@ -22,9 +22,14 @@ import { LoginResolve } from './Service/Auth/login-resolve.service';
 import { AuthGaurd } from './Service/Auth/auth-gaurd.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { JWT_Module_Options } from './Global variables/jwt_auth';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerService } from './ErrorHandling/error-handler';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { transactionReducer } from './@Ngrx/transaction.reducers';
+import { TransactionEffects } from './@Ngrx/transaction.effects';
+import { EffectsModule } from '@ngrx/effects';
+import { TransactionService } from './Service/Transaction/transaction.service';
 
 @NgModule({
   declarations: [
@@ -40,11 +45,12 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
+    RouterModule,
     AppRoutingModule,
+    FormsModule,
     JwtModule.forRoot(JWT_Module_Options),
+    StoreModule.forRoot({ transactions: transactionReducer }),
+    EffectsModule.forRoot([TransactionEffects]), //to register effects
   ],
   providers: [
     //provide custom error handler class to app module.
@@ -52,6 +58,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     AuthService,
     LoginResolve,
     AuthGaurd,
+    TransactionService,
     provideHttpClient(),
     //ensures the authentication is setup before any other services or components are initialized
     provideAppInitializer(() => authFactory(inject(AuthService))),

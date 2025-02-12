@@ -8,6 +8,7 @@ interface BasicDetails {
   screenshot?: File;
 }
 export interface Transaction extends BasicDetails {
+  transactionId?: string;
   type: 'Income' | 'Expense';
   category: string;
 }

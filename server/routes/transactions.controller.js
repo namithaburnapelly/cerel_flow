@@ -16,14 +16,11 @@ router.get("/:userId", async (req, res) => {
 
     //check if user has transactions
     if (!user || user.transactions.length === 0) {
-      return res
-        .status(404)
-        .json({ message: "User not found or No transactions registered." });
+      return res.status(404).json({ message: "No transactions registered." });
     }
 
     //returns transactions of user
     return res.status(200).json({
-      userId: user.userId,
       transactions: user.transactions,
     });
   } catch (error) {
@@ -53,9 +50,7 @@ router.post("/:userId", async (req, res) => {
     );
 
     if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-      return res
-        .status(200)
-        .json({ message: "Transaction added successfully." });
+      return res.status(200).json(transaction);
     } else {
       return res.status(400).json({ message: "Failed to add transaction." });
     }
@@ -109,6 +104,7 @@ router.patch("/:userId/:transactionId", async (req, res) => {
   }
 });
 
+//deleting the transaction
 router.delete("/:userId/:transactionId", async (req, res) => {
   try {
     const { userId, transactionId } = req.params;
@@ -126,7 +122,7 @@ router.delete("/:userId/:transactionId", async (req, res) => {
     } else {
       return res.status(404).json({ message: "Transaction not found." });
     }
-  } catch (err) {
+  } catch (error) {
     console.log(error);
     //serve error
     res.status(500).json({ message: "Server error." });

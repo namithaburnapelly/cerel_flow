@@ -1,7 +1,7 @@
 //when user login
 //user model
 export interface IUser {
-  id: string;
+  _id: string;
   email: string;
   password: string;
 }
@@ -17,6 +17,7 @@ export interface IAuthInfo {
 export interface UserInfo {
   accessToken: string;
   email: string;
+  userId: string;
 }
 
 //when new user register

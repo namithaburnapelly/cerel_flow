@@ -20,6 +20,8 @@
     "@angular/router": "^19.0.0",
     "@auth0/angular-jwt": "^5.2.0",
     "@auth0/auth0-angular": "^2.2.3",
+    "@ngrx/effects": "^19.0.1",
+    "@ngrx/store": "^19.0.1",
     "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.12.0",

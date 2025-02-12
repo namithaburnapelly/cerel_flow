@@ -71,8 +71,11 @@ router.post("/login", async (req, res) => {
     //tokens are generated and response is sent
     return res.status(200).json({
       accessToken,
-      payload: user.email,
-      expiresAt: "15s", // 15days //1hour
+      payload: {
+        _id: user._id,
+        email: user.email,
+      },
+      expiresAt: "1h", // 15days //1hour
     });
   } catch (err) {
     console.log(err);

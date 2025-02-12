@@ -32,6 +32,7 @@ export class AuthService {
         const returnedUser: UserInfo = {
           accessToken: userData.accessToken ?? '',
           email: userData.payload?.email ?? '',
+          userId: userData.payload?._id ?? '',
         };
 
         // //save in local storage
@@ -60,6 +61,11 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  getUserId(): string {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser).userId : '';
   }
 
   Register(
