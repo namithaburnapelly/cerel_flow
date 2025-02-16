@@ -5,16 +5,25 @@ import {
   addTransaction,
   addTransactionError,
   addTransactionSuccess,
+  deleteTransaction,
+  deleteTransactionError,
+  deleteTransactionSuccess,
   loadTransactions,
   loadTransactionsError,
   loadTransactionsSuccess,
+  updateTransaction,
+  updateTransactionError,
+  updateTransactionSuccess,
 } from './transaction.actions';
-import { of } from 'rxjs';
 import { mergeMap, catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class TransactionEffects {
   private actions$ = inject(Actions);
+
+  //Effects:They are powered side effect model for store. Effects use streams to provide new sources
+  //of actions to reduce state based on external interactions such as netwrok request, web socket messages
+  //and time based events.
 
   constructor(private transactionService: TransactionService) {}
   //createEffect is a function from ngrx that listens to dispatched actions and perform side effects(API Calls).
@@ -23,9 +32,6 @@ export class TransactionEffects {
       ofType(loadTransactions),
       mergeMap(({ payload }) =>
         this.transactionService.getTransactions(payload.userId).pipe(
-          tap((transactions) =>
-            console.log('loaded transactions from reducer are,', transactions)
-          ),
           map((transactions) =>
             loadTransactionsSuccess({ payload: transactions })
           ),
@@ -38,34 +44,60 @@ export class TransactionEffects {
   addTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTransaction),
-      tap(({ payload }) =>
-        console.log('🛠️ Effect received addTransaction:', payload)
-      ),
       mergeMap(({ payload }) =>
         this.transactionService
           .addTransaction(payload.userId, payload.newTransaction)
           .pipe(
-            tap((response) =>
-              console.log('✅ Transaction successfully saved:', response)
-            ),
-            // map((newTransaction) =>
-            //   //pass the new transaction rom the original action
-            //   addTransactionSuccess({ payload: { newTransaction.newTransaction } })
-            // ),
             map((response) => {
-              const newTransaction = response.newTransaction; // ✅ Extract newTransaction from response
-
-              console.log('🚀 Sending to Reducer:', newTransaction); // Debug log
-
-              return addTransactionSuccess({ payload: { newTransaction } }); // ✅ Correct structure
+              const newTransaction = response.newTransaction; //get the new transaction from the response
+              return addTransactionSuccess({ payload: { newTransaction } });
             }),
-            // catchError(async (error) => addTransactionError({ payload: error }))
-            catchError((error) => {
-              console.error('❌ Error in addTransaction effect:', error);
-              return of(addTransactionError({ payload: error }));
-            })
+            catchError(async (error) => addTransactionError({ payload: error }))
           )
       )
+    )
+  );
+
+  updateTransaction$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateTransaction),
+      mergeMap(({ payload }) =>
+        this.transactionService
+          .updateTransaction(
+            payload.userId,
+            payload.transactionId,
+            payload.changes
+          )
+          .pipe(
+            map(() =>
+              updateTransactionSuccess({
+                payload: {
+                  transactionId: payload.transactionId,
+                  changes: payload.changes,
+                },
+              })
+            )
+          )
+      ),
+      catchError(async (error) => updateTransactionError({ payload: error }))
+    )
+  );
+
+  deleteTransaction$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteTransaction),
+      mergeMap(({ payload }) =>
+        this.transactionService
+          .deleteTransaction(payload.userId, payload.transactionId)
+          .pipe(
+            map(() =>
+              deleteTransactionSuccess({
+                payload: { transactionId: payload.transactionId },
+              })
+            )
+          )
+      ),
+      catchError(async (error) => deleteTransactionError({ payload: error }))
     )
   );
 }

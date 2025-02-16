@@ -10,10 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './Service/Auth/auth.service';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
-import { TransactionFormComponent } from './transaction-form/transaction-form.component';
+import { TransactionFormComponent } from './transaction-list/transaction-form/transaction-form.component';
 import { ChartsComponent } from './charts/charts.component';
 import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './register/register.component';
@@ -30,6 +30,8 @@ import { transactionReducer } from './@Ngrx/transaction.reducers';
 import { TransactionEffects } from './@Ngrx/transaction.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { TransactionService } from './Service/Transaction/transaction.service';
+import { TransactionResolve } from './Service/Transaction/transaction-resolve.service';
+import { AuthInterceptor } from './Service/Auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { TransactionService } from './Service/Transaction/transaction.service';
     { provide: ErrorHandler, useClass: ErrorHandlerService },
     AuthService,
     LoginResolve,
+    TransactionResolve,
     AuthGaurd,
     TransactionService,
     provideHttpClient(),

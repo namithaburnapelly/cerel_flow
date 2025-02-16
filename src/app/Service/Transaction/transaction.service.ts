@@ -25,7 +25,7 @@ export class TransactionService {
       .post<Transaction>(`${this._transactionsUrl}/${userId}`, newTransaction)
       .pipe(
         map((transaction: Transaction) => {
-          // Wrap the response in an object with newTransaction key
+          // Wrap the response in an object with newTransaction as key
           return { newTransaction: transaction };
         })
       );

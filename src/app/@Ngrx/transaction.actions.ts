@@ -41,7 +41,13 @@ export const addTransactionError = createAction(
 //update transaction
 export const updateTransaction = createAction(
   '[Transaction] Update Transactions',
-  props<{ payload: { transactionId: string; changes: Partial<Transaction> } }>()
+  props<{
+    payload: {
+      userId: string;
+      transactionId: string;
+      changes: Partial<Transaction>;
+    };
+  }>()
 );
 //on success
 export const updateTransactionSuccess = createAction(
@@ -56,16 +62,16 @@ export const updateTransactionError = createAction(
 
 //delete Transaction
 export const deleteTransaction = createAction(
-  '[Transaction] Update Transactions',
-  props<{ payload: { transactionId: string } }>()
+  '[Transaction] Delete Transactions',
+  props<{ payload: { userId: string; transactionId: string } }>()
 );
 //on success
 export const deleteTransactionSuccess = createAction(
-  '[Transaction] Update Transactions Success',
+  '[Transaction] Delete Transactions Success',
   props<{ payload: { transactionId: string } }>()
 );
 //on failure
 export const deleteTransactionError = createAction(
-  '[Transaction] Update Transactions Error',
+  '[Transaction] Delete Transactions Error',
   props<{ payload: { error: ApiError } }>()
 );

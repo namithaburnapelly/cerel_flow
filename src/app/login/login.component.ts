@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../Service/Auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -42,8 +42,6 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  ngOnInit(): void {}
-
   login(): void {
     if (this.loginForm.valid) {
       //login success
@@ -69,7 +67,7 @@ export class LoginComponent {
             //   this.router.navigateByUrl('');
             // }
             console.log(result, ' successfully login');
-            this.router.navigateByUrl('/private/home');
+            this.router.navigateByUrl('/private');
           },
           error: (err) => {
             this.errorMessage = this.errorHandler.handleError(err);

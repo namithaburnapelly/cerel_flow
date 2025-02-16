@@ -2,14 +2,14 @@ import { createFeatureSelector } from '@ngrx/store';
 import { environment } from '../../environment/environment';
 import { Transaction } from '../Model/transaction.model';
 
-//state interface
+//state interface frr transactions
 export interface TransactionState {
   transactions: Transaction[];
   loading: boolean;
   error: { message: string | null } | null;
 }
 
-//intial state
+//intial state for transactions
 export const initialState: TransactionState = {
   transactions: [],
   loading: false,
@@ -19,6 +19,7 @@ export const initialState: TransactionState = {
 export interface ApiError {
   message: string;
 }
+
 const TRANSACTION_FEATURE_KEY = environment.TRANSACTION_FEATURE_KEY;
 
 //the createFeatureSelector method returns a top level feature state.

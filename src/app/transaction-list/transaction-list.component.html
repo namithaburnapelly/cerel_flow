@@ -1,16 +1,28 @@
 <div>
   <h2>Transactions</h2>
 
+  <button (click)="toggleTransactionForm()">Add Transaction</button>
+
+  <app-transaction-form
+    *ngIf="showForm"
+    [transactionToEdit]="selectedTransaction"
+    (formSubmitted)="handleFormSubmitted($event)"
+    (formCancelled)="handleFormCancel()"
+  ></app-transaction-form>
+
   <!-- Display Loading Message -->
   <div *ngIf="transactions$ | async as transactions; else loading">
     <ul *ngIf="transactions.length > 0; else noTransactions">
       <li *ngFor="let transaction of transactions">
         <span
-          >{{ transaction.category }} - ${{ transaction.amount }} ({{
-            transaction.date
-          }})</span
+          >{{ transaction.transactionId }} -{{ transaction.type }} -
+          {{ transaction.category }} - ${{ transaction.amount }} -
+          {{ transaction.description }}</span
         >
-        <!-- <button (click)="deleteTransaction(transaction.transactionId)">Delete</button> -->
+        <button (click)="deleteTransaction(transaction.transactionId)">
+          Delete
+        </button>
+        <button (click)="editTransaction(transaction)">Update</button>
       </li>
     </ul>
   </div>
@@ -26,38 +38,4 @@
       <p class="error">{{ errorMessage }}</p>
     </div>
   </ng-template>
-
-  <!-- Button to Add a Transaction -->
-  <div class="transaction-form">
-    <h2>Add Transaction</h2>
-
-    <form [formGroup]="transactionForm" (ngSubmit)="onSubmitTransaction()">
-      <label for="type">Type:</label>
-      <select id="type" formControlName="type">
-        <option value="Income">Income</option>
-        <option value="Expense">Expense</option>
-      </select>
-
-      <label for="category">Category:</label>
-      <input id="category" type="text" formControlName="category" required />
-
-      <label for="amount">Amount:</label>
-      <input id="amount" type="number" formControlName="amount" required />
-
-      <label for="description">Description:</label>
-      <textarea id="description" formControlName="description"></textarea>
-      <!-- 
-      <label for="wallet">Wallet:</label>
-      <input id="wallet" type="text" formControlName="wallet" />
-
-      <label for="screenshot">Upload Screenshot:</label>
-      <input id="screenshot" type="file" (change)="onFileSelect($event)" /> -->
-
-      <button type="submit" [disabled]="transactionForm.invalid">
-        Add Transaction
-      </button>
-    </form>
-
-    <p *ngIf="error$ | async" class="error">Error: {{ error$ | async }}</p>
-  </div>
 </div>

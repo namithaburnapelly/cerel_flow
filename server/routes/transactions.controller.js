@@ -30,6 +30,10 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+//Function to add if it exists as it is optional
+const addIfExists = (key, value) =>
+  value !== undefined ? { [key]: value } : {};
+
 //to register a new transaction
 router.post("/:userId", async (req, res) => {
   try {
@@ -39,6 +43,9 @@ router.post("/:userId", async (req, res) => {
       category: req.body.category,
       amount: req.body.amount,
       date: req.body.date,
+      ...addIfExists("wallet", req.body.wallet), //spread operator used to add the key, value pair if exists
+      ...addIfExists("description", req.body.description),
+      ...addIfExists("screenshot", req.body.screenshot),
     };
 
     const db = getDb();

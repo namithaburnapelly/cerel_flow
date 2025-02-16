@@ -1,2 +1,15 @@
-<p>home works!</p>
-<button (click)="getUserID()">id</button>
+<p>Welcome to home page</p>
+
+<div>
+  <a routerLink="/private/transaction/list">
+    <button>View all transactions</button>
+  </a>
+</div>
+<div *ngIf="totalIncome$ | async as totalIncome; else loading">
+  Total income
+  {{ totalIncome }}
+</div>
+<!-- Loading Placeholder -->
+<ng-template #loading>
+  <p>Loading Income...</p>
+</ng-template>

@@ -34,44 +34,38 @@ export const transactionReducer = createReducer(
   initialState,
 
   //load transactions
-  on(loadTransactions, (state) => {
-    console.log('load came here');
-    return handleStateChange(state, { loading: true, error: null });
-  }),
-  on(loadTransactionsSuccess, (state, { payload }) => {
-    console.log('Transactions Loaded:', payload.transactions); // Debug log
-    return handleStateChange(state, {
+  on(loadTransactions, (state) =>
+    handleStateChange(state, { loading: true, error: null })
+  ),
+  on(loadTransactionsSuccess, (state, { payload }) =>
+    handleStateChange(state, {
       transactions: payload.transactions,
       loading: false,
-    });
-  }),
-  on(loadTransactionsError, (state, { payload }) => {
-    console.log('error in load');
-    return handleStateChange(state, {
+    })
+  ),
+  on(loadTransactionsError, (state, { payload }) =>
+    handleStateChange(state, {
       loading: false,
       error: { message: payload.error.message },
-    });
-  }),
+    })
+  ),
 
   //add transaction
-  on(addTransaction, (state) => {
-    console.log('came here');
-    return handleStateChange(state, { loading: true, error: null });
-  }),
-  on(addTransactionSuccess, (state, { payload }) => {
-    console.log('🟢 Reducer - Adding Transaction:', payload.newTransaction);
-    return handleStateChange(state, {
+  on(addTransaction, (state) =>
+    handleStateChange(state, { loading: true, error: null })
+  ),
+  on(addTransactionSuccess, (state, { payload }) =>
+    handleStateChange(state, {
       transactions: [...state.transactions, payload.newTransaction],
       loading: false,
-    });
-  }),
-  on(addTransactionError, (state, { payload }) => {
-    console.log('error came here');
-    return handleStateChange(state, {
+    })
+  ),
+  on(addTransactionError, (state, { payload }) =>
+    handleStateChange(state, {
       loading: false,
       error: { message: payload.error.message },
-    });
-  }),
+    })
+  ),
 
   //update transaction
   on(updateTransaction, (state) =>
