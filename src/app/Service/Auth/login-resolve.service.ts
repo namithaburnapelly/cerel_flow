@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
@@ -12,7 +12,9 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginResolve implements Resolve<boolean> {
-  constructor(private authState: AuthService, private router: Router) {}
+  private authState = inject(AuthService);
+  private router = inject(Router);
+  constructor() {}
 
   resolve(
     route: ActivatedRouteSnapshot,

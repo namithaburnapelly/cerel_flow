@@ -1,13 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../Service/Auth/auth.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TransactionState } from '../@Ngrx/transaction.state';
-import {
-  selectTotalIncome,
-  selectTransactions,
-} from '../@Ngrx/transaction.selectors';
-import { Transaction } from '../Model/transaction.model';
+import { selectTotalIncome } from '../@Ngrx/transaction.selectors';
 import { loadTransactions } from '../@Ngrx/transaction.actions';
 
 @Component({
@@ -23,7 +18,10 @@ export class HomeComponent implements OnInit {
   totalIncome$: Observable<number>;
   userId!: string;
 
-  constructor(private store: Store, private authService: AuthService) {
+  private store = inject(Store);
+  private authService = inject(AuthService);
+
+  constructor() {
     this.totalIncome$ = this.store.select(selectTotalIncome);
     // this.transactions$ = this.store.select(selectTransactions);
   }

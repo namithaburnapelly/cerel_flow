@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../Service/Auth/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,12 +15,12 @@ export class LoginComponent {
   errorMessage: string | null;
   isPasswordVisible: boolean = false;
 
-  constructor(
-    private errorHandler: ErrorHandlerService,
-    private authService: AuthService,
-    private router: Router,
-    private fb: FormBuilder
-  ) {
+  private errorHandler = inject(ErrorHandlerService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+
+  constructor() {
     //define the form group with strictly typed controls and validation
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

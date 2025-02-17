@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -9,7 +9,8 @@ import { Transaction } from '../../Model/transaction.model';
 })
 export class TransactionService {
   private _transactionsUrl = environment.transactionUrl;
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  constructor() {}
 
   getTransactions(userId: string): Observable<{ transactions: Transaction[] }> {
     return this.http.get<{ transactions: Transaction[] }>(

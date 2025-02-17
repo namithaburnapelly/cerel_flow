@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Transaction } from '../Model/transaction.model';
 import { Store } from '@ngrx/store';
@@ -33,10 +33,9 @@ export class TransactionListComponent implements OnInit {
   selectedTransaction: Transaction | null = null; //holds the transaction to edit
   // selectedFile: File | null = null;
 
-  constructor(
-    private store: Store<TransactionState>,
-    private authService: AuthService
-  ) {
+  private store = inject(Store<TransactionState>);
+  private authService = inject(AuthService);
+  constructor() {
     this.transactions$ = this.store.select(selectTransactions);
     this.loading$ = this.store.select(selectLoading);
     this.error$ = this.store.select(selectError);

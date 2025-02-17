@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
@@ -27,7 +28,9 @@ export class TransactionFormComponent implements OnChanges {
   isEditmode: boolean = false;
   transactionForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  private fb = inject(FormBuilder);
+
+  constructor() {
     this.transactionForm = this.fb.group({
       type: ['', Validators.required],
       category: ['', Validators.required],

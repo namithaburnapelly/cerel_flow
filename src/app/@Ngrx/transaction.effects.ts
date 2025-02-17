@@ -20,12 +20,13 @@ import { mergeMap, catchError, map, tap } from 'rxjs/operators';
 @Injectable()
 export class TransactionEffects {
   private actions$ = inject(Actions);
+  private transactionService = inject(TransactionService);
 
   //Effects:They are powered side effect model for store. Effects use streams to provide new sources
   //of actions to reduce state based on external interactions such as netwrok request, web socket messages
   //and time based events.
 
-  constructor(private transactionService: TransactionService) {}
+  constructor() {}
   //createEffect is a function from ngrx that listens to dispatched actions and perform side effects(API Calls).
   loadTransactions$ = createEffect(() =>
     this.actions$.pipe(

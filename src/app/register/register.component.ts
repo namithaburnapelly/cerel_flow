@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../Service/Auth/auth.service';
 import { ErrorHandlerService } from '../ErrorHandling/error-handler';
@@ -14,12 +14,12 @@ export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage: string | null;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private errorHandler: ErrorHandlerService,
-    private router: Router
-  ) {
+  private errorHandler = inject(ErrorHandlerService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+
+  constructor() {
     //define the form group with strictly typed controls and validtion
     this.registerForm = this.fb.group({
       username: ['', [Validators.required]],

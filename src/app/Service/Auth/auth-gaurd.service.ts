@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -13,7 +13,10 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthGaurd implements CanActivate {
-  constructor(private authState: AuthService, private router: Router) {}
+  private authState = inject(AuthService);
+  private router = inject(Router);
+
+  constructor() {}
 
   canActivate(
     route: ActivatedRouteSnapshot,

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IAuthInfo, NewUser, UserInfo } from '../../Model/user';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -21,7 +21,10 @@ export class AuthService {
   // by exposing it asObservable , we give other parts read-only access to current authentication state
   stateItem$: Observable<IAuthInfo | null> = this.stateItem.asObservable();
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+  private http = inject(HttpClient);
+  private jwtHelper = inject(JwtHelperService);
+
+  constructor() {}
 
   //login method
   Login(email: string, password: string): Observable<IAuthInfo> {
