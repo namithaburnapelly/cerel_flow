@@ -32,7 +32,7 @@ function authenticateToken(req, res, next) {
       return res.status(403).send("Invalid access key");
     }
 
-    req.user = user;
+    req.user = data;
     next();
   });
 }

@@ -26,7 +26,7 @@ export class LoginResolve implements Resolve<boolean> {
         }
         if (user && user.accessToken) {
           console.log(user, 'from login resolve');
-          this.router.navigateByUrl('/private/home');
+          this.router.navigateByUrl('/private');
           return false;
         }
         return true;

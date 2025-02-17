@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './Service/Auth/auth.service';
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { TransactionFormComponent } from './transaction-list/transaction-form/transaction-form.component';
@@ -31,7 +31,7 @@ import { TransactionEffects } from './@Ngrx/transaction.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { TransactionService } from './Service/Transaction/transaction.service';
 import { TransactionResolve } from './Service/Transaction/transaction-resolve.service';
-import { AuthInterceptor } from './Service/Auth/auth.interceptor';
+import { authInterceptor } from './Service/Auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -62,7 +62,8 @@ import { AuthInterceptor } from './Service/Auth/auth.interceptor';
     TransactionResolve,
     AuthGaurd,
     TransactionService,
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    // { provide: HTTP_INTERCEPTORS, useValue: authInterceptor, multi: true },
     //ensures the authentication is setup before any other services or components are initialized
     provideAppInitializer(() => authFactory(inject(AuthService))),
   ],

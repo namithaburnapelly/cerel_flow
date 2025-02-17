@@ -68,6 +68,11 @@ export class AuthService {
     return storedUser ? JSON.parse(storedUser).userId : '';
   }
 
+  getAuthToken(): string {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser).accessToken : '';
+  }
+
   Register(
     username: string,
     email: string,

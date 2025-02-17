@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 const { getDb } = require("../db");
+const { authenticateToken } = require("../jwt.auth");
 
 //to get all transactions of a given user
-router.get("/:userId", async (req, res) => {
+router.get("/:userId", authenticateToken, async (req, res) => {
   try {
     const db = getDb();
 
@@ -35,7 +36,7 @@ const addIfExists = (key, value) =>
   value !== undefined ? { [key]: value } : {};
 
 //to register a new transaction
-router.post("/:userId", async (req, res) => {
+router.post("/:userId", authenticateToken, async (req, res) => {
   try {
     const transaction = {
       transactionId: "trxn" + new Date().getMilliseconds(),
@@ -69,7 +70,7 @@ router.post("/:userId", async (req, res) => {
 });
 
 //to update a existing transaction
-router.patch("/:userId/:transactionId", async (req, res) => {
+router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
   try {
     const { userId, transactionId } = req.params;
     const updatedData = req.body; //contains fields that need to be updated
@@ -112,28 +113,32 @@ router.patch("/:userId/:transactionId", async (req, res) => {
 });
 
 //deleting the transaction
-router.delete("/:userId/:transactionId", async (req, res) => {
-  try {
-    const { userId, transactionId } = req.params;
+router.delete(
+  "/:userId/:transactionId",
+  authenticateToken,
+  async (req, res) => {
+    try {
+      const { userId, transactionId } = req.params;
 
-    const db = getDb();
-    const result = await db.collection("transactions").updateOne(
-      { userId: userId }, //finds the user id in which the aciton to be done
-      { $pull: { transactions: { transactionId: transactionId } } } //pull removes the transaction where transaction maps
-    );
+      const db = getDb();
+      const result = await db.collection("transactions").updateOne(
+        { userId: userId }, //finds the user id in which the aciton to be done
+        { $pull: { transactions: { transactionId: transactionId } } } //pull removes the transaction where transaction maps
+      );
 
-    if (result.modifiedCount > 0) {
-      return res
-        .status(200)
-        .json({ message: "Transaction deleted successfully." });
-    } else {
-      return res.status(404).json({ message: "Transaction not found." });
+      if (result.modifiedCount > 0) {
+        return res
+          .status(200)
+          .json({ message: "Transaction deleted successfully." });
+      } else {
+        return res.status(404).json({ message: "Transaction not found." });
+      }
+    } catch (error) {
+      console.log(error);
+      //serve error
+      res.status(500).json({ message: "Server error." });
     }
-  } catch (error) {
-    console.log(error);
-    //serve error
-    res.status(500).json({ message: "Server error." });
   }
-});
+);
 
 module.exports = router;
