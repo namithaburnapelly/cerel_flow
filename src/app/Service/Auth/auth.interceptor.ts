@@ -9,6 +9,8 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 
+//Interceptor here is used to take the url and attach the authorization token to it every time a api call is made.
+
 export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
@@ -26,7 +28,9 @@ export function authInterceptor(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 403) {
         authService.removestate();
-        router.navigate(['/login']);
+        router.navigate(['/login'], {
+          queryParams: { error: 'Your Session expired. Please log in again.' },
+        });
       }
       return throwError(() => error);
     })

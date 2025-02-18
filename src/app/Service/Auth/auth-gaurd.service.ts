@@ -31,7 +31,11 @@ export class AuthGaurd implements CanActivate {
         const token: string | undefined = user?.accessToken;
         if (!user || this.authState.isTokenExpired(token ?? null)) {
           console.log('user not logged in cannot access home page');
-          this.router.navigateByUrl('/login');
+          this.router.navigate(['/login'], {
+            queryParams: {
+              error: 'Your Session expired. Please log in again.',
+            },
+          });
           this.authState.removestate();
           return false;
         }

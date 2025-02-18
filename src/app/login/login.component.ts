@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../Service/Auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorHandlerService } from '../ErrorHandling/error-handler';
 
@@ -10,7 +10,7 @@ import { ErrorHandlerService } from '../ErrorHandling/error-handler';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string | null;
   isPasswordVisible: boolean = false;
@@ -19,7 +19,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
-
+  private route = inject(ActivatedRoute);
   constructor() {
     //define the form group with strictly typed controls and validation
     this.loginForm = this.fb.group({
@@ -28,6 +28,13 @@ export class LoginComponent {
     });
     //set error message initially to null
     this.errorMessage = null;
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['error']) console.log(params['error']);
+      this.errorMessage = params['error'];
+    });
   }
 
   togglePasswordVisibility() {
