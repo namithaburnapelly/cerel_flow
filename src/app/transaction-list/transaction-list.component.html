@@ -5,22 +5,41 @@
 
   <!-- Display Loading Message -->
   <div *ngIf="transactions$ | async as transactions; else loading">
-    <ul *ngIf="transactions.length > 0; else noTransactions">
-      <li *ngFor="let transaction of transactions">
-        <span
-          >{{ transaction.transactionId }} -{{ transaction.type }} -
-          {{ transaction.category }} - ${{ transaction.amount }} -
-          {{ transaction.description }}</span
-        >
-        <button (click)="deleteTransaction(transaction.transactionId)">
-          Delete
-        </button>
-        <app-update-transaction
-          [transactionToEdit]="transaction"
-        ></app-update-transaction>
-      </li>
-    </ul>
+    <table *ngIf="transactions.length > 0; else noTransactions">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>type</th>
+          <th>category</th>
+          <th>amount</th>
+          <th>description</th>
+          <th>options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.transactionId }}</td>
+          <td>{{ transaction.type }}</td>
+          <td>{{ transaction.category }}</td>
+          <td>${{ transaction.amount }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>
+            <button (click)="editTransaction(transaction)">Update</button>
+            <button (click)="deleteTransaction(transaction.transactionId)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <app-transaction-form
+    *ngIf="showForm"
+    [transactionToEdit]="selectedTransaction"
+    (formSubmitted)="handleFormSubmitted($event)"
+    (formCancelled)="handleFormCancel()"
+  ></app-transaction-form>
 
   <!-- Loading Placeholder -->
   <ng-template #loading>

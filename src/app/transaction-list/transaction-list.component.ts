@@ -27,7 +27,10 @@ export class TransactionListComponent implements OnInit {
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
   userId!: string;
+
   showForm: boolean = false;
+  selectedTransaction: Transaction | null = null; //holds the transaction to edit
+  // selectedFile: File | null = null;
 
   private store = inject(Store<TransactionState>);
   private authService = inject(AuthService);
@@ -37,12 +40,41 @@ export class TransactionListComponent implements OnInit {
     this.error$ = this.store.select(selectError);
   }
 
-  getUserId(): string {
-    return this.authService.getUserId();
-  }
-
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
+  }
+
+  //checks if the form is being submitted for update or add then performs action
+  handleFormSubmitted(data: Transaction): void {
+    if (this.selectedTransaction?.transactionId) {
+      //update the existing transaction
+      this.store.dispatch(
+        updateTransaction({
+          payload: {
+            userId: this.userId,
+            transactionId: this.selectedTransaction.transactionId,
+            changes: data,
+          },
+        })
+      );
+      this.selectedTransaction = null;
+    }
+    this.showForm = false;
+  }
+
+  handleFormCancel() {
+    this.showForm = false;
+    this.selectedTransaction = null;
+  }
+
+  editTransaction(transaction: Transaction) {
+    if (this.showForm) {
+      alert('Please submit or close the existing form before proceeding.');
+      return;
+    }
+
+    this.selectedTransaction = { ...transaction };
+    this.showForm = true;
   }
 
   deleteTransaction(transactionId: string | undefined): void {
