@@ -32,6 +32,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { TransactionService } from './Service/Transaction/transaction.service';
 import { TransactionResolve } from './Service/Transaction/transaction-resolve.service';
 import { authInterceptor } from './Service/Auth/auth.interceptor';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { NewTransactionComponent } from './transaction-list/new-transaction/new-transaction.component';
+import { UpdateTransactionComponent } from './transaction-list/update-transaction/update-transaction.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,10 @@ import { authInterceptor } from './Service/Auth/auth.interceptor';
     ChartsComponent,
     AuthComponent,
     RegisterComponent,
+    NavbarComponent,
+    PagenotfoundComponent,
+    NewTransactionComponent,
+    UpdateTransactionComponent,
   ],
   imports: [
     BrowserModule,

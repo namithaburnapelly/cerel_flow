@@ -1,14 +1,7 @@
 <div>
   <h2>Transactions</h2>
 
-  <button (click)="toggleTransactionForm()">Add Transaction</button>
-
-  <app-transaction-form
-    *ngIf="showForm"
-    [transactionToEdit]="selectedTransaction"
-    (formSubmitted)="handleFormSubmitted($event)"
-    (formCancelled)="handleFormCancel()"
-  ></app-transaction-form>
+  <app-new-transaction></app-new-transaction>
 
   <!-- Display Loading Message -->
   <div *ngIf="transactions$ | async as transactions; else loading">
@@ -22,7 +15,9 @@
         <button (click)="deleteTransaction(transaction.transactionId)">
           Delete
         </button>
-        <button (click)="editTransaction(transaction)">Update</button>
+        <app-update-transaction
+          [transactionToEdit]="transaction"
+        ></app-update-transaction>
       </li>
     </ul>
   </div>

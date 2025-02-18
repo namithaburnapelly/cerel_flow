@@ -1,0 +1,6 @@
+<button (click)="toggleTransactionForm()">Add Transaction</button>
+<app-transaction-form
+  *ngIf="showForm"
+  (formSubmitted)="handleFormSubmitted($event)"
+  (formCancelled)="handleFormCancel()"
+></app-transaction-form>

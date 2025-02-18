@@ -2,7 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../Service/Auth/auth.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectTotalIncome } from '../@Ngrx/transaction.selectors';
+import {
+  selectNetBalance,
+  selectTotalExpenses,
+  selectTotalIncome,
+} from '../@Ngrx/transaction.selectors';
 import { loadTransactions } from '../@Ngrx/transaction.actions';
 
 @Component({
@@ -14,16 +18,20 @@ import { loadTransactions } from '../@Ngrx/transaction.actions';
 })
 export class HomeComponent implements OnInit {
   //observable varibles that store data from select
-  // transactions$: Observable<Transaction[]>;
   totalIncome$: Observable<number>;
+  totalExpenses$: Observable<number>;
+  netBalance$: Observable<number>;
+
   userId!: string;
+  today: Date = new Date();
 
   private store = inject(Store);
   private authService = inject(AuthService);
 
   constructor() {
     this.totalIncome$ = this.store.select(selectTotalIncome);
-    // this.transactions$ = this.store.select(selectTransactions);
+    this.totalExpenses$ = this.store.select(selectTotalExpenses);
+    this.netBalance$ = this.store.select(selectNetBalance);
   }
 
   ngOnInit(): void {

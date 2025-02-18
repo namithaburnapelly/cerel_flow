@@ -1,13 +1,19 @@
-<p>Welcome to home page</p>
+<h2>Dashboard</h2>
 
-<div>
-  <a routerLink="/private/transaction/list">
-    <button>View all transactions</button>
-  </a>
+<h4>{{ today | date : "fullDate" }}</h4>
+
+<app-new-transaction></app-new-transaction>
+
+<div *ngIf="totalIncome$ | async as total; else loading">
+  Total income &#8377; {{ total }}
 </div>
-<div *ngIf="totalIncome$ | async as totalIncome; else loading">
-  Total income
-  {{ totalIncome }}
+
+<div *ngIf="totalExpenses$ | async as total; else loading">
+  Total Expenses &#8377; {{ total }}
+</div>
+
+<div *ngIf="netBalance$ | async as total; else loading">
+  Net Balance &#8377; {{ total }}
 </div>
 <!-- Loading Placeholder -->
 <ng-template #loading>

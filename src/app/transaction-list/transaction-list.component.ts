@@ -10,7 +10,6 @@ import {
 import {
   addTransaction,
   deleteTransaction,
-  loadTransactions,
   updateTransaction,
 } from '../@Ngrx/transaction.actions';
 import { TransactionState } from '../@Ngrx/transaction.state';
@@ -30,9 +29,6 @@ export class TransactionListComponent implements OnInit {
   userId!: string;
   showForm: boolean = false;
 
-  selectedTransaction: Transaction | null = null; //holds the transaction to edit
-  // selectedFile: File | null = null;
-
   private store = inject(Store<TransactionState>);
   private authService = inject(AuthService);
   constructor() {
@@ -47,57 +43,6 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
-  }
-
-  toggleTransactionForm() {
-    if (this.showForm) {
-      alert('Please submit or close the existing form before proceeding.');
-      return;
-    }
-    this.showForm = !this.showForm;
-  }
-
-  //checks if the form is being submitted for update or add then performs action
-  handleFormSubmitted(data: Transaction): void {
-    if (this.selectedTransaction?.transactionId) {
-      //update the existing transaction
-      this.store.dispatch(
-        updateTransaction({
-          payload: {
-            userId: this.userId,
-            transactionId: this.selectedTransaction.transactionId,
-            changes: data,
-          },
-        })
-      );
-      this.selectedTransaction = null;
-    } else {
-      //Add a new transaction
-      this.store.dispatch(
-        addTransaction({
-          payload: {
-            userId: this.userId,
-            newTransaction: data,
-          },
-        })
-      );
-    }
-    this.showForm = false;
-  }
-
-  handleFormCancel() {
-    this.showForm = false;
-    this.selectedTransaction = null;
-  }
-
-  editTransaction(transaction: Transaction) {
-    if (this.showForm) {
-      alert('Please submit or close the existing form before proceeding.');
-      return;
-    }
-
-    this.selectedTransaction = { ...transaction };
-    this.showForm = true;
   }
 
   deleteTransaction(transactionId: string | undefined): void {

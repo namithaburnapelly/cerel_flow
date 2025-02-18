@@ -4,6 +4,7 @@ import { HomeComponent } from '../home/home.component';
 import { ChartsComponent } from '../charts/charts.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { TransactionResolve } from '../Service/Transaction/transaction-resolve.service';
+import { PagenotfoundComponent } from '../pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     component: TransactionListComponent,
     resolve: { transactions: TransactionResolve },
   },
+  { path: '**', component: PagenotfoundComponent },
 ];
 
 @NgModule({

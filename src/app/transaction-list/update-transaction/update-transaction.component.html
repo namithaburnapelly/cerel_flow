@@ -1,0 +1,7 @@
+<button (click)="editTransaction()">Update</button>
+<app-transaction-form
+  *ngIf="showForm"
+  [transactionToEdit]="transactionToEdit"
+  (formSubmitted)="handleFormSubmitted($event)"
+  (formCancelled)="handleFormCancel()"
+></app-transaction-form>
