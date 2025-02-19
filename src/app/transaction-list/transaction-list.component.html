@@ -17,7 +17,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let transaction of transactions">
+        <!-- The paginate pipe filters the transaction array to show only 3 items per page based on p(current page) -->
+        <tr
+          *ngFor="
+            let transaction of transactions
+              | paginate : { itemsPerPage: 3, currentPage: p }
+          "
+        >
           <td>{{ transaction.transactionId }}</td>
           <td>{{ transaction.type }}</td>
           <td>{{ transaction.category }}</td>
@@ -32,6 +38,9 @@
         </tr>
       </tbody>
     </table>
+    <!-- when user clicks next or previous page change updates p
+      and table automatically updates to show transactions for new page -->
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
 
   <app-transaction-form

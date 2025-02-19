@@ -8,7 +8,6 @@ import {
   selectTransactions,
 } from '../@Ngrx/transaction.selectors';
 import {
-  addTransaction,
   deleteTransaction,
   updateTransaction,
 } from '../@Ngrx/transaction.actions';
@@ -28,6 +27,8 @@ export class TransactionListComponent implements OnInit {
   error$: Observable<string | null>;
   userId!: string;
 
+  //defines the page number
+  p: number = 1;
   showForm: boolean = false;
   selectedTransaction: Transaction | null = null; //holds the transaction to edit
   // selectedFile: File | null = null;
@@ -42,6 +43,15 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
+
+    //this sets all the transactions
+    this.transactions$.subscribe((transactions) => {
+      //handles pagination dynamically if the number of items changes
+      const totalPages = Math.ceil(transactions.length / 5);
+      if (this.p > totalPages) {
+        this.p = totalPages || 1;
+      }
+    });
   }
 
   //checks if the form is being submitted for update or add then performs action

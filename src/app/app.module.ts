@@ -35,6 +35,7 @@ import { authInterceptor } from './Service/Auth/auth.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { NewTransactionComponent } from './transaction-list/new-transaction/new-transaction.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { NewTransactionComponent } from './transaction-list/new-transaction/new-
   ],
   imports: [
     BrowserModule,
+    NgxPaginationModule, //pagination module from npm
     ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
