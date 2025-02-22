@@ -40,6 +40,7 @@ export const transactionReducer = createReducer(
   on(loadTransactionsSuccess, (state, { payload }) =>
     handleStateChange(state, {
       transactions: payload.transactions,
+      pagination: payload.pagination,
       loading: false,
     })
   ),

@@ -3,6 +3,18 @@ import { environment } from '../../../environment/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Transaction } from '../../Model/transaction.model';
+import { Store } from '@ngrx/store';
+import { loadTransactions } from '../../@Ngrx/transaction.actions';
+
+interface APIResponse {
+  transactions: Transaction[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+  };
+}
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +22,33 @@ import { Transaction } from '../../Model/transaction.model';
 export class TransactionService {
   private _transactionsUrl = environment.transactionUrl;
   private http = inject(HttpClient);
+  private store = inject(Store);
   constructor() {}
 
-  getTransactions(userId: string): Observable<{ transactions: Transaction[] }> {
-    return this.http.get<{ transactions: Transaction[] }>(
-      `${this._transactionsUrl}/${userId}`
+  getTransactions(
+    userId: string,
+    page: number,
+    pageSize: number
+  ): Observable<APIResponse> {
+    const params: any = {
+      userId,
+      page,
+      pageSize,
+    };
+    return this.http.get<APIResponse>(`${this._transactionsUrl}/${userId}`, {
+      params,
+    });
+  }
+
+  loadTransactions(userId: string, page: number, pageSize: number) {
+    this.store.dispatch(
+      loadTransactions({
+        payload: {
+          userId: userId,
+          page: page,
+          pageSize: pageSize,
+        },
+      })
     );
   }
 

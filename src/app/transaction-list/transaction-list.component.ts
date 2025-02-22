@@ -5,14 +5,17 @@ import { Store } from '@ngrx/store';
 import {
   selectError,
   selectLoading,
+  selectPagination,
   selectTransactions,
 } from '../@Ngrx/transaction.selectors';
 import {
   deleteTransaction,
+  loadTransactions,
   updateTransaction,
 } from '../@Ngrx/transaction.actions';
 import { TransactionState } from '../@Ngrx/transaction.state';
 import { AuthService } from '../Service/Auth/auth.service';
+import { TransactionService } from '../Service/Transaction/transaction.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -23,35 +26,51 @@ import { AuthService } from '../Service/Auth/auth.service';
 export class TransactionListComponent implements OnInit {
   //observable variables that store data from select.
   transactions$: Observable<Transaction[]>;
+  pagination$: Observable<{
+    currentPage: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+  }>;
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
-  userId!: string;
 
-  //defines the page number
-  p: number = 1;
+  //pagination parameters
+  userId!: string;
+  currentPage = 1;
+  pageSize = 5;
+
   showForm: boolean = false;
   selectedTransaction: Transaction | null = null; //holds the transaction to edit
   // selectedFile: File | null = null;
 
   private store = inject(Store<TransactionState>);
   private authService = inject(AuthService);
+  private transactionService = inject(TransactionService);
   constructor() {
     this.transactions$ = this.store.select(selectTransactions);
+    this.pagination$ = this.store.select(selectPagination);
     this.loading$ = this.store.select(selectLoading);
     this.error$ = this.store.select(selectError);
   }
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
+    //fetch transactions when the component initializes
+    this.transactionService.loadTransactions(
+      this.userId,
+      this.currentPage,
+      this.pageSize
+    );
+  }
 
-    //this sets all the transactions
-    this.transactions$.subscribe((transactions) => {
-      //handles pagination dynamically if the number of items changes
-      const totalPages = Math.ceil(transactions.length / 5);
-      if (this.p > totalPages) {
-        this.p = totalPages || 1;
-      }
-    });
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.transactionService.loadTransactions(
+      this.userId,
+      this.currentPage,
+      this.pageSize
+    );
   }
 
   //checks if the form is being submitted for update or add then performs action
@@ -98,6 +117,18 @@ export class TransactionListComponent implements OnInit {
           payload: { userId: this.userId, transactionId: transactionId },
         })
       );
+
+      //for redirect to previous page if transactions are ot available
+      this.store.select(selectTransactions).subscribe((transactions) => {
+        if (transactions.length === 0 && this.currentPage > 1) {
+          this.currentPage--;
+          this.transactionService.loadTransactions(
+            this.userId,
+            this.currentPage,
+            this.pageSize
+          );
+        }
+      });
     }
   }
 }

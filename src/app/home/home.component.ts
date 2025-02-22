@@ -8,6 +8,7 @@ import {
   selectTotalIncome,
 } from '../@Ngrx/transaction.selectors';
 import { loadTransactions } from '../@Ngrx/transaction.actions';
+import { TransactionService } from '../Service/Transaction/transaction.service';
 
 @Component({
   selector: 'app-home',
@@ -24,9 +25,12 @@ export class HomeComponent implements OnInit {
 
   userId!: string;
   today: Date = new Date();
+  page = 1;
+  pageSize = 5;
 
   private store = inject(Store);
   private authService = inject(AuthService);
+  private transactionService = inject(TransactionService);
 
   constructor() {
     this.totalIncome$ = this.store.select(selectTotalIncome);
@@ -37,8 +41,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
     if (this.userId) {
-      this.store.dispatch(
-        loadTransactions({ payload: { userId: this.userId } })
+      this.transactionService.loadTransactions(
+        this.userId,
+        this.page,
+        this.pageSize
       );
     } else {
       console.error('Error Occured. Please try again later.');

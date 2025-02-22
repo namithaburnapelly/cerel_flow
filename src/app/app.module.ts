@@ -30,7 +30,6 @@ import { transactionReducer } from './@Ngrx/transaction.reducers';
 import { TransactionEffects } from './@Ngrx/transaction.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { TransactionService } from './Service/Transaction/transaction.service';
-import { TransactionResolve } from './Service/Transaction/transaction-resolve.service';
 import { authInterceptor } from './Service/Auth/auth.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
@@ -67,7 +66,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     { provide: ErrorHandler, useClass: ErrorHandlerService },
     AuthService,
     LoginResolve,
-    TransactionResolve,
     AuthGaurd,
     TransactionService,
     provideHttpClient(withInterceptors([authInterceptor])),

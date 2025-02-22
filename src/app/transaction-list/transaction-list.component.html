@@ -18,16 +18,11 @@
       </thead>
       <tbody>
         <!-- The paginate pipe filters the transaction array to show only 3 items per page based on p(current page) -->
-        <tr
-          *ngFor="
-            let transaction of transactions
-              | paginate : { itemsPerPage: 3, currentPage: p }
-          "
-        >
+        <tr *ngFor="let transaction of transactions">
           <td>{{ transaction.transactionId }}</td>
           <td>{{ transaction.type }}</td>
           <td>{{ transaction.category }}</td>
-          <td>${{ transaction.amount }}</td>
+          <td>{{ transaction.amount | currency : "INR" }}</td>
           <td>{{ transaction.description }}</td>
           <td>
             <button (click)="editTransaction(transaction)">Update</button>
@@ -40,7 +35,24 @@
     </table>
     <!-- when user clicks next or previous page change updates p
       and table automatically updates to show transactions for new page -->
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <button
+      (click)="onPageChange(currentPage - 1)"
+      [disabled]="(pagination$ | async)?.currentPage === 1"
+    >
+      Previous
+    </button>
+    <span>
+      Page {{ (pagination$ | async)?.currentPage }} of
+      {{ (pagination$ | async)?.totalPages }}
+    </span>
+    <button
+      (click)="onPageChange(currentPage + 1)"
+      [disabled]="
+        (pagination$ | async)?.currentPage === (pagination$ | async)?.totalPages
+      "
+    >
+      Next
+    </button>
   </div>
 
   <app-transaction-form

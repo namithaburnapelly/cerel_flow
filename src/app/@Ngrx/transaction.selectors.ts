@@ -13,6 +13,12 @@ export const selectTransactions = createSelector(
   (state) => state.transactions
 );
 
+//selector for pagination meta data
+export const selectPagination = createSelector(
+  selectTransactionState,
+  (state) => state.pagination
+);
+
 //check if loading is true
 export const selectLoading = createSelector(
   selectTransactionState,

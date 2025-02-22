@@ -9,12 +9,28 @@ import { ApiError } from './transaction.state';
 //To load all the transactions
 export const loadTransactions = createAction(
   '[Transaction] Load Transactions',
-  props<{ payload: { userId: string } }>()
+  props<{
+    payload: {
+      userId: string;
+      page: number;
+      pageSize: number;
+    };
+  }>()
 );
 //on success
 export const loadTransactionsSuccess = createAction(
   '[Transaction] Load Transactions Success',
-  props<{ payload: { transactions: Transaction[] } }>()
+  props<{
+    payload: {
+      transactions: Transaction[]; //paginated transactions
+      pagination: {
+        currentPage: number;
+        pageSize: number;
+        totalItems: number;
+        totalPages: number;
+      };
+    };
+  }>()
 );
 //on failure
 export const loadTransactionsError = createAction(

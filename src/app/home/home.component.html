@@ -5,15 +5,15 @@
 <app-new-transaction></app-new-transaction>
 
 <div *ngIf="totalIncome$ | async as total; else loading">
-  Total income &#8377; {{ total }}
+  Total income {{ total | currency : "INR" }}
 </div>
 
 <div *ngIf="totalExpenses$ | async as total; else loading">
-  Total Expenses &#8377; {{ total }}
+  Total Expenses {{ total | currency : "INR" }}
 </div>
 
 <div *ngIf="netBalance$ | async as total; else loading">
-  Net Balance &#8377; {{ total }}
+  Net Balance {{ total | currency : "INR" }}
 </div>
 <!-- Loading Placeholder -->
 <ng-template #loading>

@@ -5,6 +5,12 @@ import { Transaction } from '../Model/transaction.model';
 //state interface frr transactions
 export interface TransactionState {
   transactions: Transaction[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalItems: number;
+    totalPages: number;
+  };
   loading: boolean;
   error: { message: string | null } | null;
 }
@@ -12,6 +18,12 @@ export interface TransactionState {
 //intial state for transactions
 export const initialState: TransactionState = {
   transactions: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 5,
+    totalItems: 0,
+    totalPages: 0,
+  },
   loading: false,
   error: null,
 };

@@ -15,7 +15,7 @@ import {
   updateTransactionError,
   updateTransactionSuccess,
 } from './transaction.actions';
-import { mergeMap, catchError, map, tap } from 'rxjs/operators';
+import { mergeMap, catchError, map, tap, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class TransactionEffects {
@@ -31,13 +31,32 @@ export class TransactionEffects {
   loadTransactions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadTransactions),
-      mergeMap(({ payload }) =>
-        this.transactionService.getTransactions(payload.userId).pipe(
-          map((transactions) =>
-            loadTransactionsSuccess({ payload: transactions })
-          ),
-          catchError(async (error) => loadTransactionsError({ payload: error }))
-        )
+      //switch map cancels the previous inner observable when new one arrives.
+      switchMap((action) =>
+        this.transactionService
+          .getTransactions(
+            action.payload.userId,
+            action.payload.page,
+            action.payload.pageSize
+          )
+          .pipe(
+            map((response) =>
+              loadTransactionsSuccess({
+                payload: {
+                  transactions: response.transactions,
+                  pagination: {
+                    currentPage: response.pagination.currentPage,
+                    pageSize: response.pagination.pageSize,
+                    totalItems: response.pagination.totalItems,
+                    totalPages: response.pagination.totalPages,
+                  },
+                },
+              })
+            ),
+            catchError(async (error) =>
+              loadTransactionsError({ payload: error })
+            )
+          )
       )
     )
   );
