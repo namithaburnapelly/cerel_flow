@@ -8,21 +8,61 @@ const { authenticateToken } = require("../jwt.auth");
 router.get("/:userId", authenticateToken, async (req, res) => {
   try {
     const db = getDb();
+    const userId = req.params.userId;
 
-    const user = await db.collection("transactions").findOne(
-      { userId: req.params.userId },
+    //pagination parameters
+    const page = parseInt(req.query.page) || 1;
+    const pageSize = parseInt(req.query.pageSize) || 5; ///for now defaulting to 5
+    const skip = (page - 1) * pageSize;
+
+    //aggregation pipeline with arrray of operations for pagination
+    const pipeline = [
+      { $match: { userId: userId } },
       //projection displays these values in the result output where; 0 - dont view, 1 - view
-      { projection: { _id: 0, userId: 1, transactions: 1 } }
-    );
+      { $project: { transactions: 1 } },
+      //deconstructs an array field
+      //it will create separate document for each transaction
+      { $unwind: "$transactions" },
+      //replaces the entire document
+      //to make each transaction the root of the document , so we can work easily while doing operations like skip and limit.
+      { $replaceRoot: { newRoot: "$transactions" } },
+      //sorts transactions by date in decreasing order
+      { $sort: { date: -1 } },
+      { $skip: skip }, //skip the previous records
+      { $limit: pageSize }, //limits the no of records being returned
+    ];
 
+    //execute aggregation
+    const paginatedTransactions = await db
+      .collection("transactions")
+      .aggregate(pipeline)
+      .toArray();
+
+    //result returns a object with _id and totalTransactions: number of transactions
+    const result = await db
+      .collection("transactions")
+      .aggregate([
+        { $match: { userId: userId } },
+        { $project: { totalTransactions: { $size: "$transactions" } } },
+        { $limit: 1 },
+      ])
+      .next(); //to get the first (and only) document
+
+    const totalTransactions = result ? result.totalTransactions : 0;
     //check if user has transactions
-    if (!user || user.transactions.length === 0) {
+    if (totalTransactions === 0) {
       return res.status(404).json({ message: "No transactions registered." });
     }
 
     //returns transactions of user
     return res.status(200).json({
-      transactions: user.transactions,
+      transactions: paginatedTransactions,
+      pagination: {
+        currentPage: page,
+        pageSize,
+        totalItems: totalTransactions,
+        totalPages: Math.ceil(totalTransactions / pageSize),
+      },
     });
   } catch (error) {
     console.log(error);
@@ -92,6 +132,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
     );
 
     //updating the fields
+
     const result = await db.collection("transactions").updateOne(
       { userId: userId, "transactions.transactionId": transactionId }, //finds the correct userid and  transaction id
       { $set: updatedFileds }, //set applies the maped updated
