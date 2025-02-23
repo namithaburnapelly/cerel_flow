@@ -87,6 +87,7 @@ router.post("/:userId", authenticateToken, async (req, res) => {
       ...addIfExists("wallet", req.body.wallet), //spread operator used to add the key, value pair if exists
       ...addIfExists("description", req.body.description),
       ...addIfExists("screenshot", req.body.screenshot),
+      created_at: new Date(),
     };
 
     const db = getDb();
@@ -135,14 +136,33 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
 
     const result = await db.collection("transactions").updateOne(
       { userId: userId, "transactions.transactionId": transactionId }, //finds the correct userid and  transaction id
-      { $set: updatedFileds }, //set applies the maped updated
+      {
+        $set: {
+          "transactions.$[element].updated_at": new Date(), // Ensure updatedDate is always set
+          ...updatedFileds,
+        },
+      }, //set applies the maped updated
       { arrayFilters: [{ "element.transactionId": transactionId }] } //filter the correct transaction in array
     );
 
+    // Fetch the updated transaction
+    const updatedDocument = await db.collection("transactions").findOne(
+      { userId: userId, "transactions.transactionId": transactionId }, // Find the updated document
+      {
+        projection: {
+          transactions: { $elemMatch: { transactionId: transactionId } },
+        },
+      } // Only return the matched transaction
+    );
+
+    // Extract the updated transaction
+    const updatedTransaction = updatedDocument?.transactions[0];
+
     if (result.modifiedCount > 0) {
-      return res
-        .status(200)
-        .json({ message: "Transaction updated successfully." });
+      return res.status(200).json({
+        message: "Transaction updated successfully.",
+        updatedTransaction,
+      });
     } else {
       return res.status(404).json({ message: "Transaction not found." });
     }
