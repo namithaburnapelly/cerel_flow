@@ -95,6 +95,7 @@ export class TransactionListComponent implements OnInit {
           },
         })
       );
+      //Reset the selected transaction
       this.selectedTransaction = null;
     }
     this.showForm = false;

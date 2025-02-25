@@ -91,3 +91,6 @@ export const deleteTransactionError = createAction(
   '[Transaction] Delete Transactions Error',
   props<{ payload: { error: ApiError } }>()
 );
+
+//when user logs out reset the store
+export const resetTransactionState = createAction('[Transaction] Reset State');

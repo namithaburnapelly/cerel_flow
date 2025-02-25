@@ -10,6 +10,7 @@ import {
   loadTransactions,
   loadTransactionsError,
   loadTransactionsSuccess,
+  resetTransactionState,
   updateTransaction,
   updateTransactionError,
   updateTransactionSuccess,
@@ -106,5 +107,8 @@ export const transactionReducer = createReducer(
       loading: false,
       error: { message: payload.error.message },
     })
-  )
+  ),
+
+  //logout
+  on(resetTransactionState, () => initialState) //reset to intitial state
 );

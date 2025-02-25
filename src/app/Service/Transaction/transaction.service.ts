@@ -5,16 +5,7 @@ import { map, Observable } from 'rxjs';
 import { Transaction } from '../../Model/transaction.model';
 import { Store } from '@ngrx/store';
 import { loadTransactions } from '../../@Ngrx/transaction.actions';
-
-interface APIResponse {
-  transactions: Transaction[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalItems: number;
-    totalPages: number;
-  };
-}
+import { TransactionState } from '../../@Ngrx/transaction.state';
 
 @Injectable({
   providedIn: 'root',
@@ -29,15 +20,18 @@ export class TransactionService {
     userId: string,
     page: number,
     pageSize: number
-  ): Observable<APIResponse> {
+  ): Observable<TransactionState> {
     const params: any = {
       userId,
       page,
       pageSize,
     };
-    return this.http.get<APIResponse>(`${this._transactionsUrl}/${userId}`, {
-      params,
-    });
+    return this.http.get<TransactionState>(
+      `${this._transactionsUrl}/${userId}`,
+      {
+        params,
+      }
+    );
   }
 
   loadTransactions(userId: string, page: number, pageSize: number) {
