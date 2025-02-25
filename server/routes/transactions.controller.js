@@ -27,7 +27,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
       //to make each transaction the root of the document , so we can work easily while doing operations like skip and limit.
       { $replaceRoot: { newRoot: "$transactions" } },
       //sorts transactions by date in decreasing order
-      { $sort: { date: -1 } },
+      { $sort: { date: -1, created_at: -1 } },
       { $skip: skip }, //skip the previous records
       { $limit: pageSize }, //limits the no of records being returned
     ];
@@ -73,7 +73,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
 
 //Function to add if it exists as it is optional
 const addIfExists = (key, value) =>
-  value !== undefined ? { [key]: value } : {};
+  value !== undefined && value !== "" ? { [key]: value } : {};
 
 //to register a new transaction
 router.post("/:userId", authenticateToken, async (req, res) => {
@@ -86,7 +86,7 @@ router.post("/:userId", authenticateToken, async (req, res) => {
       date: req.body.date,
       ...addIfExists("wallet", req.body.wallet), //spread operator used to add the key, value pair if exists
       ...addIfExists("description", req.body.description),
-      ...addIfExists("screenshot", req.body.screenshot),
+      ...addIfExists("screenshot", req.body.screenshot?.trim()),
       created_at: new Date(),
     };
 

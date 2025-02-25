@@ -19,8 +19,8 @@ export interface TransactionState {
 export const initialState: TransactionState = {
   transactions: [],
   pagination: {
-    currentPage: 1,
-    pageSize: 5,
+    currentPage: environment.currentPage,
+    pageSize: environment.pageSize,
     totalItems: 0,
     totalPages: 0,
   },

@@ -4,11 +4,13 @@ import {
   inject,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction } from '../../Model/transaction.model';
+import { formatDate } from '../../Global variables/Today_date';
 
 @Component({
   selector: 'app-transaction-form',
@@ -16,7 +18,7 @@ import { Transaction } from '../../Model/transaction.model';
   templateUrl: './transaction-form.component.html',
   styleUrl: './transaction-form.component.css',
 })
-export class TransactionFormComponent implements OnChanges {
+export class TransactionFormComponent implements OnChanges, OnInit {
   //holds the transaction if editing
   @Input() transactionToEdit: Transaction | null = null;
   //Emits the form data to another component
@@ -35,6 +37,7 @@ export class TransactionFormComponent implements OnChanges {
       type: ['', Validators.required],
       category: ['', Validators.required],
       amount: [, [Validators.required, Validators.min(1)]],
+      date: [''],
       description: [''],
       wallet: [''],
       screenshot: [null],
@@ -42,6 +45,11 @@ export class TransactionFormComponent implements OnChanges {
 
     ////////////////////////
     this.isEditmode = !!this.transactionToEdit;
+  }
+
+  ngOnInit(): void {
+    //to set by default todays date in the input field
+    this.transactionForm.get('date')?.patchValue(formatDate(new Date()));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,8 +80,10 @@ export class TransactionFormComponent implements OnChanges {
           ...data,
           transactionId: this.transactionToEdit?.transactionId,
         });
+        console.log('Transaction updated.');
       } else {
         this.formSubmitted.emit(data); //creates a new transaction
+        console.log('Transaction added.');
       }
 
       this.isEditmode = false;

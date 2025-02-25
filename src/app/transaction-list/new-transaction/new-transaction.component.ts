@@ -3,6 +3,9 @@ import { Transaction } from '../../Model/transaction.model';
 import { Store } from '@ngrx/store';
 import { addTransaction } from '../../@Ngrx/transaction.actions';
 import { AuthService } from '../../Service/Auth/auth.service';
+import { Router } from '@angular/router';
+import { TransactionService } from '../../Service/Transaction/transaction.service';
+import { environment } from '../../../environment/environment';
 
 @Component({
   selector: 'app-new-transaction',
@@ -17,6 +20,9 @@ export class NewTransactionComponent implements OnInit {
 
   private store = inject(Store);
   private authService = inject(AuthService);
+  private transactionService = inject(TransactionService);
+  private router = inject(Router);
+
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
   }
@@ -41,7 +47,21 @@ export class NewTransactionComponent implements OnInit {
     );
 
     this.showForm = false;
+
+    //navigate to transaction page 1 upon adding the transaction
+    this.router.navigate(['/private/transaction/list'], {
+      queryParams: { page: 1 },
+      queryParamsHandling: 'merge',
+    });
+
+    //load the transactions
+    this.transactionService.loadTransactions(
+      this.userId,
+      1,
+      environment.pageSize
+    );
   }
+
   handleFormCancel() {
     this.showForm = false;
   }

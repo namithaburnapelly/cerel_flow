@@ -10,12 +10,13 @@ import {
 } from '../@Ngrx/transaction.selectors';
 import {
   deleteTransaction,
-  loadTransactions,
   updateTransaction,
 } from '../@Ngrx/transaction.actions';
 import { TransactionState } from '../@Ngrx/transaction.state';
 import { AuthService } from '../Service/Auth/auth.service';
 import { TransactionService } from '../Service/Transaction/transaction.service';
+import { environment } from '../../environment/environment';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction-list',
@@ -37,8 +38,8 @@ export class TransactionListComponent implements OnInit {
 
   //pagination parameters
   userId!: string;
-  currentPage = 1;
-  pageSize = 5;
+  currentPage!: number;
+  pageSize = environment.pageSize;
 
   showForm: boolean = false;
   selectedTransaction: Transaction | null = null; //holds the transaction to edit
@@ -47,6 +48,9 @@ export class TransactionListComponent implements OnInit {
   private store = inject(Store<TransactionState>);
   private authService = inject(AuthService);
   private transactionService = inject(TransactionService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   constructor() {
     this.transactions$ = this.store.select(selectTransactions);
     this.pagination$ = this.store.select(selectPagination);
@@ -56,21 +60,26 @@ export class TransactionListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
-    //fetch transactions when the component initializes
-    this.transactionService.loadTransactions(
-      this.userId,
-      this.currentPage,
-      this.pageSize
-    );
+
+    //get the route and set params page to 1 by default or if exists to it
+    this.route.queryParams.subscribe((params) => {
+      this.currentPage = +params['page'] || 1;
+      //fetch transactions when the component initializes
+      this.transactionService.loadTransactions(
+        this.userId,
+        this.currentPage,
+        this.pageSize
+      );
+    });
   }
 
   onPageChange(page: number): void {
-    this.currentPage = page;
-    this.transactionService.loadTransactions(
-      this.userId,
-      this.currentPage,
-      this.pageSize
-    );
+    //navigate to the page
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: page },
+      queryParamsHandling: 'merge',
+    });
   }
 
   //checks if the form is being submitted for update or add then performs action
@@ -118,10 +127,26 @@ export class TransactionListComponent implements OnInit {
         })
       );
 
-      //for redirect to previous page if transactions are ot available
+      console.log('deleted transaction');
+      // Reload the current page to fetch updated transactions
+      this.transactionService.loadTransactions(
+        this.userId,
+        this.currentPage,
+        this.pageSize
+      );
+
+      //for redirect to previous page if transactions are not available
       this.store.select(selectTransactions).subscribe((transactions) => {
         if (transactions.length === 0 && this.currentPage > 1) {
           this.currentPage--;
+          console.log(this.currentPage);
+
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page: this.currentPage },
+            queryParamsHandling: 'merge',
+          });
+
           this.transactionService.loadTransactions(
             this.userId,
             this.currentPage,
