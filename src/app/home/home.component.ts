@@ -6,9 +6,11 @@ import {
   selectNetBalance,
   selectTotalExpenses,
   selectTotalIncome,
+  selectTransactions,
 } from '../@Ngrx/transaction.selectors';
 import { loadTransactions } from '../@Ngrx/transaction.actions';
 import { TransactionService } from '../Service/Transaction/transaction.service';
+import { Transaction } from '../Model/transaction.model';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +24,7 @@ export class HomeComponent implements OnInit {
   totalIncome$: Observable<number>;
   totalExpenses$: Observable<number>;
   netBalance$: Observable<number>;
+  transactions$: Observable<Transaction[]>;
 
   userId!: string;
   today: Date = new Date();
@@ -33,6 +36,7 @@ export class HomeComponent implements OnInit {
   private transactionService = inject(TransactionService);
 
   constructor() {
+    this.transactions$ = this.store.select(selectTransactions);
     this.totalIncome$ = this.store.select(selectTotalIncome);
     this.totalExpenses$ = this.store.select(selectTotalExpenses);
     this.netBalance$ = this.store.select(selectNetBalance);
