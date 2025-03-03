@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
   try {
     const db = getDb();
     const data = {
-      _id: "id" + new Date().getMilliseconds(),
+      _id: "id" + Date.now(),
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,

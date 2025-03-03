@@ -27,4 +27,7 @@ const connectDB = async () => {
 
 const getDb = () => db;
 
-module.exports = { connectDB, getDb };
+const addIfExists = (key, value) =>
+  value !== undefined && value !== "" ? { [key]: value } : {};
+
+module.exports = { connectDB, getDb, addIfExists };

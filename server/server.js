@@ -9,6 +9,7 @@ const { connectDB } = require("./db");
 
 const authRoutes = require("./routes/auth");
 const transactionRoutes = require("./routes/transactions.controller");
+const transferRoutes = require("./routes/transfer.controller");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 //routes
 app.use("/auth", authRoutes);
 app.use("/transaction", transactionRoutes);
+app.use("/transfers", transferRoutes);
 
 //connection to database
 connectDB();
