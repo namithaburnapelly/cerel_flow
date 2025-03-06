@@ -15,7 +15,7 @@ import {
   updateTransactionError,
   updateTransactionSuccess,
 } from './transaction.actions';
-import { mergeMap, catchError, map, tap, switchMap } from 'rxjs/operators';
+import { mergeMap, catchError, map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class TransactionEffects {

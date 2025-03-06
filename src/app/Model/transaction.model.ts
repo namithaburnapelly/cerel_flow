@@ -1,18 +1,12 @@
-interface BasicDetails {
+export interface Transaction {
   _id?: string;
+  transactionId?: string;
   userId: string;
+  type: 'Income' | 'Expense';
+  category: string;
+  amount: number;
   date: Date;
   wallet?: string;
   description?: string;
-  amount: number;
   screenshot?: File;
-}
-export interface Transaction extends BasicDetails {
-  transactionId?: string;
-  type: 'Income' | 'Expense';
-  category: string;
-}
-
-export interface Transfer extends BasicDetails {
-  toWhom: string;
 }

@@ -30,6 +30,7 @@ export const initialState: TransactionState = {
 
 export interface ApiError {
   message: string;
+  errorCode?: string; //for debugging
 }
 
 const TRANSACTION_FEATURE_KEY = environment.TRANSACTION_FEATURE_KEY;

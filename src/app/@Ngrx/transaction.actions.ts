@@ -5,7 +5,6 @@ import { ApiError } from './transaction.state';
 //Actions: Main building blocks in NgRx. Actions express unique events that happen throughout your application.
 //Actions are input and output of many systems in NgRx. They help to understand how events are handled in the application.
 
-//Define actions using createHttpActions
 //To load all the transactions
 export const loadTransactions = createAction(
   '[Transaction] Load Transactions',

@@ -35,6 +35,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { NewTransactionComponent } from './transaction-list/new-transaction/new-transaction.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { transferReducer } from './@Ngrx/Transfers/transfer.reducers';
+import { TransferService } from './Service/Transfer/transfer.service';
+import { TransferEffects } from './@Ngrx/Transfers/transfer.effects';
+import { TransferformComponent } from './transferform/transferform.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +53,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NavbarComponent,
     PagenotfoundComponent,
     NewTransactionComponent,
+    TransferformComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,8 +63,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppRoutingModule,
     FormsModule,
     JwtModule.forRoot(JWT_Module_Options),
-    StoreModule.forRoot({ transactions: transactionReducer }),
-    EffectsModule.forRoot([TransactionEffects]), //to register effects
+    StoreModule.forRoot({
+      transactions: transactionReducer,
+      transfers: transferReducer,
+    }),
+    EffectsModule.forRoot([TransactionEffects, TransferEffects]), //to register effects
   ],
   providers: [
     //provide custom error handler class to app module.
@@ -68,6 +76,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LoginResolve,
     AuthGaurd,
     TransactionService,
+    TransferService,
     provideHttpClient(withInterceptors([authInterceptor])),
     // { provide: HTTP_INTERCEPTORS, useValue: authInterceptor, multi: true },
     //ensures the authentication is setup before any other services or components are initialized

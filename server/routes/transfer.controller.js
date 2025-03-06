@@ -110,6 +110,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
       },
       totalIncome,
       totalExpenses,
+      sortOrder,
     });
   } catch (error) {
     console.error(error);
@@ -139,7 +140,9 @@ router.post("/:userId", authenticateToken, async (req, res) => {
     );
 
     if (result.modifiedCount > 0 || result.upsertedCount > 0) {
-      return res.status(200).json({ message: "successfully added", transfer });
+      return res
+        .status(200)
+        .json({ message: "successfully added", newTransfer: transfer });
     } else {
       return res.status(400).json({ message: "Failed to add transaction." });
     }
@@ -199,7 +202,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
     if (result.modifiedCount > 0) {
       return res.status(200).json({
         message: "Transaction updated successfully.",
-        updatedTransaction,
+        updatedTransaction: updatedTransaction,
       });
     } else {
       return res.status(404).json({ message: "Transaction not found." });
