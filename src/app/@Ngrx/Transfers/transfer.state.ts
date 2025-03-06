@@ -3,18 +3,20 @@ import { environmentVariables } from '../../../environment/environment';
 import { Transfer } from '../../Model/transfer.model';
 import { ApiError } from '../transaction.state';
 
+export interface PaginationMetaData {
+  currentPage: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+}
+
 //state interface for transfers
 export interface TransferStore {
   transfers: Transfer[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalItems: number;
-    totalPages: number;
-  };
+  pagination: PaginationMetaData;
   totalIncome: number;
   totalExpenses: number;
-  sortOrder: number;
+  sortOrder: string;
   //extra
   loading: boolean;
   error: ApiError | null;
@@ -24,14 +26,14 @@ export interface TransferStore {
 export const transferInitialState: TransferStore = {
   transfers: [],
   pagination: {
-    currentPage: environmentVariables.transferCurrentPage ?? 1,
+    currentPage: 1,
     pageSize: environmentVariables.transferPageSize ?? 5,
     totalItems: 0,
     totalPages: 0,
   },
   totalIncome: 0,
   totalExpenses: 0,
-  sortOrder: -1,
+  sortOrder: 'date_desc',
   loading: false,
   error: null,
 };

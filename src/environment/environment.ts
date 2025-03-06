@@ -9,7 +9,6 @@ export const environment = {
 };
 
 export const environmentVariables = {
-  transferCurrentPage: 1,
   transferPageSize: 5,
   transferUrl: 'http://localhost:3000/transfers',
   TRANSFER_FEATURE_KEY: 'transfers',

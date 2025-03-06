@@ -39,6 +39,10 @@ import { transferReducer } from './@Ngrx/Transfers/transfer.reducers';
 import { TransferService } from './Service/Transfer/transfer.service';
 import { TransferEffects } from './@Ngrx/Transfers/transfer.effects';
 import { TransferformComponent } from './transferform/transferform.component';
+import { RecentPaymentComponent } from './recent-payment/recent-payment.component';
+import { NewTransferComponent } from './recent-payment/new-transfer/new-transfer.component';
+import { TransactionsComponent } from './transactions/transactions.component';
+import { TransferListComponent } from './transfer-list/transfer-list.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +58,10 @@ import { TransferformComponent } from './transferform/transferform.component';
     PagenotfoundComponent,
     NewTransactionComponent,
     TransferformComponent,
+    RecentPaymentComponent,
+    NewTransferComponent,
+    TransactionsComponent,
+    TransferListComponent,
   ],
   imports: [
     BrowserModule,

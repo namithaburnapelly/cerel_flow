@@ -105,7 +105,7 @@ export class TransferEffects {
         this.transferService
           .updateTransfer(
             payload.userId,
-            payload.transactionId,
+            payload.transaction_id,
             payload.changes
           )
           .pipe(
@@ -114,7 +114,7 @@ export class TransferEffects {
               updateTransferSuccess({
                 payload: {
                   userId: payload.userId,
-                  transactionId: payload.transactionId,
+                  transaction_id: payload.transaction_id,
                   updatedTransaction: payload.changes,
                 },
               })
@@ -139,14 +139,14 @@ export class TransferEffects {
       tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transferService
-          .deleteTransfer(payload.userId, payload.transactionId)
+          .deleteTransfer(payload.userId, payload.transaction_id)
           .pipe(
             tap(() => console.log('✅ Transfer Deleted Successfully')),
             map(() =>
               deleteTransferSuccess({
                 payload: {
                   userId: payload.userId,
-                  transactionId: payload.transactionId,
+                  transaction_id: payload.transaction_id,
                 },
               })
             ),

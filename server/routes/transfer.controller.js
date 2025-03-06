@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { getDb, addIfExists } = require("../db");
+const { getDb } = require("../db");
 const { authenticateToken } = require("../jwt.auth");
+const { addIfExists, getSortObject } = require("../helper");
 
 const TransferCollection = "transfers";
 
@@ -15,21 +16,21 @@ router.get("/:userId", authenticateToken, async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 5;
     const skip = (page - 1) * pageSize;
-    const sortOrder = parseInt(req.query.sortOrder) || -1; //default descending
+    const sortOrder = req.query.sortOrder;
 
     //aggregation pipeline with array of operations for pagination
     const pipeline = [
       { $match: { user_id: userId } },
-
       //projection displays these values in the result output
       { $project: { transfers: 1 } },
       //deconstructs an array field
       //it will create separate document for each transfer
       { $unwind: "$transfers" },
+      { $set: { "transfers.date": { $toDate: "$transfers.date" } } },
       //replaces the entire document
       //to make each transaction the root of the document, so we can work easily doing operations like skip and limit.
       { $replaceRoot: { newRoot: "$transfers" } },
-      { $sort: { created_at: sortOrder } },
+      { $sort: getSortObject(sortOrder) },
       { $skip: skip },
       { $limit: pageSize },
     ];

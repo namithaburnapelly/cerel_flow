@@ -1,0 +1,11 @@
+<div style="margin: 20px">
+  <button (click)="formSelected('Transaction')">Transaction</button>
+  <button (click)="formSelected('Transfer')">Transfer</button>
+
+  <div *ngIf="transferFormVisibility">
+    <div>
+      <app-transferform></app-transferform>
+    </div>
+  </div>
+  <div *ngIf="transactionFormVisibility">transaction form</div>
+</div>

@@ -4,6 +4,8 @@ import { HomeComponent } from '../home/home.component';
 import { ChartsComponent } from '../charts/charts.component';
 import { TransactionListComponent } from '../transaction-list/transaction-list.component';
 import { PagenotfoundComponent } from '../pagenotfound/pagenotfound.component';
+import { RecentPaymentComponent } from '../recent-payment/recent-payment.component';
+import { TransactionsComponent } from '../transactions/transactions.component';
 
 const routes: Routes = [
   {
@@ -11,6 +13,8 @@ const routes: Routes = [
     component: HomeComponent,
   },
   { path: 'charts', component: ChartsComponent },
+  { path: 'addTransaction', component: RecentPaymentComponent },
+  { path: 'transactions', component: TransactionsComponent },
   {
     path: 'transaction/list',
     component: TransactionListComponent,

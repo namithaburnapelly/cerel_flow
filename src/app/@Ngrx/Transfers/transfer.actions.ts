@@ -10,7 +10,7 @@ export const loadTransfers = createAction(
       userId: string;
       page: number;
       pageSize?: number; //can set default in effect
-      sortOrder: number;
+      sortOrder: string;
     };
   }>()
 );
@@ -28,7 +28,7 @@ export const loadTransfersSuccess = createAction(
       };
       totalIncome: number;
       totalExpenses: number;
-      sortOrder: number;
+      sortOrder: string;
     };
   }>()
 );
@@ -60,7 +60,7 @@ export const updateTransfer = createAction(
   props<{
     payload: {
       userId: string;
-      transactionId: string;
+      transaction_id: string;
       changes: Transfer;
     };
   }>()
@@ -71,7 +71,7 @@ export const updateTransferSuccess = createAction(
   props<{
     payload: {
       userId: string;
-      transactionId: string;
+      transaction_id: string;
       updatedTransaction: Transfer;
     };
   }>()
@@ -85,12 +85,12 @@ export const updateTransferError = createAction(
 //delete transfer
 export const deleteTransfer = createAction(
   '[Transfer] Delete Transfer',
-  props<{ payload: { userId: string; transactionId: string } }>()
+  props<{ payload: { userId: string; transaction_id: string } }>()
 );
 //on success
 export const deleteTransferSuccess = createAction(
   '[Transfer] Delete Transfer Success',
-  props<{ payload: { userId: string; transactionId: string } }>()
+  props<{ payload: { userId: string; transaction_id: string } }>()
 );
 //on Error
 export const deleteTransferError = createAction(

@@ -37,12 +37,6 @@ export const selectExpensesofTransfers = createSelector(
   (state) => state.totalExpenses
 );
 
-//select sort order
-export const selectSortOrderofTransfers = createSelector(
-  selectTransferStore,
-  (state) => state.sortOrder
-);
-
 //total new balance
 export const selectNetBalanceofTransfers = createSelector(
   selectIncomeofTransfers,

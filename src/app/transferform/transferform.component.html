@@ -1,1 +1,74 @@
-<p>transferform works!</p>
+<div>
+  <h2>Transfers Form</h2>
+
+  <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
+    <table cellspacing="0" cellpadding="10">
+      <tr>
+        <th>Field</th>
+        <th>Input</th>
+      </tr>
+
+      <tr>
+        <td><label>Recipient:</label></td>
+        <td>
+          <input
+            formControlName="recipient"
+            type="text"
+            style="text-transform: capitalize"
+          />
+          <div
+            *ngIf="
+              transferForm.get('recipient')?.invalid &&
+              transferForm.get('recipient')?.touched
+            "
+          >
+            ❌ Required (min 3 characters).
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label>Amount:</label></td>
+        <td>
+          <input formControlName="amount" type="number" />
+          <div
+            *ngIf="
+              transferForm.get('amount')?.invalid &&
+              transferForm.get('amount')?.touched
+            "
+          >
+            ❌ Amount must be at least 1.
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label>Type:</label></td>
+        <td>
+          <select formControlName="type">
+            <option value="to">To</option>
+            <option value="from">From</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label>Date:</label></td>
+        <td><input formControlName="date" type="date" /></td>
+      </tr>
+
+      <tr>
+        <td><label>Description:</label></td>
+        <td><textarea formControlName="description"></textarea></td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="center">
+          <button type="submit" [disabled]="transferForm.invalid">
+            Submit
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

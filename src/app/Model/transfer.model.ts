@@ -1,6 +1,6 @@
 export interface Transfer {
   _id: string;
-  transactionId: string;
+  transaction_id: string;
   userId: string;
   recipient: string;
   amount: number;

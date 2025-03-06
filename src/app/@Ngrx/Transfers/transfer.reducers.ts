@@ -92,7 +92,7 @@ export const transferReducer = createReducer(
     console.log('reducer ✅ updateTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: state.transfers.map((transaction) =>
-        transaction.transactionId === payload.transactionId
+        transaction.transaction_id === payload.transaction_id
           ? { ...transaction, ...payload.updatedTransaction }
           : transaction
       ),
@@ -120,7 +120,7 @@ export const transferReducer = createReducer(
     console.log('reducer ✅ deleteTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: state.transfers.filter(
-        (transactions) => transactions.transactionId !== payload.transactionId
+        (transactions) => transactions.transaction_id !== payload.transaction_id
       ),
       loading: false,
       error: null,
