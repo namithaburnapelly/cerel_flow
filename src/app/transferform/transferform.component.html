@@ -11,11 +11,7 @@
       <tr>
         <td><label>Recipient:</label></td>
         <td>
-          <input
-            formControlName="recipient"
-            type="text"
-            style="text-transform: capitalize"
-          />
+          <input formControlName="recipient" type="text" />
           <div
             *ngIf="
               transferForm.get('recipient')?.invalid &&

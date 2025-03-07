@@ -3,7 +3,9 @@ const router = express.Router();
 
 const { getDb } = require("../db");
 const { authenticateToken } = require("../jwt.auth");
+const { addIfExists, getSortObject, titleCase } = require("../helper");
 
+const TransactionCollection = "transactions";
 //to get all transactions of a given user
 router.get("/:userId", authenticateToken, async (req, res) => {
   try {
@@ -14,6 +16,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 5; ///for now defaulting to 5
     const skip = (page - 1) * pageSize;
+    const sortOrder = req.query.sortOrder;
 
     //aggregation pipeline with arrray of operations for pagination
     const pipeline = [
@@ -23,21 +26,51 @@ router.get("/:userId", authenticateToken, async (req, res) => {
       //deconstructs an array field
       //it will create separate document for each transaction
       { $unwind: "$transactions" },
+      { $set: { "transfers.date": { $toDate: "$transfers.date" } } },
       //replaces the entire document
       //to make each transaction the root of the document , so we can work easily while doing operations like skip and limit.
       { $replaceRoot: { newRoot: "$transactions" } },
       //sorts transactions by date in decreasing order
-      { $sort: { date: -1, created_at: -1 } },
+      { $sort: getSortObject(sortOrder) },
       { $skip: skip }, //skip the previous records
       { $limit: pageSize }, //limits the no of records being returned
     ];
 
     //execute aggregation
     const paginatedTransactions = await db
-      .collection("transactions")
+      .collection(TransactionCollection)
       .aggregate(pipeline)
       .toArray();
 
+    //to get total income and expense
+    const incomeExpensePipeline = [
+      { $match: { user_id: userId } },
+      { $unwind: "$transactions" },
+      {
+        $group: {
+          _id: null,
+          totalIncome: {
+            $sum: {
+              $cond: [
+                //condition
+                { $eq: ["$transactions.type", "Income"] }, //equals
+                "$transactions.amount",
+                0,
+              ],
+            },
+          },
+          totalExpenses: {
+            $sum: {
+              $cond: [
+                { $eq: ["$transactions.type", "Expense"] },
+                "$transactions.amount",
+                0,
+              ],
+            },
+          },
+        },
+      },
+    ];
     //result returns a object with _id and totalTransactions: number of transactions
     const result = await db
       .collection("transactions")

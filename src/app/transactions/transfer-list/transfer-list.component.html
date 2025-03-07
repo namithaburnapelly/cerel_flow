@@ -43,8 +43,22 @@
             <td>{{ transaction.date | date : "mediumDate" }}</td>
             <td>{{ transaction.description || "N/A" }}</td>
             <td>
+              <!-- <button
+                (click)="openUpdateModal(transaction)"
+                style="color: blue"
+              >
+                Edit
+              </button> -->
               <button
-                (click)="deleteTransferTransaction(transaction.transaction_id)"
+                (click)="openUpdateModal(transaction)"
+                mat-button
+                color="primary"
+              >
+                Edit
+              </button>
+              <button
+                (click)="confirmDelete(transaction)"
+                mat-button
                 style="color: red"
               >
                 Delete

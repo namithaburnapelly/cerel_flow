@@ -42,7 +42,10 @@ import { TransferformComponent } from './transferform/transferform.component';
 import { RecentPaymentComponent } from './recent-payment/recent-payment.component';
 import { NewTransferComponent } from './recent-payment/new-transfer/new-transfer.component';
 import { TransactionsComponent } from './transactions/transactions.component';
-import { TransferListComponent } from './transfer-list/transfer-list.component';
+import { TransferListComponent } from './transactions/transfer-list/transfer-list.component';
+import { UpdateTransferComponent } from './@Angular_material/update-transfer/update-transfer.component';
+import { ConfirmDeleteDialogComponent } from './@Angular_material/confirm-delete-dialog/confirm-delete-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -62,6 +65,8 @@ import { TransferListComponent } from './transfer-list/transfer-list.component';
     NewTransferComponent,
     TransactionsComponent,
     TransferListComponent,
+    UpdateTransferComponent,
+    ConfirmDeleteDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +75,7 @@ import { TransferListComponent } from './transfer-list/transfer-list.component';
     RouterModule,
     AppRoutingModule,
     FormsModule,
+    MatDialogModule,
     JwtModule.forRoot(JWT_Module_Options),
     StoreModule.forRoot({
       transactions: transactionReducer,

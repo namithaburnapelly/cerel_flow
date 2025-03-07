@@ -1,24 +1,27 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transfer } from '../Model/transfer.model';
+import { Transfer } from '../../Model/transfer.model';
 import {
   PaginationMetaData,
   TransferStore,
-} from '../@Ngrx/Transfers/transfer.state';
-import { environmentVariables } from '../../environment/environment';
+} from '../../@Ngrx/Transfers/transfer.state';
+import { environmentVariables } from '../../../environment/environment';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../Service/Auth/auth.service';
+import { AuthService } from '../../Service/Auth/auth.service';
 import {
   selectErrorofTransfers,
   selectLoadingofTransfers,
   selectPaginationofTransfers,
   selectTransfers,
-} from '../@Ngrx/Transfers/transfer.selectors';
+} from '../../@Ngrx/Transfers/transfer.selectors';
 import {
   deleteTransfer,
   loadTransfers,
-} from '../@Ngrx/Transfers/transfer.actions';
+} from '../../@Ngrx/Transfers/transfer.actions';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent } from '../../@Angular_material/confirm-delete-dialog/confirm-delete-dialog.component';
+import { UpdateTransferComponent } from '../../@Angular_material/update-transfer/update-transfer.component';
 
 @Component({
   selector: 'app-transfer-list',
@@ -37,11 +40,14 @@ export class TransferListComponent implements OnInit {
   currentPage!: number;
   pageSize: number = environmentVariables.transferPageSize;
   selectedSortOrder: string = 'date_desc';
+  selectedTransaction: Transfer | null = null;
 
   private store = inject(Store<TransferStore>);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  //Angular material for dialog box to confirm delete
+  private dialog = inject(MatDialog);
 
   constructor() {
     this.transactions$ = this.store.select(selectTransfers);
@@ -87,27 +93,43 @@ export class TransferListComponent implements OnInit {
     });
   }
 
-  deleteTransferTransaction(transactionId: string) {
-    if (transactionId) {
-      this.store.dispatch(
-        deleteTransfer({
-          payload: {
-            userId: this.userId,
-            transaction_id: transactionId,
-          },
-        })
-      );
+  openUpdateModal(transaction: Transfer) {
+    this.dialog.open(UpdateTransferComponent, {
+      width: '500px',
+      data: transaction,
+    });
+  }
 
-      //wait for store to update then fetch new data
-      setTimeout(() => {
-        this.transactions$.subscribe((trnx) => {
-          if (trnx.length === 0) {
-            this.goToPreviousPage();
-          }
-        });
+  confirmDelete(transaction: Transfer) {
+    if (transaction) {
+      const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+        width: '400px',
+        data: { item_type: 'transfer', item_name: transaction.recipient },
+      });
 
-        this.loadTransfers();
-      }, 700);
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result && transaction.transaction_id) {
+          this.store.dispatch(
+            deleteTransfer({
+              payload: {
+                userId: this.userId,
+                transaction_id: transaction.transaction_id,
+              },
+            })
+          );
+
+          //wait for store to update then fetch new data
+          setTimeout(() => {
+            this.transactions$.subscribe((trnx) => {
+              if (trnx.length === 0) {
+                this.goToPreviousPage();
+              }
+            });
+
+            this.loadTransfers();
+          }, 600);
+        }
+      });
     }
   }
 
