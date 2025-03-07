@@ -8,44 +8,42 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AuthService } from './Service/Auth/auth.service';
+import { LoginComponent } from './Authentication/login/login.component';
+import { AuthService } from './Authentication/Service/auth.service';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import { TransactionListComponent } from './transaction-list/transaction-list.component';
-import { TransactionFormComponent } from './transaction-list/transaction-form/transaction-form.component';
-import { ChartsComponent } from './charts/charts.component';
-import { AuthComponent } from './auth/auth.component';
-import { RegisterComponent } from './register/register.component';
-import { authFactory } from './Global variables/user_auth';
-import { LoginResolve } from './Service/Auth/login-resolve.service';
-import { AuthGaurd } from './Service/Auth/auth-gaurd.service';
+import { HomeComponent } from './expense/Components/Layout/home/home.component';
+import { RegisterComponent } from './Authentication/register/register.component';
+import { authFactory } from './Authentication/utils/user_auth';
+import { LoginResolve } from './Authentication/Service/login-resolve.service';
+import { AuthGaurd } from './Authentication/Service/auth-gaurd.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { JWT_Module_Options } from './Global variables/jwt_auth';
+import { JWT_Module_Options } from './Authentication/utils/jwt_auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ErrorHandlerService } from './ErrorHandling/error-handler';
+import { ErrorHandlerService } from './expense/utils/error-handler';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { transactionReducer } from './@Ngrx/transaction.reducers';
-import { TransactionEffects } from './@Ngrx/transaction.effects';
 import { EffectsModule } from '@ngrx/effects';
-import { TransactionService } from './Service/Transaction/transaction.service';
-import { authInterceptor } from './Service/Auth/auth.interceptor';
-import { NavbarComponent } from './navbar/navbar.component';
+import { TransactionService } from './expense/Service/Transaction/transaction.service';
+import { authInterceptor } from './Authentication/Service/auth.interceptor';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
-import { NewTransactionComponent } from './transaction-list/new-transaction/new-transaction.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { transferReducer } from './@Ngrx/Transfers/transfer.reducers';
-import { TransferService } from './Service/Transfer/transfer.service';
-import { TransferEffects } from './@Ngrx/Transfers/transfer.effects';
-import { TransferformComponent } from './transferform/transferform.component';
-import { RecentPaymentComponent } from './recent-payment/recent-payment.component';
-import { NewTransferComponent } from './recent-payment/new-transfer/new-transfer.component';
-import { TransactionsComponent } from './transactions/transactions.component';
-import { TransferListComponent } from './transactions/transfer-list/transfer-list.component';
-import { UpdateTransferComponent } from './@Angular_material/update-transfer/update-transfer.component';
-import { ConfirmDeleteDialogComponent } from './@Angular_material/confirm-delete-dialog/confirm-delete-dialog.component';
+import { transferReducer } from './expense/@NgRx/Transfers/transfer.reducers';
+import { TransferService } from './expense/Service/Transfer/transfer.service';
+import { TransferEffects } from './expense/@NgRx/Transfers/transfer.effects';
+import { RecentPaymentComponent } from './expense/Components/Payments/recent-payment/recent-payment.component';
+import { NewTransferComponent } from './expense/Components/Payments/new-transfer/new-transfer.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UpdateTransferComponent } from './expense/Components/Payments/@Angular_material/update-transfer/update-transfer.component';
+import { TransferformComponent } from './expense/Components/Transactions/Forms/transferform/transferform.component';
+import { TransactionFormComponent } from './expense/Components/Transactions/Forms/transaction-form/transaction-form.component';
+import { TransactionListComponent } from './expense/Components/Transactions/Lists/transaction-list/transaction-list.component';
+import { TransferListComponent } from './expense/Components/Transactions/Lists/transfer-list/transfer-list.component';
+import { ConfirmDeleteDialogComponent } from './expense/Components/Payments/@Angular_material/confirm-delete-dialog/confirm-delete-dialog.component';
+import { UpdateTransactionComponent } from './expense/Components/Payments/@Angular_material/update-transaction/update-transaction.component';
+import { NavbarComponent } from './expense/Components/Layout/navbar/navbar.component';
+import { transactionReducer } from './expense/@NgRx/Transactions/transaction.reducers';
+import { TransactionEffects } from './expense/@NgRx/Transactions/transaction.effects';
+import { NewTransactionComponent } from './expense/Components/Payments/new-transaction/new-transaction.component';
 
 @NgModule({
   declarations: [
@@ -54,19 +52,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     HomeComponent,
     TransactionListComponent,
     TransactionFormComponent,
-    ChartsComponent,
-    AuthComponent,
     RegisterComponent,
     NavbarComponent,
     PagenotfoundComponent,
-    NewTransactionComponent,
     TransferformComponent,
     RecentPaymentComponent,
     NewTransferComponent,
-    TransactionsComponent,
     TransferListComponent,
     UpdateTransferComponent,
     ConfirmDeleteDialogComponent,
+    UpdateTransactionComponent,
+    NewTransactionComponent,
   ],
   imports: [
     BrowserModule,

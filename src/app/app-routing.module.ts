@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { LoginResolve } from './Service/Auth/login-resolve.service';
-import { AuthGaurd } from './Service/Auth/auth-gaurd.service';
+import { LoginComponent } from './Authentication/login/login.component';
+import { RegisterComponent } from './Authentication/register/register.component';
+import { LoginResolve } from './Authentication/Service/login-resolve.service';
+import { AuthGaurd } from './Authentication/Service/auth-gaurd.service';
 
 const routes: Routes = [
   //private path for home page

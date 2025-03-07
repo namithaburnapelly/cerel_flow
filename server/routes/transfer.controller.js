@@ -128,7 +128,7 @@ router.post("/:userId", authenticateToken, async (req, res) => {
       amount: req.body.amount,
       type: req.body.type,
       date: req.body.date,
-      ...addIfExists("description", titleCase(req.body.description)),
+      ...addIfExists("description", req.body.description),
       created_at: new Date(),
     };
 
@@ -171,10 +171,9 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
     const updatedFields = Object.fromEntries(
       Object.entries(updatedData).map(([key, value]) => [
         `transfers.$[element].${key}`,
-        value,
+        key === "recipient" ? titleCase(value) : value,
       ])
     );
-
     //updating the data
     const result = await db.collection(TransferCollection).updateOne(
       { user_id: userId, "transfers.transaction_id": transactionId },

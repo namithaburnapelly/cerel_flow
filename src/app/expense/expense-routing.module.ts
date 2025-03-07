@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from '../home/home.component';
-import { ChartsComponent } from '../charts/charts.component';
-import { TransactionListComponent } from '../transaction-list/transaction-list.component';
+import { HomeComponent } from './Components/Layout/home/home.component';
 import { PagenotfoundComponent } from '../pagenotfound/pagenotfound.component';
-import { RecentPaymentComponent } from '../recent-payment/recent-payment.component';
-import { TransactionsComponent } from '../transactions/transactions.component';
+import { RecentPaymentComponent } from './Components/Payments/recent-payment/recent-payment.component';
+import { TransactionListComponent } from './Components/Transactions/Lists/transaction-list/transaction-list.component';
+import { TransferListComponent } from './Components/Transactions/Lists/transfer-list/transfer-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
   },
-  { path: 'charts', component: ChartsComponent },
   { path: 'addTransaction', component: RecentPaymentComponent },
-  { path: 'transactions', component: TransactionsComponent },
+  { path: 'transactions', component: TransactionListComponent },
+  { path: 'transfers', component: TransferListComponent },
   {
     path: 'transaction/list',
     component: TransactionListComponent,

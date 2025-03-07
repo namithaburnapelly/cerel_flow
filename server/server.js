@@ -18,7 +18,7 @@ app.use(cors());
 
 //routes
 app.use("/auth", authRoutes);
-app.use("/transaction", transactionRoutes);
+app.use("/transactions", transactionRoutes);
 app.use("/transfers", transferRoutes);
 
 //connection to database

@@ -1,0 +1,77 @@
+<div>
+  <h2>Transaction Form</h2>
+
+  <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+    <table cellspacing="0" cellpadding="10">
+      <tr>
+        <th>Field</th>
+        <th>Input</th>
+      </tr>
+
+      <tr>
+        <td><label for="type">Type:</label></td>
+        <td>
+          <select id="type" formControlName="type">
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label for="category">Category:</label></td>
+        <td>
+          <input
+            type="text"
+            id="category"
+            formControlName="category"
+            required
+          />
+          <div
+            *ngIf="
+              transactionForm.get('category')?.touched &&
+              transactionForm.get('category')?.invalid
+            "
+          >
+            ❌ Enter a valid category
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label for="date">Date:</label></td>
+        <td><input type="date" id="date" formControlName="date" required /></td>
+      </tr>
+
+      <tr>
+        <td><label for="amount">Amount:</label></td>
+        <td>
+          <input id="amount" type="number" formControlName="amount" required />
+          <div
+            *ngIf="
+              transactionForm.get('amount')?.touched &&
+              transactionForm.get('amount')?.invalid
+            "
+          >
+            ❌ Amount must be greater than 0!
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <td><label for="description">Description:</label></td>
+        <td>
+          <textarea id="description" formControlName="description"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2" align="center">
+          <button type="submit" [disabled]="transactionForm.invalid">
+            Submit
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

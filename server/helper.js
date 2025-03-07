@@ -21,7 +21,11 @@ const getSortObject = (sortOrder) => {
 };
 
 function titleCase(string) {
-  return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  return string
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 module.exports = { addIfExists, getSortObject, titleCase };
