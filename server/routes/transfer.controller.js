@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getDb } = require("../db");
 const { authenticateToken } = require("../jwt.auth");
-const { addIfExists, getSortObject } = require("../helper");
+const { addIfExists, getSortObject, titleCase } = require("../helper");
 
 const TransferCollection = "transfers";
 
@@ -124,11 +124,11 @@ router.post("/:userId", authenticateToken, async (req, res) => {
   try {
     const transfer = {
       transaction_id: "trxn" + Date.now(),
-      recipient: req.body.recipient,
+      recipient: titleCase(req.body.recipient),
       amount: req.body.amount,
       type: req.body.type,
       date: req.body.date,
-      ...addIfExists("description", req.body.description),
+      ...addIfExists("description", titleCase(req.body.description)),
       created_at: new Date(),
     };
 
