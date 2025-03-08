@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ExpenseRoutingModule } from './expense-routing.module';
 import { HomeComponent } from './Components/Layout/home/home.component';
 import { NavbarComponent } from './Components/Layout/navbar/navbar.component';
@@ -16,7 +15,6 @@ import { ConfirmDeleteDialogComponent } from './Components/Payments/@Angular_mat
 import { UpdateTransactionComponent } from './Components/Payments/@Angular_material/update-transaction/update-transaction.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RouterModule } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
 import { StoreModule } from '@ngrx/store';
 import { transactionReducer } from './@NgRx/Transactions/transaction.reducers';
 import { transferReducer } from './@NgRx/Transfers/transfer.reducers';
@@ -24,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { TransactionEffects } from './@NgRx/Transactions/transaction.effects';
 import { TransferEffects } from './@NgRx/Transfers/transfer.effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     NgxPaginationModule, //pagination module from npm
     RouterModule,
-    MatDialogModule,
+    MaterialModule, //Ffor all angular material
     StoreModule.forFeature('transactions', transactionReducer),
     StoreModule.forFeature('transfers', transferReducer),
     EffectsModule.forFeature([TransactionEffects, TransferEffects]), //to register effects

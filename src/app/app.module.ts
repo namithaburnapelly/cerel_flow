@@ -26,6 +26,8 @@ import { authInterceptor } from './Authentication/Service/auth.interceptor';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { TransferService } from './expense/Service/Transfer/transfer.service';
 import { ExpenseModule } from './expense/expense.module';
+import { NotificationService } from './expense/Service/Notification/notification.service';
+import { MaterialModule } from './expense/material/material.module';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { ExpenseModule } from './expense/expense.module';
     EffectsModule.forRoot([]), // Make sure EffectsModule is initialized
     StoreModule.forRoot({}), //This initializes NgRx Store globally
     ExpenseModule,
+    MaterialModule,
   ],
   providers: [
     //provide custom error handler class to app module.
@@ -52,6 +55,7 @@ import { ExpenseModule } from './expense/expense.module';
     AuthGaurd,
     TransactionService,
     TransferService,
+    NotificationService,
     provideHttpClient(withInterceptors([authInterceptor])),
     // { provide: HTTP_INTERCEPTORS, useValue: authInterceptor, multi: true },
     //ensures the authentication is setup before any other services or components are initialized
