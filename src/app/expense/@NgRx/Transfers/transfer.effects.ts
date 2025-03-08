@@ -57,7 +57,7 @@ export class TransferEffects {
               console.error('❌ API Error:', error); // Logs error response
               return of(
                 loadTransfersError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })
@@ -88,7 +88,7 @@ export class TransferEffects {
               console.error('❌ API Error:', error); // Logs error response
               return of(
                 addTransferError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })
@@ -124,7 +124,7 @@ export class TransferEffects {
               console.error('❌ API Error:', error);
               return of(
                 updateTransferError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })
@@ -154,7 +154,7 @@ export class TransferEffects {
               console.error('❌ API Error:', error);
               return of(
                 deleteTransferError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })

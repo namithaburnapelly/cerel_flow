@@ -64,7 +64,7 @@ export class TransactionEffects {
               console.error('❌ API Error:', error); // Logs error response
               return of(
                 loadTransactionsError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })
@@ -95,7 +95,7 @@ export class TransactionEffects {
               console.error('❌ API Error:', error); // Logs error response
               return of(
                 addTransactionError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })
@@ -131,7 +131,7 @@ export class TransactionEffects {
               console.error('❌ API Error:', error);
               return of(
                 updateTransactionError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })
@@ -161,7 +161,7 @@ export class TransactionEffects {
               console.error('❌ API Error:', error);
               return of(
                 deleteTransactionError({
-                  payload: { error: { message: error.message } },
+                  payload: error,
                 })
               );
             })

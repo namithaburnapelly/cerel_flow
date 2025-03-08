@@ -97,7 +97,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
     const totalTransfers = result ? result.totalTransfers : 0;
     //if user has transfers
     if (totalTransfers === 0) {
-      return res.status(404).json({ message: "No transactions registered." });
+      return res.status(404).json({ message: "No Transfers Found" });
     }
 
     //returns paginated transactions

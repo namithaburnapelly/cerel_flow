@@ -86,3 +86,5 @@ export class TransferformComponent implements OnInit {
     // this.transferForm.reset();
   }
 }
+
+/////changes: after form submitted give a notification and reset the form
