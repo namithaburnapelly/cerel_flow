@@ -1,3 +1,10 @@
 <h2>Dashboard</h2>
 
 <h4>{{ today | date : "fullDate" }}</h4>
+
+<div>
+  <h2>Financial Summary</h2>
+  <p>Total Income: {{ totalIncome$ | async | currency : "INR" }}</p>
+  <p>Total Expenses: {{ totalExpenses$ | async | currency : "INR" }}</p>
+  <p>Net Balance: {{ netBalance$ | async | currency : "INR" }}</p>
+</div>
