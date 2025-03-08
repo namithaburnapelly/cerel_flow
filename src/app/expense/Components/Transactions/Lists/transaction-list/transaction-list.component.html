@@ -12,7 +12,7 @@
 
   <!-- Loading Placeholder -->
   <ng-template #loading>
-    <p>Loading transactions...</p>
+    <mat-spinner></mat-spinner>
   </ng-template>
 
   <!-- No Transactions Message -->
@@ -65,23 +65,41 @@
       <!-- when user clicks next or previous page change updates p
       and table automatically updates to show transactions for new page -->
 
-      <div *ngIf="pagination$ | async as pagination">
-        <button
-          (click)="onPageChange(pagination.currentPage - 1)"
-          [disabled]="pagination.currentPage == 1"
-        >
-          Previous
-        </button>
-        <span
-          >Page {{ pagination.currentPage }} of
-          {{ pagination.totalPages }}</span
-        >
-        <button
-          (click)="onPageChange(pagination.currentPage + 1)"
-          [disabled]="pagination.currentPage === pagination.totalPages"
-        >
-          Next
-        </button>
+      <div
+        *ngIf="pagination$ | async as pagination"
+        style="display: flex; justify-content: space-between; width: 600px"
+      >
+        <div>
+          Items per page:
+          <select
+            name="pageSize"
+            id="pageSize"
+            (change)="onPageSizeChange($event)"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <div>
+          <span
+            >Page {{ pagination.currentPage }} of
+            {{ pagination.totalPages }}</span
+          >
+          <button
+            (click)="onPageChange(pagination.currentPage - 1)"
+            [disabled]="pagination.currentPage == 1"
+          >
+            previous
+          </button>
+          <button
+            (click)="onPageChange(pagination.currentPage + 1)"
+            [disabled]="pagination.currentPage === pagination.totalPages"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   </div>

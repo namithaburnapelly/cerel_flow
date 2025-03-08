@@ -22,6 +22,7 @@ import {
 } from '../../../../@NgRx/Transfers/transfer.actions';
 import { UpdateTransferComponent } from '../../../Payments/@Angular_material/update-transfer/update-transfer.component';
 import { ConfirmDeleteDialogComponent } from '../../../Payments/@Angular_material/confirm-delete-dialog/confirm-delete-dialog.component';
+import { NotificationService } from '../../../../Service/Notification/notification.service';
 
 @Component({
   selector: 'app-transfer-list',
@@ -47,6 +48,7 @@ export class TransferListComponent implements OnInit {
   private router = inject(Router);
   //Angular material for dialog box to confirm delete
   private dialog = inject(MatDialog);
+  private notificationService = inject(NotificationService);
 
   constructor() {
     this.transactions$ = this.store.select(selectTransfers);
@@ -59,7 +61,10 @@ export class TransferListComponent implements OnInit {
     this.userId = this.authService.getUserId();
 
     this.route.queryParams.subscribe((params) => {
-      this.currentPage = +params['page'] || 1;
+      const { page, pageSize } = params;
+      this.currentPage = +page || 1;
+      this.pageSize = +pageSize || 5;
+
       if (this.userId) {
         this.loadTransfers();
       }
@@ -92,6 +97,18 @@ export class TransferListComponent implements OnInit {
     });
   }
 
+  onPageSizeChange(event: Event) {
+    //+ is a shorthand convertion of string to number
+    this.pageSize = +(event.target as HTMLSelectElement).value;
+    this.currentPage = 1;
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: this.currentPage, pageSize: this.pageSize },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   openUpdateModal(transaction: Transfer) {
     this.dialog.open(UpdateTransferComponent, {
       width: '500px',
@@ -115,6 +132,9 @@ export class TransferListComponent implements OnInit {
                 transaction_id: transaction.transaction_id,
               },
             })
+          );
+          this.notificationService.showNotification(
+            'Transaction deleted successfully!'
           );
 
           //wait for store to update then fetch new data

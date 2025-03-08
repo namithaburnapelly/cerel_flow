@@ -20,6 +20,7 @@ import { Transaction } from '../../../../Model/transaction.model';
 import { PaginationMetaData } from '../../../../@NgRx/Transfers/transfer.state';
 import { AuthService } from '../../../../../Authentication/Service/auth.service';
 import { TransactionState } from '../../../../@NgRx/Transactions/transaction.state';
+import { NotificationService } from '../../../../Service/Notification/notification.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -46,6 +47,7 @@ export class TransactionListComponent implements OnInit {
   private router = inject(Router);
   //Angular material for dialog box to confirm delete
   private dialog = inject(MatDialog);
+  private notificationService = inject(NotificationService);
 
   constructor() {
     this.transactions$ = this.store.select(selectTransactions);
@@ -59,7 +61,9 @@ export class TransactionListComponent implements OnInit {
 
     //get the route and set params page to 1 by default or if exists to it
     this.route.queryParams.subscribe((params) => {
-      this.currentPage = +params['page'] || 1;
+      const { page, pageSize } = params;
+      this.currentPage = +page || 1;
+      this.pageSize = +pageSize || 5;
       //fetch transactions when the component initializes
       if (this.userId) {
         this.loadTransactions();
@@ -94,6 +98,18 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
+  onPageSizeChange(event: Event) {
+    //+ is a shorthand convertion of string to number
+    this.pageSize = +(event.target as HTMLSelectElement).value;
+    this.currentPage = 1;
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: this.currentPage, pageSize: this.pageSize },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   openUpdateModal(transaction: Transaction) {
     this.dialog.open(UpdateTransactionComponent, {
       width: '500px',
@@ -117,6 +133,10 @@ export class TransactionListComponent implements OnInit {
                 transaction_id: transaction.transaction_id,
               },
             })
+          );
+
+          this.notificationService.showNotification(
+            'Transaction deleted successfully!'
           );
 
           //wait for the store to update then fetch new data

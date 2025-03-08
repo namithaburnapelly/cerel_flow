@@ -10,6 +10,7 @@ import {
   addTransaction,
   updateTransaction,
 } from '../../../../@NgRx/Transactions/transaction.actions';
+import { NotificationService } from '../../../../Service/Notification/notification.service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -27,12 +28,13 @@ export class TransactionFormComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private store = inject(Store);
+  private notificationService = inject(NotificationService);
 
   constructor(
     @Optional() private dialogRef?: MatDialogRef<TransactionFormComponent>
   ) {
     this.transactionForm = this.fb.group({
-      type: ['Income', Validators.required],
+      type: ['', Validators.required],
       category: ['', Validators.required],
       amount: [, [Validators.required, Validators.min(1)]],
       date: [''],
@@ -76,6 +78,9 @@ export class TransactionFormComponent implements OnInit {
         })
       );
       this.dialogRef?.close();
+      this.notificationService.showNotification(
+        'Transaction updated successfully!'
+      );
     } else {
       this.store.dispatch(
         addTransaction({
@@ -85,6 +90,10 @@ export class TransactionFormComponent implements OnInit {
           },
         })
       );
+      this.notificationService.showNotification(
+        'Transaction added successfully!'
+      );
+      this.transactionForm.reset();
     }
   }
 }

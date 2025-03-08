@@ -9,6 +9,7 @@ import {
   addTransfer,
   updateTransfer,
 } from '../../../../@NgRx/Transfers/transfer.actions';
+import { NotificationService } from '../../../../Service/Notification/notification.service';
 
 @Component({
   selector: 'app-transferform',
@@ -26,14 +27,15 @@ export class TransferformComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private store = inject(Store);
+  private notificationService = inject(NotificationService);
 
   constructor(
     @Optional() private dialogRef?: MatDialogRef<TransferformComponent>
   ) {
     this.transferForm = this.fb.group({
-      recipient: ['Namitha', Validators.required],
-      amount: [1200, [Validators.required, Validators.min(1)]],
-      type: ['from', Validators.required],
+      recipient: ['', Validators.required],
+      amount: [, [Validators.required, Validators.min(1)]],
+      type: ['', Validators.required],
       date: [''],
       description: [''],
     });
@@ -73,6 +75,9 @@ export class TransferformComponent implements OnInit {
         })
       );
       this.dialogRef?.close();
+      this.notificationService.showNotification(
+        'Transaction updated Sucessfully!'
+      );
     } else {
       this.store.dispatch(
         addTransfer({
@@ -82,8 +87,11 @@ export class TransferformComponent implements OnInit {
           },
         })
       );
+      this.notificationService.showNotification(
+        'Transaction Added Sucessfully!'
+      );
     }
-    // this.transferForm.reset();
+    this.transferForm.reset();
   }
 }
 
