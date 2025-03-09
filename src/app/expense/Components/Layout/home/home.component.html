@@ -8,3 +8,26 @@
   <p>Total Expenses: {{ totalExpenses$ | async | currency : "INR" }}</p>
   <p>Net Balance: {{ netBalance$ | async | currency : "INR" }}</p>
 </div>
+
+<div *ngIf="transactions$ | async as transactions">
+  <div *ngIf="transactions.length > 0">
+    <h3>Recent Transactions</h3>
+    <div>
+      <p *ngFor="let transaction of transactions">
+        {{ transaction.category }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="transfers$ | async as transfers">
+  <div *ngIf="transfers.length > 0">
+    <h3>Recent Transactions</h3>
+    <div>
+      <p *ngFor="let transaction of transfers">
+        Recent transfer from {{ transaction.recipient }} of
+        {{ transaction.amount }}
+      </p>
+    </div>
+  </div>
+</div>

@@ -39,7 +39,7 @@ export class TransferListComponent implements OnInit {
 
   userId!: string;
   currentPage!: number;
-  pageSize: number = environmentVariables.transferPageSize;
+  pageSize: number;
   selectedSortOrder: string = 'date_desc';
 
   private store = inject(Store<TransferStore>);
@@ -55,6 +55,9 @@ export class TransferListComponent implements OnInit {
     this.pagination$ = this.store.select(selectPaginationofTransfers);
     this.loading$ = this.store.select(selectLoadingofTransfers);
     this.error$ = this.store.select(selectErrorofTransfers);
+
+    //get local storage items
+    this.pageSize = Number(localStorage.getItem('transfers_per_page')) || 5;
   }
 
   ngOnInit(): void {
@@ -63,7 +66,8 @@ export class TransferListComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const { page, pageSize } = params;
       this.currentPage = +page || 1;
-      this.pageSize = +pageSize || 5;
+      //only update when page size value is present , else use stored value
+      this.pageSize = pageSize ? +pageSize : this.pageSize;
 
       if (this.userId) {
         this.loadTransfers();
@@ -107,6 +111,8 @@ export class TransferListComponent implements OnInit {
       queryParams: { page: this.currentPage, pageSize: this.pageSize },
       queryParamsHandling: 'merge',
     });
+
+    localStorage.setItem('transfers_per_page', this.pageSize.toString());
   }
 
   openUpdateModal(transaction: Transfer) {

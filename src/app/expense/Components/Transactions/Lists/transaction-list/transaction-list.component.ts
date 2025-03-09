@@ -38,7 +38,7 @@ export class TransactionListComponent implements OnInit {
   //pagination parameters
   userId!: string;
   currentPage!: number;
-  pageSize = environmentVariables.transactionPageSize;
+  pageSize: number;
   selectedSortOrder: string = 'date_desc';
 
   private store = inject(Store<TransactionState>);
@@ -54,6 +54,9 @@ export class TransactionListComponent implements OnInit {
     this.pagination$ = this.store.select(selectPaginationofTransactions);
     this.loading$ = this.store.select(selectLoadingofTransactions);
     this.error$ = this.store.select(selectErrorofTransactions);
+
+    //get local storage items
+    this.pageSize = Number(localStorage.getItem('transactions_per_page')) || 5;
   }
 
   ngOnInit(): void {
@@ -63,7 +66,8 @@ export class TransactionListComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const { page, pageSize } = params;
       this.currentPage = +page || 1;
-      this.pageSize = +pageSize || 5;
+      //only update when page size value is present , else use stored value
+      this.pageSize = pageSize ? +pageSize : this.pageSize;
       //fetch transactions when the component initializes
       if (this.userId) {
         this.loadTransactions();
@@ -108,6 +112,7 @@ export class TransactionListComponent implements OnInit {
       queryParams: { page: this.currentPage, pageSize: this.pageSize },
       queryParamsHandling: 'merge',
     });
+    localStorage.setItem('transactions_per_page', this.pageSize.toString());
   }
 
   openUpdateModal(transaction: Transaction) {
