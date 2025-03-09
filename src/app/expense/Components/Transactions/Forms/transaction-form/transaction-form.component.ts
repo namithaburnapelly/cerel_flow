@@ -39,7 +39,6 @@ export class TransactionFormComponent implements OnInit {
       amount: [, [Validators.required, Validators.min(1)]],
       date: [''],
       description: [''],
-      wallet: [''],
       screenshot: [null],
     });
   }

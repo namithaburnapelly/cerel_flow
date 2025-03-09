@@ -21,15 +21,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
     //aggregation pipeline with array of operations for pagination
     const pipeline = [
       { $match: { user_id: userId } },
-      //projection displays these values in the result output
-      { $project: { transfers: 1 } },
-      //deconstructs an array field
-      //it will create separate document for each transfer
-      { $unwind: "$transfers" },
-      { $set: { "transfers.date": { $toDate: "$transfers.date" } } },
-      //replaces the entire document
-      //to make each transaction the root of the document, so we can work easily doing operations like skip and limit.
-      { $replaceRoot: { newRoot: "$transfers" } },
+      { $set: { date: { $toDate: "$date" } } },
       { $sort: getSortObject(sortOrder) },
       { $skip: skip },
       { $limit: pageSize },
@@ -44,7 +36,6 @@ router.get("/:userId", authenticateToken, async (req, res) => {
     //to get total income and expense
     const incomeExpensePipeline = [
       { $match: { user_id: userId } },
-      { $unwind: "$transfers" },
       {
         $group: {
           _id: null,
@@ -52,19 +43,15 @@ router.get("/:userId", authenticateToken, async (req, res) => {
             $sum: {
               $cond: [
                 //condition
-                { $eq: ["$transfers.type", "from"] }, //equals
-                "$transfers.amount",
+                { $eq: ["$type", "from"] }, //equals
+                "$amount",
                 0,
               ],
             },
           },
           totalExpenses: {
             $sum: {
-              $cond: [
-                { $eq: ["$transfers.type", "to"] },
-                "$transfers.amount",
-                0,
-              ],
+              $cond: [{ $eq: ["type", "to"] }, "$amount", 0],
             },
           },
         },
@@ -85,16 +72,9 @@ router.get("/:userId", authenticateToken, async (req, res) => {
       : 0;
 
     //reuslt returns total number of transactions
-    const result = await db
+    const totalTransfers = await db
       .collection(TransferCollection)
-      .aggregate([
-        { $match: { user_id: userId } },
-        { $project: { totalTransfers: { $size: "$transfers" } } },
-        { $limit: 1 }, //to ensure one document is returned
-      ])
-      .next();
-
-    const totalTransfers = result ? result.totalTransfers : 0;
+      .countDocuments({ user_id: userId });
     //if user has transfers
     if (totalTransfers === 0) {
       return res.status(404).json({ message: "No Transfers Found" });
@@ -123,6 +103,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
 router.post("/:userId", authenticateToken, async (req, res) => {
   try {
     const transfer = {
+      user_id: req.params.userId,
       transaction_id: "trxn" + Date.now(),
       recipient: titleCase(req.body.recipient),
       amount: req.body.amount,
@@ -134,15 +115,11 @@ router.post("/:userId", authenticateToken, async (req, res) => {
 
     const db = getDb();
     //add new transaction of transfer into user's transfer array
-    const result = await db.collection(TransferCollection).updateOne(
-      { user_id: req.params.userId },
-      { $push: { transfers: transfer } },
-      { upsert: true } //creates a new document if user does not exist
-    );
+    const result = await db.collection(TransferCollection).insertOne(transfer);
 
-    if (result.modifiedCount > 0 || result.upsertedCount > 0) {
+    if (result.insertedId) {
       return res
-        .status(200)
+        .status(201) //created response
         .json({ message: "successfully added", newTransfer: transfer });
     } else {
       return res.status(400).json({ message: "Failed to add transaction." });
@@ -170,34 +147,26 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
     //map user input keys to mongo update format
     const updatedFields = Object.fromEntries(
       Object.entries(updatedData).map(([key, value]) => [
-        `transfers.$[element].${key}`,
+        key,
         key === "recipient" ? titleCase(value) : value,
       ])
     );
+
     //updating the data
     const result = await db.collection(TransferCollection).updateOne(
-      { user_id: userId, "transfers.transaction_id": transactionId },
+      { user_id: userId, transaction_id: transactionId },
       {
         $set: {
-          "transfers.$[element].updated_at": new Date(),
+          updated_at: new Date(),
           ...updatedFields,
         },
-      },
-      { arrayFilters: [{ "element.transaction_id": transactionId }] }
-    );
-
-    //fetch updated transactions
-    const updatedDocument = await db.collection(TransferCollection).findOne(
-      { user_id: userId, "transfers.transaction_id": transactionId },
-      {
-        projection: {
-          transfers: { $elemMatch: { transaction_id: transactionId } },
-        },
-      } //return the matched transaction of transfer
+      }
     );
 
     //extract updated transaction
-    const updatedTransaction = updatedDocument?.transfers[0];
+    const updatedTransaction = await db
+      .collection(TransferCollection)
+      .findOne({ user_id: userId, transaction_id: transactionId });
 
     if (result.modifiedCount > 0) {
       return res.status(200).json({
@@ -222,23 +191,11 @@ router.delete(
 
       const db = getDb();
 
-      //check if user exists
-      const userExists = await db.collection(TransferCollection).findOne({
-        user_id: userId,
-      });
-
-      if (!userExists) {
-        return res.status(404).json({ message: "User not found." });
-      }
-
       const result = await db
         .collection(TransferCollection)
-        .updateOne(
-          { user_id: userId },
-          { $pull: { transfers: { transaction_id: transactionId } } }
-        );
+        .deleteOne({ user_id: userId, transaction_id: transactionId });
 
-      if (result.modifiedCount > 0) {
+      if (result.deletedCount > 0) {
         return res
           .status(200)
           .json({ message: "Transaction deleted successfully." });
