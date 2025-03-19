@@ -32,7 +32,7 @@ export class TransferEffects {
             action.payload.userId,
             action.payload.page,
             action.payload.pageSize || 5,
-            action.payload.sortOrder
+            action.payload.sortOrder,
           )
           .pipe(
             tap((response) => console.log('✅ API Response:', response)), // Logs successful API response
@@ -50,7 +50,7 @@ export class TransferEffects {
                   totalExpenses: response.totalExpenses,
                   sortOrder: response.sortOrder,
                 },
-              })
+              }),
             ),
             tap(() => console.log('✅ Dispatching Success Action')), // Logs before success action is dispatched
             catchError((error) => {
@@ -58,12 +58,12 @@ export class TransferEffects {
               return of(
                 loadTransfersError({
                   payload: error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   addTransfer$ = createEffect(() =>
@@ -81,7 +81,7 @@ export class TransferEffects {
                   userId: payload.userId,
                   newTransfer: response.newTransfer,
                 },
-              })
+              }),
             ),
             tap(() => console.log('✅ Dispatching Success Action')),
             catchError((error) => {
@@ -89,12 +89,12 @@ export class TransferEffects {
               return of(
                 addTransferError({
                   payload: error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   updateTransfer$ = createEffect(() =>
@@ -106,7 +106,7 @@ export class TransferEffects {
           .updateTransfer(
             payload.userId,
             payload.transaction_id,
-            payload.changes
+            payload.changes,
           )
           .pipe(
             tap(() => console.log('✅ Transfer updated Successfully')),
@@ -117,7 +117,7 @@ export class TransferEffects {
                   transaction_id: payload.transaction_id,
                   updatedTransaction: payload.changes,
                 },
-              })
+              }),
             ),
             tap(() => console.log('✅ Dispatching Success Action')),
             catchError((error) => {
@@ -125,12 +125,12 @@ export class TransferEffects {
               return of(
                 updateTransferError({
                   payload: error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 
   deleteTransfer$ = createEffect(() =>
@@ -148,18 +148,18 @@ export class TransferEffects {
                   userId: payload.userId,
                   transaction_id: payload.transaction_id,
                 },
-              })
+              }),
             ),
             catchError((error) => {
               console.error('❌ API Error:', error);
               return of(
                 deleteTransferError({
                   payload: error,
-                })
+                }),
               );
-            })
-          )
-      )
-    )
+            }),
+          ),
+      ),
+    ),
   );
 }

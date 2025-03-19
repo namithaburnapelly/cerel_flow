@@ -31,7 +31,7 @@ export class TransactionFormComponent implements OnInit {
   private notificationService = inject(NotificationService);
 
   constructor(
-    @Optional() private dialogRef?: MatDialogRef<TransactionFormComponent>
+    @Optional() private dialogRef?: MatDialogRef<TransactionFormComponent>,
   ) {
     this.transactionForm = this.fb.group({
       type: ['', Validators.required],
@@ -74,11 +74,11 @@ export class TransactionFormComponent implements OnInit {
             transaction_id: this.transactionData.transaction_id,
             changes: data,
           },
-        })
+        }),
       );
       this.dialogRef?.close();
       this.notificationService.showNotification(
-        'Transaction updated successfully!'
+        'Transaction updated successfully!',
       );
     } else {
       this.store.dispatch(
@@ -87,10 +87,10 @@ export class TransactionFormComponent implements OnInit {
             userId: this.userId,
             newTransaction: data,
           },
-        })
+        }),
       );
       this.notificationService.showNotification(
-        'Transaction added successfully!'
+        'Transaction added successfully!',
       );
       this.transactionForm.reset();
     }

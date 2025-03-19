@@ -1,3 +1,7 @@
-.password_input {
-  display: flex;
+.error-message {
+  color: #d90429ff;
+  user-select: none;
+  font-weight: 600;
+
+  @apply text-sm;
 }

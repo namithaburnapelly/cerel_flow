@@ -11,18 +11,18 @@ import {
 export const selectTotalIncome = createSelector(
   selectIncomeofTransfers,
   selectIncomeofTransactions,
-  (traansferIncome, transactionIncome) => traansferIncome + transactionIncome
+  (traansferIncome, transactionIncome) => traansferIncome + transactionIncome,
 );
 
 export const selectTotalExpenses = createSelector(
   selectExpensesofTransfers,
   selectExpensesofTransactions,
   (transferExpenses, transactionExpenses) =>
-    transferExpenses + transactionExpenses
+    transferExpenses + transactionExpenses,
 );
 
 export const selectNetBalance = createSelector(
   selectTotalIncome,
   selectTotalExpenses,
-  (income, expenses) => income - expenses
+  (income, expenses) => income - expenses,
 );

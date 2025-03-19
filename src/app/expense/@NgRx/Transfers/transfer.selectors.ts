@@ -4,42 +4,42 @@ import { selectTransferStore } from './transfer.state';
 //to get paginated transactions of transfers
 export const selectTransfers = createSelector(
   selectTransferStore,
-  (state) => state.transfers
+  (state) => state.transfers,
 );
 
 //pagination meta data
 export const selectPaginationofTransfers = createSelector(
   selectTransferStore,
-  (state) => state.pagination
+  (state) => state.pagination,
 );
 
 //check if loading
 export const selectLoadingofTransfers = createSelector(
   selectTransferStore,
-  (state) => state.loading
+  (state) => state.loading,
 );
 
 //error if any
 export const selectErrorofTransfers = createSelector(
   selectTransferStore,
-  (state) => (state.error ? state.error.message : null)
+  (state) => (state.error ? state.error.message : null),
 );
 
 //select totalIncome
 export const selectIncomeofTransfers = createSelector(
   selectTransferStore,
-  (state) => state.totalIncome
+  (state) => state.totalIncome,
 );
 
 //select total expenses
 export const selectExpensesofTransfers = createSelector(
   selectTransferStore,
-  (state) => state.totalExpenses
+  (state) => state.totalExpenses,
 );
 
 //total new balance
 export const selectNetBalanceofTransfers = createSelector(
   selectIncomeofTransfers,
   selectExpensesofTransfers,
-  (totalIncome, totalExpenses) => totalIncome - totalExpenses
+  (totalIncome, totalExpenses) => totalIncome - totalExpenses,
 );

@@ -25,7 +25,7 @@ import {
 //function to handle state updates
 export function handleStateChange(
   state: TransactionState,
-  changes: Partial<TransactionState>
+  changes: Partial<TransactionState>,
 ): TransactionState {
   return { ...state, ...changes };
 }
@@ -58,7 +58,7 @@ export const transactionReducer = createReducer(
   on(loadTransactionsError, (state, { payload }) => {
     console.error(
       'reducer ❌ loadTransactionFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -82,7 +82,7 @@ export const transactionReducer = createReducer(
   on(addTransactionError, (state, { payload }) => {
     console.error(
       'reducer ❌ addTransactionFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -101,7 +101,7 @@ export const transactionReducer = createReducer(
       transactions: state.transactions.map((transaction) =>
         transaction.transaction_id === payload.transaction_id
           ? { ...transaction, ...payload.updatedTransaction }
-          : transaction
+          : transaction,
       ),
       loading: false,
       error: null,
@@ -110,7 +110,7 @@ export const transactionReducer = createReducer(
   on(updateTransactionError, (state, { payload }) => {
     console.error(
       'reducer ❌ updateTransactionFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -127,7 +127,7 @@ export const transactionReducer = createReducer(
     console.log('reducer ✅ deleteTransactionSuccess action received', payload);
     return handleStateChange(state, {
       transactions: state.transactions.filter(
-        (transaction) => transaction.transaction_id !== payload.transaction_id
+        (transaction) => transaction.transaction_id !== payload.transaction_id,
       ),
       loading: false,
       error: null,
@@ -136,7 +136,7 @@ export const transactionReducer = createReducer(
   on(deleteTransactionError, (state, { payload }) => {
     console.error(
       'reducer ❌ updateTransactionFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -145,5 +145,5 @@ export const transactionReducer = createReducer(
   }),
 
   //logout
-  on(resetTransactionStore, () => transactionInitialState) //reset to intitial state
+  on(resetTransactionStore, () => transactionInitialState), //reset to intitial state
 );

@@ -40,8 +40,8 @@
           <tr *ngFor="let transaction of transactions">
             <td>{{ transaction.category }}</td>
             <td>{{ transaction.type }}</td>
-            <td>{{ transaction.amount | currency : "INR" }}</td>
-            <td>{{ transaction.date | date : "mediumDate" }}</td>
+            <td>{{ transaction.amount | currency: "INR" }}</td>
+            <td>{{ transaction.date | date: "mediumDate" }}</td>
             <td>{{ transaction.description || "N/A" }}</td>
             <td>
               <button

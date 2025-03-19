@@ -15,6 +15,6 @@ export const transactionsResolver: ResolveFn<void> = () => {
         page: 1,
         sortOrder: 'date_desc',
       },
-    })
+    }),
   );
 };

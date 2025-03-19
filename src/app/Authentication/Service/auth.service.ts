@@ -45,7 +45,7 @@ export class AuthService {
           this.stateItem.next(returnedUser); //updating the user state
         }
         return returnedUser;
-      })
+      }),
     );
   }
 
@@ -79,7 +79,7 @@ export class AuthService {
   Register(
     username: string,
     email: string,
-    password: string
+    password: string,
   ): Observable<NewUser> {
     return this.http.post<NewUser>(this._registerurl, {
       username,

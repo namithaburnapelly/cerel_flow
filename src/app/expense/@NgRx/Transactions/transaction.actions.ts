@@ -15,7 +15,7 @@ export const loadTransactions = createAction(
       pageSize?: number;
       sortOrder: string;
     };
-  }>()
+  }>(),
 );
 //on success
 export const loadTransactionsSuccess = createAction(
@@ -33,28 +33,28 @@ export const loadTransactionsSuccess = createAction(
       totalExpenses: number;
       sortOrder: string;
     };
-  }>()
+  }>(),
 );
 //on failure
 export const loadTransactionsError = createAction(
   '[Transaction] Load Transactions Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 // to add transaction
 export const addTransaction = createAction(
   '[Transaction] Add Transaction',
-  props<{ payload: { userId: string; newTransaction: Transaction } }>()
+  props<{ payload: { userId: string; newTransaction: Transaction } }>(),
 );
 //on success
 export const addTransactionSuccess = createAction(
   '[Transaction] Add Transaction Success',
-  props<{ payload: { userId: string; newTransaction: Transaction } }>()
+  props<{ payload: { userId: string; newTransaction: Transaction } }>(),
 );
 //on failure
 export const addTransactionError = createAction(
   '[Transaction] Add Transaction Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //update transaction
@@ -66,7 +66,7 @@ export const updateTransaction = createAction(
       transaction_id: string;
       changes: Transaction;
     };
-  }>()
+  }>(),
 );
 //on success
 export const updateTransactionSuccess = createAction(
@@ -77,28 +77,28 @@ export const updateTransactionSuccess = createAction(
       transaction_id: string;
       updatedTransaction: Transaction;
     };
-  }>()
+  }>(),
 );
 //on failure
 export const updateTransactionError = createAction(
   '[Transaction] Update Transaction Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //delete Transaction
 export const deleteTransaction = createAction(
   '[Transaction] Delete Transaction',
-  props<{ payload: { userId: string; transaction_id: string } }>()
+  props<{ payload: { userId: string; transaction_id: string } }>(),
 );
 //on success
 export const deleteTransactionSuccess = createAction(
   '[Transaction] Delete Transaction Success',
-  props<{ payload: { userId: string; transaction_id: string } }>()
+  props<{ payload: { userId: string; transaction_id: string } }>(),
 );
 //on failure
 export const deleteTransactionError = createAction(
   '[Transaction] Delete Transactions Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //when user logs out reset the store

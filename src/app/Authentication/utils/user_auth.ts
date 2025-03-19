@@ -11,7 +11,7 @@ export const authFactory = (authService: AuthService): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
       const _localuser: UserInfo = JSON.parse(
-        localStorage.getItem('user') || '{}'
+        localStorage.getItem('user') || '{}',
       );
 
       if (_localuser && _localuser.accessToken) {

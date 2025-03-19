@@ -18,7 +18,7 @@ export class LoginResolve implements Resolve<boolean> {
 
   resolve(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
   ): Observable<boolean> {
     return this.authState.stateItem$.pipe(
       map((user) => {
@@ -28,11 +28,11 @@ export class LoginResolve implements Resolve<boolean> {
         }
         if (user && user.accessToken) {
           console.log(user, 'from login resolve');
-          this.router.navigateByUrl('/private');
+          this.router.navigateByUrl('/expense');
           return false;
         }
         return true;
-      })
+      }),
     );
   }
 }

@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 
 export function authInterceptor(
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -21,7 +21,7 @@ export function authInterceptor(
   const newReqWithHeader = req.clone({
     headers: req.headers.append(
       'Authorization',
-      `Bearer ${authService.getAuthToken()}`
+      `Bearer ${authService.getAuthToken()}`,
     ),
   });
   return next(newReqWithHeader).pipe(
@@ -33,6 +33,6 @@ export function authInterceptor(
         });
       }
       return throwError(() => error);
-    })
+    }),
   );
 }

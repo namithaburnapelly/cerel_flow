@@ -13,7 +13,7 @@ function generateAccessToken(user) {
     secretkey,
     {
       expiresIn: "1h", //1hour
-    }
+    },
   );
 }
 

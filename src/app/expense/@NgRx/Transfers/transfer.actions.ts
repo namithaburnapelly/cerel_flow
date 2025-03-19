@@ -12,7 +12,7 @@ export const loadTransfers = createAction(
       pageSize?: number; //can set default in effect
       sortOrder: string;
     };
-  }>()
+  }>(),
 );
 //on success
 export const loadTransfersSuccess = createAction(
@@ -30,28 +30,28 @@ export const loadTransfersSuccess = createAction(
       totalExpenses: number;
       sortOrder: string;
     };
-  }>()
+  }>(),
 );
 //on Error
 export const loadTransfersError = createAction(
   '[Transfer] load Transfers Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //to add new transfer
 export const addTransfer = createAction(
   '[Transfer] Add Transfer',
-  props<{ payload: { userId: string; newTransfer: Transfer } }>()
+  props<{ payload: { userId: string; newTransfer: Transfer } }>(),
 );
 //on success
 export const addTransferSuccess = createAction(
   '[Transfer] Add Transfer Success',
-  props<{ payload: { userId: string; newTransfer: Transfer } }>()
+  props<{ payload: { userId: string; newTransfer: Transfer } }>(),
 );
 //on Error
 export const addTransferError = createAction(
   '[Transfer] Add Transfer Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //to update transfer
@@ -63,7 +63,7 @@ export const updateTransfer = createAction(
       transaction_id: string;
       changes: Transfer;
     };
-  }>()
+  }>(),
 );
 //on success
 export const updateTransferSuccess = createAction(
@@ -74,28 +74,28 @@ export const updateTransferSuccess = createAction(
       transaction_id: string;
       updatedTransaction: Transfer;
     };
-  }>()
+  }>(),
 );
 //on Error
 export const updateTransferError = createAction(
   '[Transfer] Update Transfer Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //delete transfer
 export const deleteTransfer = createAction(
   '[Transfer] Delete Transfer',
-  props<{ payload: { userId: string; transaction_id: string } }>()
+  props<{ payload: { userId: string; transaction_id: string } }>(),
 );
 //on success
 export const deleteTransferSuccess = createAction(
   '[Transfer] Delete Transfer Success',
-  props<{ payload: { userId: string; transaction_id: string } }>()
+  props<{ payload: { userId: string; transaction_id: string } }>(),
 );
 //on Error
 export const deleteTransferError = createAction(
   '[Transfer] Delete Transfer Error',
-  props<{ payload: { error: ApiError } }>()
+  props<{ payload: { error: ApiError } }>(),
 );
 
 //when user logs out resest store

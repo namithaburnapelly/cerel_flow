@@ -30,7 +30,7 @@ export class TransferformComponent implements OnInit {
   private notificationService = inject(NotificationService);
 
   constructor(
-    @Optional() private dialogRef?: MatDialogRef<TransferformComponent>
+    @Optional() private dialogRef?: MatDialogRef<TransferformComponent>,
   ) {
     this.transferForm = this.fb.group({
       recipient: ['', Validators.required],
@@ -72,11 +72,11 @@ export class TransferformComponent implements OnInit {
             transaction_id: this.transactionData.transaction_id,
             changes: data,
           },
-        })
+        }),
       );
       this.dialogRef?.close();
       this.notificationService.showNotification(
-        'Transaction updated Sucessfully!'
+        'Transaction updated Sucessfully!',
       );
     } else {
       this.store.dispatch(
@@ -85,10 +85,10 @@ export class TransferformComponent implements OnInit {
             userId: this.userId,
             newTransfer: data,
           },
-        })
+        }),
       );
       this.notificationService.showNotification(
-        'Transaction Added Sucessfully!'
+        'Transaction Added Sucessfully!',
       );
     }
     this.transferForm.reset();

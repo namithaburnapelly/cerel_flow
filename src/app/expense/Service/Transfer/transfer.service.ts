@@ -17,7 +17,7 @@ export class TransferService {
     userId: string,
     page: number,
     pageSize: number,
-    sortOrder: string
+    sortOrder: string,
   ): Observable<TransferStore> {
     console.log('Service 🟡 Fetching Transfers:', {
       userId,
@@ -38,20 +38,20 @@ export class TransferService {
 
   addTransfer(
     userId: string,
-    newTransfer: Transfer
+    newTransfer: Transfer,
   ): Observable<{ message: string; newTransfer: Transfer }> {
     console.log('service 🟢 Adding Transfer:', { userId, newTransfer });
 
     return this.http.post<{ message: string; newTransfer: Transfer }>(
       `${this._transferUrl}/${userId}`,
-      newTransfer
+      newTransfer,
     );
   }
 
   updateTransfer(
     userId: string,
     transaction_id: string,
-    changes: Partial<Transfer>
+    changes: Partial<Transfer>,
   ): Observable<{ message: string; updatedTransaction: Transfer }> {
     console.log('service 🟢 updating Transfer:', {
       userId,
@@ -61,13 +61,13 @@ export class TransferService {
 
     return this.http.patch<{ message: string; updatedTransaction: Transfer }>(
       `${this._transferUrl}/${userId}/${transaction_id}`,
-      changes
+      changes,
     );
   }
 
   deleteTransfer(
     userId: string,
-    transaction_id: string
+    transaction_id: string,
   ): Observable<{ message: string }> {
     console.log('service ❌ updating Transfer:', {
       userId,
@@ -75,7 +75,7 @@ export class TransferService {
     });
 
     return this.http.delete<{ message: string }>(
-      `${this._transferUrl}/${userId}/${transaction_id}`
+      `${this._transferUrl}/${userId}/${transaction_id}`,
     );
   }
 }

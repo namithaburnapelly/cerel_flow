@@ -18,7 +18,7 @@ import {
 
 function handleStateChange(
   state: TransferStore,
-  changes: Partial<TransferStore>
+  changes: Partial<TransferStore>,
 ): TransferStore {
   return { ...state, ...changes };
 }
@@ -51,7 +51,7 @@ export const transferReducer = createReducer(
   on(loadTransfersError, (state, { payload }) => {
     console.error(
       'reducer ❌ loadTransferFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -75,7 +75,7 @@ export const transferReducer = createReducer(
   on(addTransferError, (state, { payload }) => {
     console.error(
       'reducer ❌ addTransferFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -94,7 +94,7 @@ export const transferReducer = createReducer(
       transfers: state.transfers.map((transaction) =>
         transaction.transaction_id === payload.transaction_id
           ? { ...transaction, ...payload.updatedTransaction }
-          : transaction
+          : transaction,
       ),
       loading: false,
       error: null,
@@ -103,7 +103,7 @@ export const transferReducer = createReducer(
   on(updateTransferError, (state, { payload }) => {
     console.error(
       'reducer ❌ updateTransferFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -120,7 +120,8 @@ export const transferReducer = createReducer(
     console.log('reducer ✅ deleteTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: state.transfers.filter(
-        (transactions) => transactions.transaction_id !== payload.transaction_id
+        (transactions) =>
+          transactions.transaction_id !== payload.transaction_id,
       ),
       loading: false,
       error: null,
@@ -129,7 +130,7 @@ export const transferReducer = createReducer(
   on(deleteTransferError, (state, { payload }) => {
     console.error(
       'reducer ❌ deleteTransferFailure action received',
-      payload.error
+      payload.error,
     );
     return handleStateChange(state, {
       loading: false,
@@ -138,5 +139,5 @@ export const transferReducer = createReducer(
   }),
 
   //logout
-  on(resetTransferStore, () => transferInitialState) //reset to the initial state of the store
+  on(resetTransferStore, () => transferInitialState), //reset to the initial state of the store
 );

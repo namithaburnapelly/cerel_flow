@@ -4,11 +4,12 @@ import { LoginComponent } from './Authentication/login/login.component';
 import { RegisterComponent } from './Authentication/register/register.component';
 import { LoginResolve } from './Authentication/Service/login-resolve.service';
 import { AuthGaurd } from './Authentication/Service/auth-gaurd.service';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 const routes: Routes = [
   //private path for home page
   {
-    path: 'private',
+    path: 'expense',
     loadChildren: () =>
       import('./expense/expense.module').then((m) => m.ExpenseModule),
     canActivate: [AuthGaurd],
@@ -27,6 +28,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
+  },
+  {
+    path: '**',
+    component: PagenotfoundComponent,
   },
 ];
 

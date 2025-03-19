@@ -12,7 +12,7 @@ import { Transfer } from '../../../../Model/transfer.model';
 export class UpdateTransferComponent {
   constructor(
     public dialogRef: MatDialogRef<UpdateTransferComponent>,
-    @Inject(MAT_DIALOG_DATA) public transaction: Transfer
+    @Inject(MAT_DIALOG_DATA) public transaction: Transfer,
   ) {}
 
   close() {

@@ -12,7 +12,7 @@ export class ConfirmDeleteDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { item_type: string; item_name: string }
+    public data: { item_type: string; item_name: string },
   ) {}
 
   onCancel(): void {

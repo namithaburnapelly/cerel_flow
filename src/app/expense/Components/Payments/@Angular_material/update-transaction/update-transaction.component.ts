@@ -12,7 +12,7 @@ import { Transaction } from '../../../../Model/transaction.model';
 export class UpdateTransactionComponent {
   constructor(
     public dialogRef: MatDialogRef<UpdateTransactionComponent>,
-    @Inject(MAT_DIALOG_DATA) public transaction: Transaction
+    @Inject(MAT_DIALOG_DATA) public transaction: Transaction,
   ) {}
 
   close() {

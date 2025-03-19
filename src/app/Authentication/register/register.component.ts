@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   standalone: false,
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css', '../login/login.component.css'],
 })
 export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage: string | null;
+  isPasswordVisible: boolean = false;
 
   private errorHandler = inject(ErrorHandlerService);
   private authService = inject(AuthService);
@@ -28,6 +29,10 @@ export class RegisterComponent {
     });
     //set errror message to null initially
     this.errorMessage = null;
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
   }
 
   get username() {
@@ -49,7 +54,7 @@ export class RegisterComponent {
         .Register(
           this.registerForm.value.username,
           this.registerForm.value.email,
-          this.registerForm.value.password
+          this.registerForm.value.password,
         )
         .subscribe({
           next: (result) => {
@@ -62,6 +67,7 @@ export class RegisterComponent {
         });
     } else {
       console.log('Invalid form submission');
+      this.registerForm.markAllAsTouched();
     }
   }
 }

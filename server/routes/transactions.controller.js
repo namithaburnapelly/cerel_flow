@@ -153,7 +153,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
       Object.entries(updatedData).map(([key, value]) => [
         key, //map keys correctly to mongodb update
         key === "category" ? titleCase(value) : value,
-      ])
+      ]),
     );
 
     //updating the fields
@@ -164,7 +164,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
           updated_at: new Date(), // Ensure updatedDate is always set
           ...updatedFileds,
         },
-      } //set applies the maped updated
+      }, //set applies the maped updated
     );
 
     // Extract the updated transaction
@@ -216,7 +216,7 @@ router.delete(
       //serve error
       res.status(500).json({ message: "Server error." });
     }
-  }
+  },
 );
 
 module.exports = router;

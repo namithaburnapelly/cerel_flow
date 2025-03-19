@@ -1,41 +1,118 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-  <!-- email input field -->
-  <div>
-    <input
-      type="email"
-      id="email"
-      formControlName="email"
-      placeholder="email"
-    />
-    <!-- error message for invalid email -->
-    <div *ngIf="email?.invalid && email?.touched">
-      <div *ngIf="email?.hasError('required')">Email is required.</div>
-      <div *ngIf="email?.hasError('email')">Please enter valid email.</div>
-    </div>
-  </div>
-  <!-- password input field -->
-  <div>
-    <div class="password_input">
-      <input
-        [type]="isPasswordVisible ? 'text' : 'password'"
-        id="password"
-        formControlName="password"
-        placeholder="password"
-      />
-      <button type="button" (click)="togglePasswordVisibility()">
-        see password
-      </button>
-    </div>
-    <!-- error message for invalid password -->
-    <div *ngIf="password?.invalid && password?.touched">
-      <div *ngIf="password?.hasError('required')">Password is required.</div>
-      <div *ngIf="password?.hasError('minlength')">
-        Password must be atleast 6 characters long.
+<!-- full page side corner -->
+<div class="h-full w-full bg-sea-green p-4">
+  <!-- Image and form -->
+  <div
+    class="flex h-full w-full flex-col justify-center rounded-md bg-white md:flex-row"
+  >
+    <!-- form division -->
+    <div
+      class="my-30 flex w-full flex-col items-center justify-center md:my-0 md:h-full md:w-[50%]"
+    >
+      <div
+        class="flex w-[50%] flex-col items-center justify-center text-center md:w-[60%]"
+      >
+        <div
+          *ngIf="errorMessage"
+          class="select-none p-2 font-semibold text-fire-engine-red"
+        >
+          {{ errorMessage }}
+        </div>
+        <div class="mb-4 select-none text-3xl font-bold text-dark-spring-green">
+          Login here
+        </div>
+        <!-- card -->
+        <div
+          class="flex h-full w-[80%] flex-col justify-center rounded-xl border border-border-color px-9 py-7"
+        >
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="login()"
+            class="flex w-full flex-col gap-4 space-y-2"
+          >
+            <!-- email input field -->
+            <div class="flex w-full flex-col items-start justify-start">
+              <label for="email" class="select-none font-medium">Email</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="Enter your email address"
+                class="w-full rounded border border-border-color p-[5px] focus:border-b-4 focus:border-b-sea-green focus:outline-none"
+              />
+              <!-- error message for invalid email -->
+              <div *ngIf="email?.invalid && email?.touched">
+                <div *ngIf="email?.hasError('required')" class="error-message">
+                  *Email is required
+                </div>
+              </div>
+            </div>
+            <!-- password input field -->
+            <div class="flex w-full flex-col items-start justify-start">
+              <label for="password" class="select-none font-semibold"
+                >Password</label
+              >
+              <div class="relative w-full">
+                <input
+                  [type]="isPasswordVisible ? 'text' : 'password'"
+                  id="password"
+                  formControlName="password"
+                  placeholder="Enter your password"
+                  class="w-full rounded border border-border-color p-[5px] focus:border-b-4 focus:border-b-sea-green focus:outline-none"
+                />
+                <lucide-icon
+                  *ngIf="isPasswordVisible === false"
+                  name="eye"
+                  (click)="togglePasswordVisibility()"
+                  class="absolute right-1 top-1 cursor-pointer text-muted-foreground"
+                ></lucide-icon>
+                <lucide-icon
+                  *ngIf="isPasswordVisible === true"
+                  name="eye-off"
+                  (click)="togglePasswordVisibility()"
+                  class="absolute right-1 top-1 cursor-pointer text-muted-foreground"
+                ></lucide-icon>
+              </div>
+              <!-- error message for invalid password -->
+              <div *ngIf="password?.invalid && password?.touched">
+                <div
+                  *ngIf="password?.hasError('required')"
+                  class="error-message"
+                >
+                  *Password is required
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                type="submit"
+                class="w-full cursor-pointer rounded bg-sea-green py-1 text-lg font-semibold text-white drop-shadow-xl duration-150 hover:bg-dark-spring-green"
+              >
+                Login
+              </button>
+            </div>
+            <div class="my-4 flex w-full items-center">
+              <div class="flex-1 border-t border-border-color"></div>
+              <span class="select-none px-3 text-sm text-[#80828D]">OR</span>
+              <div class="flex-1 border-t border-border-color"></div>
+            </div>
+            <div class="w-full">
+              <a
+                routerLink="/register"
+                routerLinkActive="active"
+                class="block w-full cursor-pointer rounded border border-border-color px-5 py-1 text-lg font-semibold hover:border-[#80828D]"
+                >Sign up</a
+              >
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+    <div class="flex items-center justify-center p-4">
+      <img
+        src="assets/authentication/login.jpg"
+        alt="login Image"
+        class="w-[527px] object-cover md:w-[500px]"
+      />
+    </div>
   </div>
-  <!-- submit button (disabled if form is invalid) -->
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  <a routerLink="/register" routerLinkActive="active">Sign up</a>
-  <div *ngIf="errorMessage">{{ errorMessage }}</div>
-</form>
+</div>

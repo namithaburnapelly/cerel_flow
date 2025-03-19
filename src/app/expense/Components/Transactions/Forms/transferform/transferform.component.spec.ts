@@ -8,9 +8,8 @@ describe('TransferformComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TransferformComponent]
-    })
-    .compileComponents();
+      declarations: [TransferformComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TransferformComponent);
     component = fixture.componentInstance;

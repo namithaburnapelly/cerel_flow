@@ -20,11 +20,12 @@ export class LoginComponent implements OnInit {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private route = inject(ActivatedRoute);
+
   constructor() {
     //define the form group with strictly typed controls and validation
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
     //set error message initially to null
     this.errorMessage = null;
@@ -55,25 +56,8 @@ export class LoginComponent implements OnInit {
         .Login(this.loginForm.value.email, this.loginForm.value.password)
         .subscribe({
           next: (result) => {
-            // if (this.authService.isAuthenticated()) {
-            //   console.log('user authenticated');
-
-            //   const headers = new HttpHeaders()
-            //     .set('Content-type', 'application/json')
-            //     .set('Authorization', `Bearer ${this.authService.getToken()}`);
-
-            //   this.http
-            //     .get('http://localhost:3000/private/home', { headers })
-            //     .subscribe((res) => {
-            //       console.log(res);
-            //     });
-
-            // } else {
-            //   console.log('forbidden access');
-            //   this.router.navigateByUrl('');
-            // }
             console.log(result, ' successfully login');
-            this.router.navigateByUrl('/private');
+            this.router.navigateByUrl('/expense');
           },
           error: (err) => {
             this.errorMessage = this.errorHandler.handleError(err);
@@ -81,6 +65,7 @@ export class LoginComponent implements OnInit {
         });
     } else {
       console.log('Invalid form');
+      this.loginForm.markAllAsTouched();
     }
   }
 

@@ -149,7 +149,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
       Object.entries(updatedData).map(([key, value]) => [
         key,
         key === "recipient" ? titleCase(value) : value,
-      ])
+      ]),
     );
 
     //updating the data
@@ -160,7 +160,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
           updated_at: new Date(),
           ...updatedFields,
         },
-      }
+      },
     );
 
     //extract updated transaction
@@ -208,7 +208,7 @@ router.delete(
       console.error(error);
       res.status(500).json({ message: "Server error." });
     }
-  }
+  },
 );
 
 module.exports = router;

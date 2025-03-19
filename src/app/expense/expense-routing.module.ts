@@ -7,24 +7,24 @@ import { TransactionListComponent } from './Components/Transactions/Lists/transa
 import { TransferListComponent } from './Components/Transactions/Lists/transfer-list/transfer-list.component';
 import { transactionsResolver } from './@NgRx/Transactions/transactions.resolver';
 import { transfersResolver } from './@NgRx/Transfers/transfers.resolver';
+import { DashboardComponent } from './Components/Layout/dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: DashboardComponent,
+    children: [
+      { path: 'dashboard', component: HomeComponent },
+      { path: 'addTransaction', component: RecentPaymentComponent },
+      { path: 'transactions', component: TransactionListComponent },
+      { path: 'transfers', component: TransferListComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    ],
     resolve: {
       transactions: transactionsResolver,
       transfers: transfersResolver,
     },
   },
-  { path: 'addTransaction', component: RecentPaymentComponent },
-  { path: 'transactions', component: TransactionListComponent },
-  { path: 'transfers', component: TransferListComponent },
-  {
-    path: 'transaction/list',
-    component: TransactionListComponent,
-  },
-  { path: '**', component: PagenotfoundComponent },
 ];
 
 @NgModule({

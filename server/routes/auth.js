@@ -83,11 +83,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/private/home", authenticateToken, (req, res) => {
-  res.json({
-    message: "this is protected route",
-    user: req.user,
-  });
-});
-
 module.exports = router;

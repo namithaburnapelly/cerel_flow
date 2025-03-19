@@ -42,5 +42,5 @@ const TRANSACTION_FEATURE_KEY = environmentVariables.TRANSACTION_FEATURE_KEY;
 
 //The below line gets the entire transactionState
 export const selectTransactionState = createFeatureSelector<TransactionState>(
-  TRANSACTION_FEATURE_KEY
+  TRANSACTION_FEATURE_KEY,
 );

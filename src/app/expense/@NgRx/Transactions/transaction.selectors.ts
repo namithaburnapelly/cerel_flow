@@ -10,42 +10,42 @@ import { selectTransactionState } from './transaction.state';
 //to get paginated transactions
 export const selectTransactions = createSelector(
   selectTransactionState,
-  (state) => state.transactions
+  (state) => state.transactions,
 );
 
 //selector for pagination meta data
 export const selectPaginationofTransactions = createSelector(
   selectTransactionState,
-  (state) => state.pagination
+  (state) => state.pagination,
 );
 
 //check if loading is true
 export const selectLoadingofTransactions = createSelector(
   selectTransactionState,
-  (state) => state.loading
+  (state) => state.loading,
 );
 
 //error message if any
 export const selectErrorofTransactions = createSelector(
   selectTransactionState,
-  (state) => (state.error ? state.error.message : null)
+  (state) => (state.error ? state.error.message : null),
 );
 
 //select totalIncome
 export const selectIncomeofTransactions = createSelector(
   selectTransactionState,
-  (state) => state.totalIncome
+  (state) => state.totalIncome,
 );
 
 //select total expenses
 export const selectExpensesofTransactions = createSelector(
   selectTransactionState,
-  (state) => state.totalExpenses
+  (state) => state.totalExpenses,
 );
 
 //total new balance
 export const selectNetBalanceofTransactions = createSelector(
   selectIncomeofTransactions,
   selectExpensesofTransactions,
-  (totalIncome, totalExpenses) => totalIncome - totalExpenses
+  (totalIncome, totalExpenses) => totalIncome - totalExpenses,
 );

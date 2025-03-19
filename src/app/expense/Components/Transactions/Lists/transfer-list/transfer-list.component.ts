@@ -84,7 +84,7 @@ export class TransferListComponent implements OnInit {
           pageSize: this.pageSize,
           sortOrder: this.selectedSortOrder,
         },
-      })
+      }),
     );
   }
 
@@ -137,10 +137,10 @@ export class TransferListComponent implements OnInit {
                 userId: this.userId,
                 transaction_id: transaction.transaction_id,
               },
-            })
+            }),
           );
           this.notificationService.showNotification(
-            'Transaction deleted successfully!'
+            'Transaction deleted successfully!',
           );
 
           //wait for store to update then fetch new data
