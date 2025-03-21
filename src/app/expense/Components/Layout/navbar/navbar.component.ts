@@ -15,7 +15,7 @@ import { resetTransferStore } from '../../../@NgRx/Transfers/transfer.actions';
 export class NavbarComponent implements OnInit {
   mode!: string;
   user_initial: string = 'null';
-  user_details: boolean = true;
+  user_details: boolean = false;
 
   private authService = inject(AuthService);
   private router = inject(Router);

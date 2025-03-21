@@ -3,5 +3,5 @@
 }
 
 .active-link p {
-  @apply w-12 opacity-100;
+  @apply w-[75%] opacity-100;
 }

@@ -1,13 +1,14 @@
-<!-- <div>
-  <button (click)="logout()">logout</button>
-</div> -->
+<!-- Main container -->
 <div class="border border-b-2 flex items-center w-full px-10 p-3 bg-[#DAEFE1]">
+  <!-- Application name -->
   <div
     class="w-[33.33%] flex justify-start font-bold text-xl text-dark-spring-green"
   >
     CerelFlow
   </div>
+  <!-- Routing links -->
   <div class="w-[33.33%] flex justify-center gap-x-6 font-semibold">
+    <!-- overview -->
     <a
       routerLink="/expense/dashboard"
       routerLinkActive="active-link"
@@ -15,11 +16,11 @@
       class="flex flex-col justify-center items-center"
     >
       Overview
-      <!-- <p class="group-[route]: w-12 h-[3px] bg-[#4C956C] rounded"></p> -->
       <p
         class="w-0 h-[3px] bg-[#4C956C] rounded opacity-0 transition-all duration-300 ease-in-out"
       ></p>
     </a>
+    <!-- transactions -->
     <a
       routerLink="/expense/transactions"
       routerLinkActive="active-link"
@@ -31,6 +32,7 @@
         class="w-0 h-[3px] bg-[#4C956C] rounded opacity-0 transition-all duration-300 ease-in-out"
       ></p>
     </a>
+    <!-- transfers -->
     <a
       routerLink="/expense/transfers"
       routerLinkActive="active-link"
@@ -43,16 +45,20 @@
       ></p>
     </a>
   </div>
+  <!-- more options -->
   <div class="w-[33.33%] flex justify-end gap-3">
+    <!-- view mode -->
     <div
       class="border border-[#CAE7D4] rounded-full p-1 w-8 h-8 bg-[#FBFEFC] flex items-center justify-center"
     >
+      <!-- light mode -->
       <lucide-icon
         *ngIf="mode === 'light'"
         name="sun"
         (click)="changemode('dark')"
         class="cursor-pointer text-muted-foreground w-5 h-5"
       ></lucide-icon>
+      <!-- dark mode -->
       <lucide-icon
         *ngIf="mode === 'dark'"
         name="moon"
@@ -60,7 +66,9 @@
         class="cursor-pointer text-muted-foreground w-5 h-5"
       ></lucide-icon>
     </div>
+    <!-- account -->
     <div class="relative">
+      <!-- account view circle -->
       <div
         (click)="viewUserDetails()"
         class="cursor-pointer text-white border border-[#4C956C] rounded-full p-1 bg-[#4C956C] w-8 h-8 flex items-center justify-center"
@@ -74,12 +82,14 @@
           user_initial
         }}</span>
       </div>
-      <!-- user details -->
+      <!-- account details main container-->
       <div
         *ngIf="user_details === true"
         class="absolute -right-1 top-7 mt-3 w-60 overflow-hidden rounded bg-white ring-1 shadow-lg ring-gray-900/5"
       >
+        <!-- inner container -->
         <div class="flex flex-col">
+          <!-- name and email -->
           <div class="flex items-center justify-center gap-x-3 px-4 pt-4 pb-2">
             <div
               class="bg-[#4C956C] w-11 h-11 rounded-full p-1 flex justify-center items-center"
@@ -101,7 +111,9 @@
             </div>
           </div>
           <div class="border-t border-[#E7E8EC]"></div>
+          <!-- account options -->
           <div class="w-full h-full flex flex-col text-sm">
+            <!-- view account -->
             <a
               class="group flex items-center gap-x-2 cursor-pointer hover:bg-[#F5FBF7] px-4 py-2"
             >
@@ -112,7 +124,7 @@
               View account
             </a>
             <div class="border-t border-[#E7E8EC]"></div>
-
+            <!-- logout -->
             <div
               (click)="logout()"
               class="group flex items-center gap-x-2 cursor-pointer hover:bg-[#F5FBF7] px-4 py-2"

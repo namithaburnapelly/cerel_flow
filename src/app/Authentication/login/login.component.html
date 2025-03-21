@@ -9,12 +9,14 @@
       class="flex w-full items-center justify-center bg-[url('assets/authentication/login.jpg')] bg-cover p-4 lg:w-[500px] lg:bg-none"
     >
       <div class="flex w-[500px] flex-col items-center">
+        <!-- error message if any -->
         <div
           *ngIf="errorMessage"
           class="select-none p-2 font-semibold text-fire-engine-red"
         >
           {{ errorMessage }}
         </div>
+        <!-- heading -->
         <div class="mb-4 select-none text-3xl font-bold text-dark-spring-green">
           Login here
         </div>
@@ -73,6 +75,7 @@
                   placeholder="Enter your password"
                   class="w-full pl-6 rounded border border-border-color p-[5px] focus:border-b-4 focus:border-b-sea-green focus:outline-none"
                 />
+                <!-- view or hide password icons -->
                 <lucide-icon
                   *ngIf="isPasswordVisible === false"
                   name="eye"
@@ -96,6 +99,7 @@
                 </div>
               </div>
             </div>
+            <!-- login button -->
             <div>
               <button
                 type="submit"
@@ -104,11 +108,13 @@
                 Login
               </button>
             </div>
+            <!-- seperation line -->
             <div class="my-4 flex w-full items-center">
               <div class="flex-1 border-t border-border-color"></div>
               <span class="select-none px-3 text-sm text-[#80828D]">OR</span>
               <div class="flex-1 border-t border-border-color"></div>
             </div>
+            <!-- sign up  buttom -->
             <div class="w-full">
               <a
                 routerLink="/register"
@@ -121,6 +127,7 @@
         </div>
       </div>
     </div>
+    <!-- image -->
     <div class="hidden items-center justify-center p-4 lg:flex">
       <img
         src="assets/authentication/login.jpg"
