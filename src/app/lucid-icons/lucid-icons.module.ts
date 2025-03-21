@@ -14,6 +14,7 @@ import {
   LockKeyhole,
   LogOut,
   Settings2,
+  Mail,
 } from 'lucide-angular';
 
 @NgModule({
@@ -32,6 +33,7 @@ import {
       LockKeyhole,
       LogOut,
       Settings2,
+      Mail,
     }),
   ],
   exports: [LucideAngularModule],
