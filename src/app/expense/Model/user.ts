@@ -4,6 +4,7 @@ export interface IUser {
   _id: string;
   email: string;
   password: string;
+  username: string;
 }
 
 //auth model
@@ -18,6 +19,7 @@ export interface UserInfo {
   accessToken: string;
   email: string;
   userId: string;
+  username: string;
 }
 
 //when new user register

@@ -11,7 +11,7 @@ export const transactionsResolver: ResolveFn<void> = () => {
   store.dispatch(
     loadTransactions({
       payload: {
-        userId: authService.getUserId(),
+        userId: authService.getUserDetails('userId'),
         page: 1,
         sortOrder: 'date_desc',
       },

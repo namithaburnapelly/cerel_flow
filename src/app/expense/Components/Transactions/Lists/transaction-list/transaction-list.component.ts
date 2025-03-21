@@ -60,7 +60,7 @@ export class TransactionListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.userId = this.authService.getUserDetails('userId');
 
     //get the route and set params page to 1 by default or if exists to it
     this.route.queryParams.subscribe((params) => {

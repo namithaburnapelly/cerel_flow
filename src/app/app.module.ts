@@ -29,15 +29,7 @@ import { ExpenseModule } from './expense/expense.module';
 import { NotificationService } from './expense/Service/Notification/notification.service';
 import { MaterialModule } from './expense/material/material.module';
 import { DashboardComponent } from './expense/Components/Layout/dashboard/dashboard.component';
-import {
-  LucideAngularModule,
-  File,
-  Home,
-  Menu,
-  UserCheck,
-  Eye,
-  EyeOff,
-} from 'lucide-angular';
+import { LucidIconsModule } from './lucid-icons/lucid-icons.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +49,7 @@ import {
     StoreModule.forRoot({}), //This initializes NgRx Store globally
     ExpenseModule,
     MaterialModule,
-    LucideAngularModule.pick({ File, Home, Menu, UserCheck, Eye, EyeOff }),
+    LucidIconsModule,
   ],
   providers: [
     //provide custom error handler class to app module.

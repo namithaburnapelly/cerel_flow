@@ -21,7 +21,7 @@ export function authInterceptor(
   const newReqWithHeader = req.clone({
     headers: req.headers.append(
       'Authorization',
-      `Bearer ${authService.getAuthToken()}`,
+      `Bearer ${authService.getUserDetails('authToken')}`,
     ),
   });
   return next(newReqWithHeader).pipe(

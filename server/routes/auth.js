@@ -74,6 +74,7 @@ router.post("/login", async (req, res) => {
       payload: {
         _id: user._id,
         email: user.email,
+        username: user.username,
       },
       expiresAt: "1h", // 15days //1hour
     });

@@ -1,15 +1,131 @@
-<h1>CerelFlow</h1>
-
-<div>
-  <a routerLink="/expense/dashboard">
-    <button>Overview</button>
-  </a>
-  <a routerLink="/expense/transactions">
-    <button>Transactions</button>
-  </a>
-  <a routerLink="/expense/transfers">
-    <button>Transfers</button>
-  </a>
-  <a routerLink="/expense/addTransaction"> <button>Add Transaction</button></a>
+<!-- <div>
   <button (click)="logout()">logout</button>
+</div> -->
+<div class="border border-b-2 flex items-center w-full px-10 p-3 bg-[#DAEFE1]">
+  <div
+    class="w-[33.33%] flex justify-start font-bold text-xl text-dark-spring-green"
+  >
+    CerelFlow
+  </div>
+  <div class="w-[33.33%] flex justify-center gap-x-6 font-semibold">
+    <a
+      routerLink="/expense/dashboard"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="flex flex-col justify-center items-center"
+    >
+      Overview
+      <!-- <p class="group-[route]: w-12 h-[3px] bg-[#4C956C] rounded"></p> -->
+      <p
+        class="w-0 h-[3px] bg-[#4C956C] rounded opacity-0 transition-all duration-300 ease-in-out"
+      ></p>
+    </a>
+    <a
+      routerLink="/expense/transactions"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="flex flex-col justify-center items-center"
+    >
+      Transactions
+      <p
+        class="w-0 h-[3px] bg-[#4C956C] rounded opacity-0 transition-all duration-300 ease-in-out"
+      ></p>
+    </a>
+    <a
+      routerLink="/expense/transfers"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="flex flex-col justify-center items-center"
+    >
+      Transfers
+      <p
+        class="w-0 h-[3px] bg-[#4C956C] rounded opacity-0 transition-all duration-300 ease-in-out"
+      ></p>
+    </a>
+  </div>
+  <div class="w-[33.33%] flex justify-end gap-3">
+    <div
+      class="border border-[#CAE7D4] rounded-full p-1 w-8 h-8 bg-[#FBFEFC] flex items-center justify-center"
+    >
+      <lucide-icon
+        *ngIf="mode === 'light'"
+        name="sun"
+        (click)="changemode('dark')"
+        class="cursor-pointer text-muted-foreground w-5 h-5"
+      ></lucide-icon>
+      <lucide-icon
+        *ngIf="mode === 'dark'"
+        name="moon"
+        (click)="changemode('light')"
+        class="cursor-pointer text-muted-foreground w-5 h-5"
+      ></lucide-icon>
+    </div>
+    <div class="relative">
+      <div
+        (click)="viewUserDetails()"
+        class="cursor-pointer text-white border border-[#4C956C] rounded-full p-1 bg-[#4C956C] w-8 h-8 flex items-center justify-center"
+      >
+        <lucide-icon
+          *ngIf="user_initial === 'null'"
+          name="user-round"
+          class="w-5 h-5"
+        ></lucide-icon>
+        <span *ngIf="user_initial !== 'null'" class="font-bold text-lg">{{
+          user_initial
+        }}</span>
+      </div>
+      <!-- user details -->
+      <div
+        *ngIf="user_details === true"
+        class="absolute -right-1 top-7 mt-3 w-60 overflow-hidden rounded bg-white ring-1 shadow-lg ring-gray-900/5"
+      >
+        <div class="flex flex-col">
+          <div class="flex items-center justify-center gap-x-3 px-4 pt-4 pb-2">
+            <div
+              class="bg-[#4C956C] w-11 h-11 rounded-full p-1 flex justify-center items-center"
+            >
+              <lucide-icon
+                *ngIf="user_initial === 'null'"
+                name="user-round"
+                class="text-white"
+              ></lucide-icon>
+              <span
+                *ngIf="user_initial !== 'null'"
+                class="text-white font-semibold text-xl"
+                >{{ user_initial }}</span
+              >
+            </div>
+            <div>
+              <div class="font-bold">{{ getUsername() }}</div>
+              <div class="text-sm">{{ getEmail() }}</div>
+            </div>
+          </div>
+          <div class="border-t border-[#E7E8EC]"></div>
+          <div class="w-full h-full flex flex-col text-sm">
+            <a
+              class="group flex items-center gap-x-2 cursor-pointer hover:bg-[#F5FBF7] px-4 py-2"
+            >
+              <lucide-icon
+                name="settings-2"
+                class="w-4 h-4 text-muted-foreground group-hover:text-sea-green"
+              ></lucide-icon>
+              View account
+            </a>
+            <div class="border-t border-[#E7E8EC]"></div>
+
+            <div
+              (click)="logout()"
+              class="group flex items-center gap-x-2 cursor-pointer hover:bg-[#F5FBF7] px-4 py-2"
+            >
+              <lucide-icon
+                name="log-out"
+                class="w-4 h-4 text-muted-foreground group-hover:text-sea-green"
+              ></lucide-icon>
+              Sign out
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

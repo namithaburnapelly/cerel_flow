@@ -61,7 +61,7 @@ export class TransferListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.userId = this.authService.getUserDetails('userId');
 
     this.route.queryParams.subscribe((params) => {
       const { page, pageSize } = params;

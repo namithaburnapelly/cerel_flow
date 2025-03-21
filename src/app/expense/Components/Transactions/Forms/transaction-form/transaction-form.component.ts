@@ -44,7 +44,7 @@ export class TransactionFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.userId = this.authService.getUserDetails('userId');
 
     //if update then patch values to form
     if (this.transactionData) {

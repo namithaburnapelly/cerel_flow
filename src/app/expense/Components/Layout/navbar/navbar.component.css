@@ -1,0 +1,7 @@
+.active-link {
+  @apply [&>*]:visible;
+}
+
+.active-link p {
+  @apply w-12 opacity-100;
+}

@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     loadTransactions({
       payload: {
-        userId: this.authService.getUserId(),
+        userId: this.authService.getUserDetails('userId'),
         page: 1,
         pageSize: 5,
         sortOrder: 'date_desc',
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     });
     loadTransfers({
       payload: {
-        userId: this.authService.getUserId(),
+        userId: this.authService.getUserDetails('userId'),
         page: 1,
         pageSize: 5,
         sortOrder: 'date_desc',

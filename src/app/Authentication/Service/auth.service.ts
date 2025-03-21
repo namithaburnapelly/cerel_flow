@@ -36,6 +36,7 @@ export class AuthService {
           accessToken: userData.accessToken ?? '',
           email: userData.payload?.email ?? '',
           userId: userData.payload?._id ?? '',
+          username: userData.payload?.username ?? '',
         };
 
         // //save in local storage
@@ -66,16 +67,19 @@ export class AuthService {
     return false;
   }
 
-  getUserId(): string {
+  getUserDetails(value: string) {
     const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser).userId : '';
+    switch (value) {
+      case 'username':
+        return storedUser ? JSON.parse(storedUser).username : '';
+      case 'email':
+        return storedUser ? JSON.parse(storedUser).email : '';
+      case 'userId':
+        return storedUser ? JSON.parse(storedUser).userId : '';
+      case 'authToken':
+        return storedUser ? JSON.parse(storedUser).accessToken : '';
+    }
   }
-
-  getAuthToken(): string {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser).accessToken : '';
-  }
-
   Register(
     username: string,
     email: string,

@@ -23,6 +23,8 @@ import { TransactionEffects } from './@NgRx/Transactions/transaction.effects';
 import { TransferEffects } from './@NgRx/Transfers/transfer.effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
+import { LucidIconsModule } from '../lucid-icons/lucid-icons.module';
+import { PlaygroundComponent } from './Components/Layout/playground/playground.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { MaterialModule } from './material/material.module';
     ConfirmDeleteDialogComponent,
     UpdateTransactionComponent,
     NewTransactionComponent,
+    PlaygroundComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +53,7 @@ import { MaterialModule } from './material/material.module';
     StoreModule.forFeature('transactions', transactionReducer),
     StoreModule.forFeature('transfers', transferReducer),
     EffectsModule.forFeature([TransactionEffects, TransferEffects]), //to register effects
+    LucidIconsModule,
   ],
   exports: [HomeComponent, NavbarComponent],
 })

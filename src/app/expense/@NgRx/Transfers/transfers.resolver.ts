@@ -11,7 +11,7 @@ export const transfersResolver: ResolveFn<void> = () => {
   store.dispatch(
     loadTransfers({
       payload: {
-        userId: authService.getUserId(),
+        userId: authService.getUserDetails('userId'),
         page: 1,
         sortOrder: 'date_desc',
       },
