@@ -31,7 +31,7 @@ export class TransferEffects {
           .getTransfers(
             action.payload.userId,
             action.payload.page,
-            action.payload.pageSize || 5,
+            action.payload.pageSize || 10,
             action.payload.sortOrder,
           )
           .pipe(

@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
       payload: {
         userId: this.authService.getUserDetails('userId'),
         page: 1,
-        pageSize: 5,
+        pageSize: 10,
         sortOrder: 'date_desc',
       },
     });
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
       payload: {
         userId: this.authService.getUserDetails('userId'),
         page: 1,
-        pageSize: 5,
+        pageSize: 10,
         sortOrder: 'date_desc',
       },
     });

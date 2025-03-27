@@ -36,7 +36,9 @@ export class NavbarComponent implements OnInit {
   }
 
   getInitital() {
-    this.user_initial = this.authService.getUserDetails('username').charAt(0);
+    this.user_initial = this.authService.getUserDetails('username')
+      ? this.authService.getUserDetails('username').charAt(0)
+      : 'null';
   }
 
   getUsername() {

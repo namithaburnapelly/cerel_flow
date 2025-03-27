@@ -12,7 +12,7 @@ function generateAccessToken(user) {
     { _id: user._id, email: user.email, password: user.password },
     secretkey,
     {
-      expiresIn: "1h", //1hour
+      expiresIn: "12h", //12hour
     },
   );
 }

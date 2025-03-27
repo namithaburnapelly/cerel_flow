@@ -5,11 +5,11 @@ export const environment = {
 };
 
 export const environmentVariables = {
-  transferPageSize: 5,
+  transferPageSize: 10,
   transferUrl: 'http://localhost:3000/transfers',
   TRANSFER_FEATURE_KEY: 'transfers',
 
   transactionUrl: 'http://localhost:3000/transactions',
-  transactionPageSize: 5,
+  transactionPageSize: 10,
   TRANSACTION_FEATURE_KEY: 'transactions',
 };

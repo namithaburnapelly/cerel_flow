@@ -15,12 +15,12 @@ import {
 } from '../../../../@NgRx/Transactions/transaction.actions';
 import { UpdateTransactionComponent } from '../../../Payments/@Angular_material/update-transaction/update-transaction.component';
 import { ConfirmDeleteDialogComponent } from '../../../Payments/@Angular_material/confirm-delete-dialog/confirm-delete-dialog.component';
-import { environmentVariables } from '../../../../../../environment/environment';
 import { Transaction } from '../../../../Model/transaction.model';
 import { PaginationMetaData } from '../../../../@NgRx/Transfers/transfer.state';
 import { AuthService } from '../../../../../Authentication/Service/auth.service';
 import { TransactionState } from '../../../../@NgRx/Transactions/transaction.state';
 import { NotificationService } from '../../../../Service/Notification/notification.service';
+import { CATEGORY_MAP } from '../../../../Model/category';
 
 @Component({
   selector: 'app-transaction-list',
@@ -41,6 +41,9 @@ export class TransactionListComponent implements OnInit {
   pageSize: number;
   selectedSortOrder: string = 'date_desc';
 
+  //date
+  today = new Date();
+
   private store = inject(Store<TransactionState>);
   private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
@@ -56,12 +59,11 @@ export class TransactionListComponent implements OnInit {
     this.error$ = this.store.select(selectErrorofTransactions);
 
     //get local storage items
-    this.pageSize = Number(localStorage.getItem('transactions_per_page')) || 5;
+    this.pageSize = Number(localStorage.getItem('transactions_per_page')) || 10;
   }
 
   ngOnInit(): void {
     this.userId = this.authService.getUserDetails('userId');
-
     //get the route and set params page to 1 by default or if exists to it
     this.route.queryParams.subscribe((params) => {
       const { page, pageSize } = params;
@@ -113,6 +115,10 @@ export class TransactionListComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
     localStorage.setItem('transactions_per_page', this.pageSize.toString());
+  }
+
+  getCategoryDetails(category: string) {
+    return CATEGORY_MAP[category] || CATEGORY_MAP['Others'];
   }
 
   openUpdateModal(transaction: Transaction) {

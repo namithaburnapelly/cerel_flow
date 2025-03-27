@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
         email: user.email,
         username: user.username,
       },
-      expiresAt: "1h", // 15days //1hour
+      expiresAt: "12h", // 15days //12hour
     });
   } catch (err) {
     console.log(err);

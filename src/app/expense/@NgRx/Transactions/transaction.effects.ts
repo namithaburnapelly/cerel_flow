@@ -14,7 +14,14 @@ import {
   updateTransactionError,
   updateTransactionSuccess,
 } from './transaction.actions';
-import { mergeMap, catchError, map, switchMap, tap } from 'rxjs/operators';
+import {
+  mergeMap,
+  catchError,
+  map,
+  switchMap,
+  tap,
+  delay,
+} from 'rxjs/operators';
 import { of } from 'rxjs';
 import { TransactionService } from '../../Service/Transaction/transaction.service';
 
@@ -38,11 +45,12 @@ export class TransactionEffects {
           .getTransactions(
             action.payload.userId,
             action.payload.page,
-            action.payload.pageSize || 5,
+            action.payload.pageSize || 10,
             action.payload.sortOrder,
           )
           .pipe(
             tap((response) => console.log('✅ API Response:', response)), // Logs successful API response
+            // delay(10000),
             map((response) =>
               loadTransactionsSuccess({
                 payload: {

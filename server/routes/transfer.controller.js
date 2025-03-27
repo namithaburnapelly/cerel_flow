@@ -14,7 +14,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
 
     //pagination parameters
     const page = parseInt(req.query.page) || 1;
-    const pageSize = parseInt(req.query.pageSize) || 5;
+    const pageSize = parseInt(req.query.pageSize) || 10;
     const skip = (page - 1) * pageSize;
     const sortOrder = req.query.sortOrder;
 

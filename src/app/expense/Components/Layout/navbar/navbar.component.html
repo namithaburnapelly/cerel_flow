@@ -1,13 +1,13 @@
 <!-- Main container -->
-<div class="border border-b-2 flex items-center w-full px-10 p-3 bg-[#DAEFE1]">
+<div class="flex bg-white items-center w-full px-10 p-3 fixed top-0 z-50">
   <!-- Application name -->
   <div
-    class="w-[33.33%] flex justify-start font-bold text-xl text-dark-spring-green"
+    class="w-[33.33%] flex justify-start font-bold text-xl text-dark-spring-green select-none"
   >
     CerelFlow
   </div>
   <!-- Routing links -->
-  <div class="w-[33.33%] flex justify-center gap-x-6 font-semibold">
+  <div class="w-[33.33%] flex justify-center gap-x-6 font-semibold select-none">
     <!-- overview -->
     <a
       routerLink="/expense/dashboard"
@@ -24,7 +24,6 @@
     <a
       routerLink="/expense/transactions"
       routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }"
       class="flex flex-col justify-center items-center"
     >
       Transactions
@@ -36,7 +35,6 @@
     <a
       routerLink="/expense/transfers"
       routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }"
       class="flex flex-col justify-center items-center"
     >
       Transfers
@@ -85,7 +83,7 @@
       <!-- account details main container-->
       <div
         *ngIf="user_details === true"
-        class="absolute -right-1 top-7 mt-3 w-60 overflow-hidden rounded bg-white ring-1 shadow-lg ring-gray-900/5"
+        class="absolute z-20 -right-1 top-7 mt-3 w-60 overflow-hidden rounded bg-white ring-1 shadow-lg ring-gray-900/5"
       >
         <!-- inner container -->
         <div class="flex flex-col">
@@ -112,7 +110,7 @@
           </div>
           <div class="border-t border-[#E7E8EC]"></div>
           <!-- account options -->
-          <div class="w-full h-full flex flex-col text-sm">
+          <div class="w-full h-full flex flex-col text-sm select-none">
             <!-- view account -->
             <a
               class="group flex items-center gap-x-2 cursor-pointer hover:bg-[#F5FBF7] px-4 py-2"

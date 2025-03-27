@@ -27,7 +27,7 @@ export const transferInitialState: TransferStore = {
   transfers: [],
   pagination: {
     currentPage: 1,
-    pageSize: environmentVariables.transferPageSize ?? 5,
+    pageSize: environmentVariables.transferPageSize ?? 10,
     totalItems: 0,
     totalPages: 0,
   },

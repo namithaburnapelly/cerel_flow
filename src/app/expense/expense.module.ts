@@ -25,6 +25,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { LucidIconsModule } from '../lucid-icons/lucid-icons.module';
 import { PlaygroundComponent } from './Components/Layout/playground/playground.component';
+import { DashboardComponent } from './Components/Layout/dashboard/dashboard.component';
+import { FilterComponent } from './Components/Layout/filter/filter.component';
+import { LoadingComponent } from './Components/Layout/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { PlaygroundComponent } from './Components/Layout/playground/playground.c
     UpdateTransactionComponent,
     NewTransactionComponent,
     PlaygroundComponent,
+    DashboardComponent,
+    FilterComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,

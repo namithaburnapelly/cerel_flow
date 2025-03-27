@@ -57,7 +57,7 @@ export class TransferListComponent implements OnInit {
     this.error$ = this.store.select(selectErrorofTransfers);
 
     //get local storage items
-    this.pageSize = Number(localStorage.getItem('transfers_per_page')) || 5;
+    this.pageSize = Number(localStorage.getItem('transfers_per_page')) || 10;
   }
 
   ngOnInit(): void {

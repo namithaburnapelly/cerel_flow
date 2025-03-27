@@ -28,7 +28,6 @@ import { TransferService } from './expense/Service/Transfer/transfer.service';
 import { ExpenseModule } from './expense/expense.module';
 import { NotificationService } from './expense/Service/Notification/notification.service';
 import { MaterialModule } from './expense/material/material.module';
-import { DashboardComponent } from './expense/Components/Layout/dashboard/dashboard.component';
 import { LucidIconsModule } from './lucid-icons/lucid-icons.module';
 
 @NgModule({
@@ -37,7 +36,6 @@ import { LucidIconsModule } from './lucid-icons/lucid-icons.module';
     LoginComponent,
     RegisterComponent,
     PagenotfoundComponent,
-    DashboardComponent,
   ],
   imports: [
     BrowserModule,
