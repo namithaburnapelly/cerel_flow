@@ -1,60 +1,41 @@
-# CerelFlow
+# 💸CerelFlow -  Expense Tracker
 
-An expense tracker application.
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+A simple and clean **Expense Tracker** app built with **Angular** for the frontend and **Express.js** for the backend. It helps you track income, expenses, and transfers, and view financial summaries.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🚀 Tech Stack
 
-```bash
-ng serve
-```
+- **Frontend**: [Angular](https://angular.io/docs) (with Tailwind CSS + NgRx)
+- **Backend**: [Express.js](https://expressjs.com/)
+- **Frontend Hosting**: [Vercel](https://vercel.com/docs)
+- **Backend Hosting**: [Render](https://render.com/docs)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 📦 Deployment
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- The **Angular frontend** is deployed on **Vercel**: simple, fast, and auto-deploys from GitHub.
+- The **Express backend** (inside `/server`) is hosted on **Render** as a Web Service.
 
-```bash
-ng generate component component-name
-```
+> Make sure your Angular app points to the Render API base URL in `environment.ts`.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 🔗 Useful Links
 
-To build the project run:
+- 🔧 Angular Docs: [angular.io/docs](https://angular.io/docs)
+- 🌐 Vercel Docs: [vercel.com/docs](https://vercel.com/docs)
+- ☁️ Render Docs: [render.com/docs](https://render.com/docs)
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🧑‍💻 Author
 
-## Running unit tests
+Made with 💚 by Namitha
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+---
 
-```bash
-ng test
-```
 
-## Running end-to-end tests
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
