@@ -1,15 +1,36 @@
-<div style="margin: 20px">
-  <button (click)="formSelected('Transaction')">Transaction</button>
-  <button (click)="formSelected('Transfer')">Transfer</button>
+<div class="m-5">
+  <div class="flex space-x-4 mb-6">
+    <button
+      (click)="formSelected('Transaction')"
+      [ngClass]="{
+        'bg-green9 text-white font-semibold shadow-md':
+          transactionFormVisibility,
+        'bg-white text-gray-700 border border-gray-300':
+          !transactionFormVisibility,
+      }"
+      class="px-4 py-2 rounded transition"
+    >
+      Transaction
+    </button>
+
+    <button
+      (click)="formSelected('Transfer')"
+      [ngClass]="{
+        'bg-green9 text-white font-semibold shadow-md': transferFormVisibility,
+        'bg-white text-gray-700 border border-gray-300':
+          !transferFormVisibility,
+      }"
+      class="px-4 py-2 rounded transition"
+    >
+      Transfer
+    </button>
+  </div>
 
   <div *ngIf="transferFormVisibility">
-    <div>
-      <app-new-transfer></app-new-transfer>
-    </div>
+    <app-new-transfer></app-new-transfer>
   </div>
+
   <div *ngIf="transactionFormVisibility">
-    <div>
-      <app-new-transaction></app-new-transaction>
-    </div>
+    <app-new-transaction></app-new-transaction>
   </div>
 </div>

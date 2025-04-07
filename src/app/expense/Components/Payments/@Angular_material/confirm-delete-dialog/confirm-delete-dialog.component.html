@@ -1,11 +1,28 @@
-<h2 mat-dialog-title>Are you sure?</h2>
-<mat-dialog-content style="font-size: 16px">
-  <p>
-    Do you want to delete the {{ data.item_type }} for
-    <b>{{ data.item_name }}</b>
-  </p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onConfirm()">Yes, Delete</button>
-</mat-dialog-actions>
+<div class="p-6 max-w-md mx-auto bg-white rounded-lg shadow-lg">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Are you sure?</h2>
+
+  <div class="text-base text-gray-700 mb-6">
+    <p>
+      Do you want to delete the
+      <span class="font-medium">{{ data.item_type }}</span> for
+      <b class="text-red-600">{{ data.item_name }}</b
+      >?
+    </p>
+  </div>
+
+  <div class="flex justify-end space-x-4">
+    <button
+      (click)="onCancel()"
+      class="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
+    >
+      Cancel
+    </button>
+
+    <button
+      (click)="onConfirm()"
+      class="px-4 py-2 rounded bg-fire-engine-red text-white hover:bg-red-700 transition font-medium"
+    >
+      Yes
+    </button>
+  </div>
+</div>

@@ -1,4 +1,10 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../../../Authentication/Service/auth.service';
@@ -16,6 +22,8 @@ export class NavbarComponent implements OnInit {
   mode!: string;
   user_initial: string = 'null';
   user_details: boolean = false;
+
+  private eref = inject(ElementRef);
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -54,5 +62,11 @@ export class NavbarComponent implements OnInit {
     this.store.dispatch(resetTransferStore());
     this.authService.removestate();
     this.router.navigate(['/login']);
+  }
+
+  @HostListener('document: click', ['$event'])
+  clickOutside(event: Event) {
+    if (!this.eref.nativeElement.contains(event.target))
+      this.user_details = false;
   }
 }

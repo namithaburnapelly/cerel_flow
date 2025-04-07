@@ -1,33 +1,124 @@
-<h2>Dashboard</h2>
+<div class="p-6">
+  <h2 class="text-3xl font-bold text-green9 mb-2">Dashboard</h2>
+  <h4 class="text-gray-500 mb-6">{{ today | date: "fullDate" }}</h4>
 
-<h4>{{ today | date: "fullDate" }}</h4>
-
-<div>
-  <h2>Financial Summary</h2>
-  <p>Total Income: {{ totalIncome$ | async | currency: "INR" }}</p>
-  <p>Total Expenses: {{ totalExpenses$ | async | currency: "INR" }}</p>
-  <p>Net Balance: {{ netBalance$ | async | currency: "INR" }}</p>
-</div>
-
-<div *ngIf="transactions$ | async as transactions">
-  <div *ngIf="transactions.length > 0">
-    <h3>Recent Transactions</h3>
-    <div>
-      <p *ngFor="let transaction of transactions">
-        {{ transaction.category }}
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <!-- Summary Boxes -->
+    <div class="bg-white p-4 shadow-md rounded-xl">
+      <h3 class="text-lg font-semibold text-green8 mb-2">Total Income</h3>
+      <p class="text-xl font-bold text-green9">
+        + {{ totalIncome$ | async | currency: "INR" }}
+      </p>
+    </div>
+    <div class="bg-white p-4 shadow-md rounded-xl">
+      <h3 class="text-lg font-semibold text-rose-600 mb-2">Total Expenses</h3>
+      <p class="text-xl font-bold text-rose-700">
+        - {{ totalExpenses$ | async | currency: "INR" }}
+      </p>
+    </div>
+    <div class="bg-white p-4 shadow-md rounded-xl">
+      <h3 class="text-lg font-semibold text-blue-700 mb-2">Net Balance</h3>
+      <p class="text-xl font-bold text-blue-800">
+        {{ netBalance$ | async | currency: "INR" }}
       </p>
     </div>
   </div>
-</div>
 
-<div *ngIf="transfers$ | async as transfers">
-  <div *ngIf="transfers.length > 0">
-    <h3>Recent Transactions</h3>
-    <div>
-      <p *ngFor="let transaction of transfers">
-        Recent transfer from {{ transaction.recipient }} of
-        {{ transaction.amount }}
-      </p>
+  <!-- Transactions and Transfers Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Transactions Box -->
+    <!-- Recent Transactions -->
+    <div
+      *ngIf="transactions$ | async as transactions"
+      class="bg-white p-5 shadow-md rounded-xl"
+    >
+      <h3 class="text-xl font-semibold mb-4 text-green9">
+        Recent Transactions
+      </h3>
+
+      <div *ngIf="transactions.length > 0; else noTransactions">
+        <ul class="space-y-4">
+          <li
+            *ngFor="let transaction of transactions.slice(0, 5)"
+            class="flex items-center justify-between border-b pb-3"
+          >
+            <!-- Left side: Icon + Info -->
+            <div class="flex items-center gap-4">
+              <div
+                [ngClass]="{
+                  'bg-green-100 text-green-600': transaction.type === 'Income',
+                  'bg-red-100 text-red-600': transaction.type === 'Expense',
+                }"
+                class="rounded-full p-2"
+              >
+                <i
+                  [ngClass]="{
+                    'lucide lucide-arrow-down-left':
+                      transaction.type === 'Income',
+                    'lucide lucide-arrow-up-right':
+                      transaction.type === 'Expense',
+                  }"
+                  class="w-5 h-5"
+                ></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800">
+                  {{ transaction.category }}
+                </p>
+                <p class="text-xs text-gray-500">
+                  {{ transaction.date | date: "MMM dd - hh:mm a" }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Right side: Amount -->
+            <p
+              [ngClass]="{
+                'text-green-600': transaction.type === 'Income',
+                'text-red-600': transaction.type === 'Expense',
+              }"
+              class="font-bold text-sm"
+            >
+              {{ transaction.type === "Income" ? "+" : "-" }}
+              {{ transaction.amount | currency: "INR" }}
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <ng-template #noTransactions>
+        <p class="text-gray-400 text-sm">No transactions yet.</p>
+      </ng-template>
+    </div>
+
+    <!-- Recent Transfers -->
+    <div
+      *ngIf="transfers$ | async as transfers"
+      class="bg-white p-5 shadow-md rounded-xl"
+    >
+      <h3 class="text-xl font-semibold mb-4 text-green9">Recent Transfers</h3>
+
+      <div *ngIf="transfers.length > 0; else noTransfers">
+        <ul class="space-y-4">
+          <li
+            *ngFor="let transfer of transfers.slice(0, 5)"
+            class="flex justify-between items-center border-b pb-2"
+          >
+            <div>
+              <p class="text-sm text-gray-700">
+                Recent transfer
+                {{ transfer.type === "to" ? "to" : "from" }}
+                <span class="font-semibold">{{ transfer.recipient }}</span>
+              </p>
+              <span class="font-semibold">₹{{ transfer.amount }}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <ng-template #noTransfers>
+        <p class="text-gray-400 text-sm">No transfers yet.</p>
+      </ng-template>
     </div>
   </div>
 </div>

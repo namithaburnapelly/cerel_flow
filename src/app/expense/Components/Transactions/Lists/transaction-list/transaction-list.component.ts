@@ -90,9 +90,15 @@ export class TransactionListComponent implements OnInit {
     );
   }
 
-  onSortChange(event: any) {
-    this.selectedSortOrder = event.target.value;
-    this.loadTransactions();
+  onSortChange(sortValue: string) {
+    if (this.selectedSortOrder !== sortValue) {
+      this.selectedSortOrder = sortValue;
+      this.loadTransactions();
+    }
+  }
+
+  transferForm() {
+    localStorage.setItem('latestForm', 'Transaction');
   }
 
   onPageChange(page: number): void {

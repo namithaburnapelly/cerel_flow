@@ -1,7 +1,14 @@
-<h2 mat-dialog-title>Update Transfer</h2>
-<mat-dialog-content>
-  <app-transferform [transactionData]="transaction"></app-transferform>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button (click)="close()">Cancel</button>
-</mat-dialog-actions>
+<div class="p-4 max-w-sm mx-auto bg-white rounded-md">
+  <div class="mb-3">
+    <app-transferform [transactionData]="transaction"></app-transferform>
+  </div>
+
+  <div class="flex justify-end">
+    <button
+      (click)="close()"
+      class="px-3 py-1 text-sm bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 transition"
+    >
+      Cancel
+    </button>
+  </div>
+</div>

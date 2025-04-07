@@ -24,7 +24,6 @@ import { TransferEffects } from './@NgRx/Transfers/transfer.effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 import { LucidIconsModule } from '../lucid-icons/lucid-icons.module';
-import { PlaygroundComponent } from './Components/Layout/playground/playground.component';
 import { DashboardComponent } from './Components/Layout/dashboard/dashboard.component';
 import { FilterComponent } from './Components/Layout/filter/filter.component';
 import { LoadingComponent } from './Components/Layout/loading/loading.component';
@@ -43,7 +42,6 @@ import { LoadingComponent } from './Components/Layout/loading/loading.component'
     ConfirmDeleteDialogComponent,
     UpdateTransactionComponent,
     NewTransactionComponent,
-    PlaygroundComponent,
     DashboardComponent,
     FilterComponent,
     LoadingComponent,

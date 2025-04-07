@@ -1,75 +1,112 @@
-<div>
-  <h2>Transaction Form</h2>
+<div class="h-full px-8 py-6 bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-6 text-center text-green9">
+    Transaction Form
+  </h2>
 
   <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
-    <table cellspacing="0" cellpadding="10">
-      <tr>
-        <th>Field</th>
-        <th>Input</th>
-      </tr>
+    <table
+      class="w-full table-auto text-center border-separate border-spacing-y-4"
+    >
+      <tbody class="text-gray-700">
+        <tr>
+          <th><label for="type">Type:</label></th>
+          <td>
+            <select
+              id="type"
+              formControlName="type"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            >
+              <option value="Income">Income</option>
+              <option value="Expense">Expense</option>
+            </select>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label for="type">Type:</label></td>
-        <td>
-          <select id="type" formControlName="type">
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-          </select>
-        </td>
-      </tr>
+        <tr>
+          <th><label for="category">Category:</label></th>
+          <td>
+            <select
+              id="category"
+              formControlName="category"
+              required
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            >
+              <option value="" disabled selected>Select a category</option>
+              <option
+                *ngFor="let category of categoryOptions"
+                [value]="category"
+              >
+                {{ category }}
+              </option>
+            </select>
+            <div
+              class="text-red-500 text-xs mt-1"
+              *ngIf="
+                transactionForm.get('category')?.touched &&
+                transactionForm.get('category')?.invalid
+              "
+            >
+              Select a category
+            </div>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label for="category">Category:</label></td>
-        <td>
-          <input
-            type="text"
-            id="category"
-            formControlName="category"
-            required
-          />
-          <div
-            *ngIf="
-              transactionForm.get('category')?.touched &&
-              transactionForm.get('category')?.invalid
-            "
-          >
-            ❌ Enter a valid category
-          </div>
-        </td>
-      </tr>
+        <tr>
+          <th><label for="date">Date:</label></th>
+          <td>
+            <input
+              type="date"
+              id="date"
+              formControlName="date"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            />
+          </td>
+        </tr>
 
-      <tr>
-        <td><label for="date">Date:</label></td>
-        <td><input type="date" id="date" formControlName="date" required /></td>
-      </tr>
+        <tr>
+          <th><label for="amount">Amount:</label></th>
+          <td>
+            <input
+              id="amount"
+              type="number"
+              formControlName="amount"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            />
+            <div
+              class="text-red-500 text-xs mt-1"
+              *ngIf="
+                transactionForm.get('amount')?.touched &&
+                transactionForm.get('amount')?.invalid
+              "
+            >
+              Amount must be greater than 0!
+            </div>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label for="amount">Amount:</label></td>
-        <td>
-          <input id="amount" type="number" formControlName="amount" required />
-          <div
-            *ngIf="
-              transactionForm.get('amount')?.touched &&
-              transactionForm.get('amount')?.invalid
-            "
-          >
-            ❌ Amount must be greater than 0!
-          </div>
-        </td>
-      </tr>
+        <tr>
+          <th><label for="description">Description:</label></th>
+          <td>
+            <textarea
+              id="description"
+              formControlName="description"
+              rows="3"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            ></textarea>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label for="description">Description:</label></td>
-        <td>
-          <textarea id="description" formControlName="description"></textarea>
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="2" align="center">
-          <button type="submit">Submit</button>
-        </td>
-      </tr>
+        <tr>
+          <td colspan="2" class="pt-4 text-center">
+            <button
+              type="submit"
+              class="bg-sea-green font-bold text-white px-6 py-2 rounded-sm shadow hover:bg-green8 transition"
+            >
+              Submit
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </form>
 </div>

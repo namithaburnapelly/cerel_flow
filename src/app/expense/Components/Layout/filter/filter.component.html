@@ -2,16 +2,16 @@
   <div class="w-60 flex justify-end items-center gap-x-2">
     <!-- toggle asc desc -->
     <div
-      class="w-8 h-8 flex justify-center items-center border border-grey8 rounded-md"
+      class="group w-8 h-8 flex justify-center items-center cursor-pointer border border-grey8 rounded-md hover:bg-green2"
+      (click)="toggleSort()"
     >
       <lucide-icon
-        name="CalendarArrowDown"
-        class="w-4 h-4 text-grey9"
+        [name]="sortIcon"
+        class="w-4 h-4 text-grey9 group-hover:text-green9"
       ></lucide-icon>
-      <!-- <lucide-icon name="moon" class="text-grey9"></lucide-icon> -->
     </div>
     <button
-      (click)="filterOptions()"
+      (click)="toggleDropdown()"
       type="button"
       class="relative group grid w-[50%] cursor-pointer grid-cols-1 rounded-md bg-white py-1 pl-3 pr-2 text-left outline outline-1 -outline-offset-1 hover:bg-green2 outline-grey8 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-green6 sm:text-sm/6"
     >
@@ -20,7 +20,7 @@
           name="arrow-up-down"
           class="w-4 h-4 text-grey9 group-hover:text-sea-green"
         ></lucide-icon>
-        <span class="block">Filter</span>
+        <span class="block"> {{ getSelectedSortName() }}</span>
       </span>
       <!-- the array up down svg -->
       <svg
@@ -43,14 +43,17 @@
         role="listbox"
       >
         <li
-          *ngFor="let option of sort_options"
-          class="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 hover:text-white hover:bg-green9"
+          *ngFor="let option of sortOptions"
+          class="group relative cursor-pointer select-none py-2 pl-3 pr-9 text-gray-900 hover:text-white hover:bg-green9"
           id="listbox-option-0"
           role="option"
+          (click)="setSelectedSort(option.key)"
         >
           <div class="flex items-center">
             <!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-            <span class="ml-3 block truncate font-normal">{{ option }}</span>
+            <span class="ml-3 block truncate font-normal">{{
+              option.name
+            }}</span>
           </div>
         </li>
       </ul>

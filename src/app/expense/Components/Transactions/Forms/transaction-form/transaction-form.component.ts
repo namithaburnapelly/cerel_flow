@@ -11,6 +11,7 @@ import {
   updateTransaction,
 } from '../../../../@NgRx/Transactions/transaction.actions';
 import { NotificationService } from '../../../../Service/Notification/notification.service';
+import { CATEGORY_KEYS } from '../../../../Model/category';
 
 @Component({
   selector: 'app-transaction-form',
@@ -24,6 +25,7 @@ export class TransactionFormComponent implements OnInit {
 
   transactionForm: FormGroup;
   userId!: string;
+  categoryOptions = CATEGORY_KEYS;
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);

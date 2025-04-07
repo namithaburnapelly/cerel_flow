@@ -1,68 +1,104 @@
-<div>
-  <h2>Transfers Form</h2>
+<div class="h-full px-8 py-6 bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-bold mb-6 text-center text-green9">Transfer Form</h2>
 
   <form [formGroup]="transferForm" (ngSubmit)="onSubmit()">
-    <table cellspacing="0" cellpadding="10">
-      <tr>
-        <th>Field</th>
-        <th>Input</th>
-      </tr>
+    <table
+      class="w-full table-auto text-center border-separate border-spacing-y-4"
+    >
+      <tbody class="text-gray-700">
+        <tr>
+          <th><label for="recipient">Recipient:</label></th>
+          <td>
+            <input
+              formControlName="recipient"
+              type="text"
+              id="recipient"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            />
+            <div
+              class="text-red-500 text-xs mt-1"
+              *ngIf="
+                transferForm.get('recipient')?.invalid &&
+                transferForm.get('recipient')?.touched
+              "
+            >
+              Required (min 3 characters).
+            </div>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label>Recipient:</label></td>
-        <td>
-          <input formControlName="recipient" type="text" />
-          <div
-            *ngIf="
-              transferForm.get('recipient')?.invalid &&
-              transferForm.get('recipient')?.touched
-            "
-          >
-            ❌ Required (min 3 characters).
-          </div>
-        </td>
-      </tr>
+        <tr>
+          <th><label for="amount">Amount:</label></th>
+          <td>
+            <input
+              formControlName="amount"
+              type="number"
+              id="amount"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            />
+            <div
+              class="text-red-500 text-xs mt-1"
+              *ngIf="
+                transferForm.get('amount')?.invalid &&
+                transferForm.get('amount')?.touched
+              "
+            >
+              Amount must be at least 1.
+            </div>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label>Amount:</label></td>
-        <td>
-          <input formControlName="amount" type="number" />
-          <div
-            *ngIf="
-              transferForm.get('amount')?.invalid &&
-              transferForm.get('amount')?.touched
-            "
-          >
-            ❌ Amount must be at least 1.
-          </div>
-        </td>
-      </tr>
+        <tr>
+          <th><label for="type">Type:</label></th>
+          <td>
+            <select
+              formControlName="type"
+              id="type"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            >
+              <option value="to">Send / Sent</option>
+              <option value="from">Received</option>
+            </select>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label>Type:</label></td>
-        <td>
-          <select formControlName="type">
-            <option value="to">To</option>
-            <option value="from">From</option>
-          </select>
-        </td>
-      </tr>
+        <tr>
+          <th><label for="date">Date:</label></th>
+          <td>
+            <input
+              formControlName="date"
+              type="date"
+              id="date"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            />
+          </td>
+        </tr>
 
-      <tr>
-        <td><label>Date:</label></td>
-        <td><input formControlName="date" type="date" /></td>
-      </tr>
+        <tr>
+          <th>
+            <label for="description">Description:</label>
+          </th>
+          <td>
+            <textarea
+              formControlName="description"
+              id="description"
+              rows="3"
+              class="w-[50%] border border-gray-300 rounded-md p-2 focus:ring-green7 focus:border-green5"
+            ></textarea>
+          </td>
+        </tr>
 
-      <tr>
-        <td><label>Description:</label></td>
-        <td><textarea formControlName="description"></textarea></td>
-      </tr>
-
-      <tr>
-        <td colspan="2" align="center">
-          <button type="submit">Submit</button>
-        </td>
-      </tr>
+        <tr>
+          <td colspan="2" class="pt-4 text-center">
+            <button
+              type="submit"
+              class="bg-sea-green font-bold text-white px-6 py-2 rounded-sm shadow hover:bg-green8 transition"
+            >
+              Submit
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </form>
 </div>

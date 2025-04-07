@@ -1,106 +1,163 @@
-<div>
-  <h2>Transfers</h2>
-
-  <select (change)="onSortChange($event)">
-    <option value="date_desc">Date (Newest First)</option>
-    <option value="date_asc">Date (Oldest First)</option>
-    <option value="amount_desc">Amount (High to Low)</option>
-    <option value="amount_asc">Amount (Low to High)</option>
-    <option value="recipient_asc">Recipient (A-Z)</option>
-    <option value="recipient_desc">Recipient (Z-A)</option>
-  </select>
-
-  <!-- Loading Placeholder -->
-  <ng-template #loading>
-    <mat-spinner></mat-spinner>
-  </ng-template>
-
-  <!-- No Transactions Message -->
-  <ng-template #noTransactions>
-    <div *ngIf="error$ | async as errorMessage">
-      <p class="error">{{ errorMessage }}</p>
-    </div>
-  </ng-template>
-
-  <div *ngIf="transactions$ | async as transactions; else loading">
-    <div *ngIf="transactions.length > 0; else noTransactions">
-      <table cellspacing="0" cellpadding="10">
-        <thead>
-          <tr>
-            <th>recipient</th>
-            <th>type</th>
-            <th>amount</th>
-            <th>Date</th>
-            <th>description</th>
-            <th>options</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- The paginate pipe filters the transaction array to show only 3 items per page based on p(current page) -->
-          <tr *ngFor="let transaction of transactions">
-            <td>{{ transaction.recipient }}</td>
-            <td>{{ transaction.type }}</td>
-            <td>{{ transaction.amount | currency: "INR" }}</td>
-            <td>{{ transaction.date | date: "mediumDate" }}</td>
-            <td>{{ transaction.description || "N/A" }}</td>
-            <td>
-              <button
-                (click)="openUpdateModal(transaction)"
-                mat-button
-                style="color: blue"
-              >
-                Edit
-              </button>
-              <button
-                (click)="confirmDelete(transaction)"
-                mat-button
-                style="color: red"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- when user clicks next or previous page change updates p
-      and table automatically updates to show transactions for new page -->
-
+<div class="flex flex-col gap-y-6 min-h-[600px]">
+  <div class="flex items-center w-full">
+    <div class="flex text-3xl font-semibold w-[50%]">Transfers</div>
+    <div class="flex w-[50%] justify-end gap-x-4">
       <div
-        *ngIf="pagination$ | async as pagination"
-        style="display: flex; justify-content: space-between; width: 600px"
+        class="flex font-semibold text-[15px] items-center gap-x-2 px-[7px] py-[4px] rounded bg-white shadow-md"
       >
-        <div>
-          Items per page:
-          <select
-            name="pageSize"
-            id="pageSize"
-            (change)="onPageSizeChange($event)"
-            [value]="pageSize"
-          >
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-          </select>
-        </div>
-        <div>
-          <span
-            >Page {{ pagination.currentPage }} of
-            {{ pagination.totalPages }}</span
-          >
-          <button
-            (click)="onPageChange(pagination.currentPage - 1)"
-            [disabled]="pagination.currentPage == 1"
-          >
-            previous
-          </button>
-          <button
-            (click)="onPageChange(pagination.currentPage + 1)"
-            [disabled]="pagination.currentPage === pagination.totalPages"
-          >
-            Next
-          </button>
-        </div>
+        <div>{{ today | date: "fullDate" }}</div>
+        <lucide-icon name="calendar-days" class="w-4 h-4"></lucide-icon>
       </div>
+      <div
+        class="flex font-semibold text-[15px] items-center gap-x-1 bg-sea-green text-white shadow-md px-[7px] py-[3px] rounded"
+      >
+        <lucide-icon name="plus" class="w-4 h-4" strokeWidth="3"></lucide-icon>
+        <a routerLink="/expense/addTransaction" (click)="transferForm()"
+          >Add Transfer</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Table container -->
+  <div
+    class="flex flex-1 flex-col gap-y-4 px-8 py-4 bg-white shadow-md rounded"
+  >
+    <!-- Header with title and filter -->
+    <div class="flex justify-between">
+      <div class="text-2xl font-semibold">Entries</div>
+      <app-filter (sortChanged)="onSortChange($event)"></app-filter>
+    </div>
+
+    <div class="flex-1 relative">
+      <!-- Loading State -->
+      <div
+        *ngIf="loading$ | async; else dataLoaded"
+        class="flex justify-center items-center"
+      >
+        <app-loading></app-loading>
+      </div>
+
+      <!-- Loaded Data -->
+      <ng-template #dataLoaded>
+        <div *ngIf="transactions$ | async as transactions">
+          <div
+            *ngIf="transactions.length > 0; else noTransfers"
+            class="relative overflow-auto pb-10"
+          >
+            <table class="w-full text-left text-gray-500">
+              <thead class="bg-green4 text-green10 font-semibold">
+                <tr>
+                  <th class="px-6 py-3 rounded-l-sm">Recipient</th>
+                  <th class="px-6 py-3">Description</th>
+                  <th class="px-6 py-3 text-end">Amount</th>
+                  <th class="px-6 py-3 text-end">Date</th>
+                  <th class="px-6 py-3 rounded-r-sm text-center">More</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let transaction of transactions"
+                  class="bg-white border-b border-grey3 hover:bg-green2 text-sm"
+                >
+                  <th class="px-6 py-4 text-gray-900 rounded-l-sm">
+                    {{ transaction.recipient }}
+                  </th>
+                  <th class="px-6 py-4">
+                    {{
+                      transaction.description
+                        ? transaction.description
+                        : transaction.type === "from"
+                          ? "Money received"
+                          : "Money Sent"
+                    }}
+                  </th>
+                  <th class="px-6 py-4 text-end">
+                    <span
+                      [ngClass]="
+                        transaction.type === 'from'
+                          ? 'text-green9'
+                          : 'text-red-500'
+                      "
+                      >{{ transaction.type === "from" ? "+" : "-" }}
+                      {{ transaction.amount | currency: "INR" }}</span
+                    >
+                  </th>
+                  <th class="px-6 py-4 text-end">
+                    {{ transaction.date | date: "mediumDate" }}
+                  </th>
+
+                  <th class="px-6 py-4 text-center rounded-r-sm">
+                    <div class="flex justify-center gap-x-2">
+                      <button
+                        (click)="openUpdateModal(transaction)"
+                        mat-button
+                        style="color: blue"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        (click)="confirmDelete(transaction)"
+                        mat-button
+                        style="color: red"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="absolute bottom-0 w-full">
+            <div class="w-full border"></div>
+            <div
+              *ngIf="pagination$ | async as pagination"
+              class="flex px-4 w-full justify-between pt-2"
+            >
+              <div class="flex items-center gap-x-1">
+                <span class="text-grey11">Entries per page:</span>
+                <select
+                  name="pageSize"
+                  id="pageSize"
+                  (change)="onPageSizeChange($event)"
+                  [value]="pageSize"
+                  class="border border-grey5 text-grey11 text-sm cursor-pointer rounded hover:bg-green3 focus:ring-green7 focus:border-green5 block w-24"
+                >
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                </select>
+              </div>
+              <div class="flex gap-x-2 text-sm">
+                <button
+                  class="border border-grey5 px-2 py-1 rounded bg-grey4 hover:bg-green3 cursor-pointer"
+                  (click)="onPageChange(pagination.currentPage - 1)"
+                  [disabled]="pagination.currentPage == 1"
+                >
+                  Previous
+                </button>
+                <button
+                  class="border border-grey5 px-2 py-1 rounded bg-grey4 hover:bg-green3 cursor-pointer"
+                  (click)="onPageChange(pagination.currentPage + 1)"
+                  [disabled]="pagination.currentPage === pagination.totalPages"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- No Transfers Message -->
+      <ng-template #noTransfers>
+        <div *ngIf="error$ | async as errorMessage">
+          <p class="text-red-500 text-center py-4">{{ errorMessage }}</p>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

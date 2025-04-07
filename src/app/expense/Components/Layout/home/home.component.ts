@@ -41,21 +41,28 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    loadTransactions({
-      payload: {
-        userId: this.authService.getUserDetails('userId'),
-        page: 1,
-        pageSize: 10,
-        sortOrder: 'date_desc',
-      },
-    });
-    loadTransfers({
-      payload: {
-        userId: this.authService.getUserDetails('userId'),
-        page: 1,
-        pageSize: 10,
-        sortOrder: 'date_desc',
-      },
-    });
+    const userId = this.authService.getUserDetails('userId');
+
+    this.store.dispatch(
+      loadTransactions({
+        payload: {
+          userId,
+          page: 1,
+          pageSize: 5,
+          sortOrder: 'date_desc',
+        },
+      }),
+    );
+
+    this.store.dispatch(
+      loadTransfers({
+        payload: {
+          userId,
+          page: 1,
+          pageSize: 5,
+          sortOrder: 'date_desc',
+        },
+      }),
+    );
   }
 }

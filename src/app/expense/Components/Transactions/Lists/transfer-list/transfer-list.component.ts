@@ -8,7 +8,6 @@ import {
   PaginationMetaData,
   TransferStore,
 } from '../../../../@NgRx/Transfers/transfer.state';
-import { environmentVariables } from '../../../../../../environment/environment';
 import { AuthService } from '../../../../../Authentication/Service/auth.service';
 import {
   selectErrorofTransfers,
@@ -36,6 +35,9 @@ export class TransferListComponent implements OnInit {
   pagination$: Observable<PaginationMetaData>;
   loading$: Observable<boolean>;
   error$: Observable<string | null>;
+
+  //date
+  today = new Date();
 
   userId!: string;
   currentPage!: number;
@@ -88,9 +90,11 @@ export class TransferListComponent implements OnInit {
     );
   }
 
-  onSortChange(event: any) {
-    this.selectedSortOrder = event.target.value;
-    this.loadTransfers();
+  onSortChange(sortValue: string) {
+    if (this.selectedSortOrder !== sortValue) {
+      this.selectedSortOrder = sortValue;
+      this.loadTransfers();
+    }
   }
 
   onPageChange(page: number): void {
@@ -99,6 +103,10 @@ export class TransferListComponent implements OnInit {
       queryParams: { page: page },
       queryParamsHandling: 'merge',
     });
+  }
+
+  transferForm() {
+    localStorage.setItem('latestForm', 'Transfer');
   }
 
   onPageSizeChange(event: Event) {
