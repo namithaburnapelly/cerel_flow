@@ -2,7 +2,6 @@
 
 A simple and clean **Expense Tracker** app built with **Angular** for the frontend and **Express.js** for the backend. It helps you track income, expenses, and transfers, and view financial summaries.
 
----
 
 ## 🚀 Tech Stack
 
@@ -11,7 +10,6 @@ A simple and clean **Expense Tracker** app built with **Angular** for the fronte
 - **Frontend Hosting**: [Vercel](https://vercel.com/docs)
 - **Backend Hosting**: [Render](https://render.com/docs)
 
----
 
 ## 📦 Deployment
 
@@ -21,7 +19,6 @@ A simple and clean **Expense Tracker** app built with **Angular** for the fronte
 > Make sure your Angular app points to the Render API base URL in `environment.ts`.
 
 
----
 
 ## 🔗 Useful Links
 
@@ -29,13 +26,11 @@ A simple and clean **Expense Tracker** app built with **Angular** for the fronte
 - 🌐 Vercel Docs: [vercel.com/docs](https://vercel.com/docs)
 - ☁️ Render Docs: [render.com/docs](https://render.com/docs)
 
----
 
 ## 🧑‍💻 Author
 
 Made with 💚 by Namitha
 
----
 
 
 
