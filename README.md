@@ -5,7 +5,7 @@ A simple and clean **Expense Tracker** app built with **Angular** for the fronte
 
 ## 🚀 Tech Stack
 
-- **Frontend**: [Angular](https://angular.io/docs) (with Tailwind CSS + NgRx)
+- **Frontend**: [Angular.js](https://angular.dev/) (with Tailwind CSS + NgRx)
 - **Backend**: [Express.js](https://expressjs.com/)
 - **Frontend Hosting**: [Vercel](https://vercel.com/docs)
 - **Backend Hosting**: [Render](https://render.com/docs)
@@ -22,7 +22,7 @@ A simple and clean **Expense Tracker** app built with **Angular** for the fronte
 
 ## 🔗 Useful Links
 
-- 🔧 Angular Docs: [angular.io/docs](https://angular.io/docs)
+- 🔧 Angular Docs: [angular.io/docs](https://angular.dev/overview)
 - 🌐 Vercel Docs: [vercel.com/docs](https://vercel.com/docs)
 - ☁️ Render Docs: [render.com/docs](https://render.com/docs)
 
