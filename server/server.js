@@ -30,10 +30,10 @@ app.use("/transfers", transferRoutes);
 //connection to database
 connectDB();
 
-// wildcard route for angular client-side routing
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist/cerel_flow", "index.html"));
-});
+// // wildcard route for angular client-side routing
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "dist/cerel_flow", "index.html"));
+// });
 
 const PORT = 3000;
 
