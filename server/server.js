@@ -32,8 +32,10 @@ connectDB();
 
 // wildcard route for angular client-side routing
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/cerel_flow", "index.html"));
+  res.sendFile(path.join(__dirname, "../dist/cerel_flow/index.html"));
 });
+
+console.log("Serving static from:", path.join(__dirname, "../dist/cerel_flow"));
 
 const PORT = 3000;
 
