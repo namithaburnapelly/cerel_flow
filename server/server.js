@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 
 // Serve Angular app
-app.use(express.static(path.join(__dirname, "dist/cerel_flow")));
+app.use(express.static(path.join(__dirname, "../dist/cerel_flow")));
 
 //enable cors
 app.use(cors());
@@ -32,7 +32,7 @@ connectDB();
 
 // wildcard route for angular client-side routing
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist/cerel_flow", "index.html"));
+  res.sendFile(path.join(__dirname, "../dist/cerel_flow", "index.html"));
 });
 
 const PORT = 3000;
