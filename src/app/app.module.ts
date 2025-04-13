@@ -29,6 +29,7 @@ import { ExpenseModule } from './expense/expense.module';
 import { NotificationService } from './expense/Service/Notification/notification.service';
 import { MaterialModule } from './expense/material/material.module';
 import { LucidIconsModule } from './lucid-icons/lucid-icons.module';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { LucidIconsModule } from './lucid-icons/lucid-icons.module';
     TransactionService,
     TransferService,
     NotificationService,
+    provideCharts(withDefaultRegisterables()), //to provide charts from chart.js
     provideHttpClient(withInterceptors([authInterceptor])),
     // { provide: HTTP_INTERCEPTORS, useValue: authInterceptor, multi: true },
     //ensures the authentication is setup before any other services or components are initialized

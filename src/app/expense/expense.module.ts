@@ -27,6 +27,7 @@ import { LucidIconsModule } from '../lucid-icons/lucid-icons.module';
 import { DashboardComponent } from './Components/Layout/dashboard/dashboard.component';
 import { FilterComponent } from './Components/Layout/filter/filter.component';
 import { LoadingComponent } from './Components/Layout/loading/loading.component';
+import { BaseChartDirective } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { LoadingComponent } from './Components/Layout/loading/loading.component'
     StoreModule.forFeature('transfers', transferReducer),
     EffectsModule.forFeature([TransactionEffects, TransferEffects]), //to register effects
     LucidIconsModule,
+    BaseChartDirective, //for charts
   ],
   exports: [HomeComponent, NavbarComponent],
 })

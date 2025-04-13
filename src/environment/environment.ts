@@ -1,15 +1,15 @@
 export const environment = {
   production: false,
-  loginUrl: 'https://cerel-flow.onrender.com/auth/login',
-  registerUrl: 'https://cerel-flow.onrender.com/auth/register',
+  loginUrl: 'http://localhost:3000/auth/login',
+  registerUrl: 'http://localhost:3000/auth/register',
 };
 
 export const environmentVariables = {
   transferPageSize: 10,
-  transferUrl: 'https://cerel-flow.onrender.com/transfers',
+  transferUrl: 'http://localhost:3000/transfers',
   TRANSFER_FEATURE_KEY: 'transfers',
 
-  transactionUrl: 'https://cerel-flow.onrender.com/transactions',
+  transactionUrl: 'http://localhost:3000/transactions',
   transactionPageSize: 10,
   TRANSACTION_FEATURE_KEY: 'transactions',
 };

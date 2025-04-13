@@ -13,6 +13,7 @@ import {
 import { loadTransactions } from '../../../@NgRx/Transactions/transaction.actions';
 import { AuthService } from '../../../../Authentication/Service/auth.service';
 import { loadTransfers } from '../../../@NgRx/Transfers/transfer.actions';
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
 
 @Component({
   selector: 'app-home',
@@ -65,4 +66,23 @@ export class HomeComponent implements OnInit {
       }),
     );
   }
+
+  public doughnutChartType: ChartType = 'doughnut';
+  public doughnutChartData: ChartData<'doughnut'> = {
+    labels: ['Income', 'Expenses', 'Savings'],
+    datasets: [
+      {
+        data: [5000, 2000, 1000],
+        backgroundColor: ['#4e79a7', '#f28e2b', '#e15759'],
+      },
+    ],
+  };
+  public doughnutChartOptions: ChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+    },
+  };
 }
