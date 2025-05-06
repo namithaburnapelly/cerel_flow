@@ -41,7 +41,7 @@ export class AuthService {
 
         // //save in local storage
         if (returnedUser && returnedUser.accessToken) {
-          console.log('token saved to local storage');
+          // console.log('token saved to local storage');
           localStorage.setItem('user', JSON.stringify(returnedUser));
           this.stateItem.next(returnedUser); //updating the user state
         }
@@ -61,7 +61,7 @@ export class AuthService {
 
   isTokenExpired(token: string | null): boolean {
     if (this.jwtHelper.isTokenExpired(token)) {
-      console.log('token expired');
+      // console.log('token expired');
       return true;
     }
     return false;

@@ -93,7 +93,7 @@ router.get("/:userId", authenticateToken, async (req, res) => {
       sortOrder,
     });
   } catch (error) {
-    console.log(error);
+    console.err(error);
     //serve error
     res.status(500).json({ message: "Server error." });
   }
@@ -128,7 +128,7 @@ router.post("/:userId", authenticateToken, async (req, res) => {
       return res.status(400).json({ message: "Failed to add transaction." });
     }
   } catch (error) {
-    console.log(error);
+    console.err(error);
     //serve error
     res.status(500).json({ message: "Server error." });
   }
@@ -181,7 +181,7 @@ router.patch("/:userId/:transactionId", authenticateToken, async (req, res) => {
       return res.status(404).json({ message: "Transaction not found." });
     }
   } catch (error) {
-    console.log(error);
+    console.err(error);
     //serve error
     res.status(500).json({ message: "Server error." });
   }
@@ -212,7 +212,7 @@ router.delete(
           .json({ message: "Transaction not found for this user." });
       }
     } catch (error) {
-      console.log(error);
+      console.err(error);
       //serve error
       res.status(500).json({ message: "Server error." });
     }

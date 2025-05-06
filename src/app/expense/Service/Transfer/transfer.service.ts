@@ -19,12 +19,12 @@ export class TransferService {
     pageSize: number,
     sortOrder: string,
   ): Observable<TransferStore> {
-    console.log('Service 🟡 Fetching Transfers:', {
-      userId,
-      page,
-      pageSize,
-      sortOrder,
-    });
+    // console.log('Service 🟡 Fetching Transfers:', {
+    //   userId,
+    //   page,
+    //   pageSize,
+    //   sortOrder,
+    // });
 
     const params = new HttpParams()
       .set('page', page)
@@ -40,7 +40,7 @@ export class TransferService {
     userId: string,
     newTransfer: Transfer,
   ): Observable<{ message: string; newTransfer: Transfer }> {
-    console.log('service 🟢 Adding Transfer:', { userId, newTransfer });
+    // console.log('service 🟢 Adding Transfer:', { userId, newTransfer });
 
     return this.http.post<{ message: string; newTransfer: Transfer }>(
       `${this._transferUrl}/${userId}`,
@@ -53,11 +53,11 @@ export class TransferService {
     transaction_id: string,
     changes: Partial<Transfer>,
   ): Observable<{ message: string; updatedTransaction: Transfer }> {
-    console.log('service 🟢 updating Transfer:', {
-      userId,
-      transaction_id,
-      changes,
-    });
+    // console.log('service 🟢 updating Transfer:', {
+    //   userId,
+    //   transaction_id,
+    //   changes,
+    // });
 
     return this.http.patch<{ message: string; updatedTransaction: Transfer }>(
       `${this._transferUrl}/${userId}/${transaction_id}`,
@@ -69,10 +69,10 @@ export class TransferService {
     userId: string,
     transaction_id: string,
   ): Observable<{ message: string }> {
-    console.log('service ❌ updating Transfer:', {
-      userId,
-      transaction_id,
-    });
+    // console.log('service ❌ updating Transfer:', {
+    //   userId,
+    //   transaction_id,
+    // });
 
     return this.http.delete<{ message: string }>(
       `${this._transferUrl}/${userId}/${transaction_id}`,

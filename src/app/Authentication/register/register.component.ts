@@ -58,7 +58,7 @@ export class RegisterComponent {
         )
         .subscribe({
           next: (result) => {
-            console.log('User registered success', result);
+            // console.log('User registered success', result);
             this.router.navigateByUrl('/login');
           },
           error: (err) => {
@@ -66,7 +66,7 @@ export class RegisterComponent {
           },
         });
     } else {
-      console.log('Invalid form submission');
+      // console.log('Invalid form submission');
       this.registerForm.markAllAsTouched();
     }
   }

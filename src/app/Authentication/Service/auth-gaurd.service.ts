@@ -30,7 +30,7 @@ export class AuthGaurd implements CanActivate {
       map((user) => {
         const token: string | undefined = user?.accessToken;
         if (!user || this.authState.isTokenExpired(token ?? null)) {
-          console.log('user not logged in cannot access home page');
+          // console.log('user not logged in cannot access home page');
           this.router.navigate(['/login']);
           this.authState.removestate();
           return false;

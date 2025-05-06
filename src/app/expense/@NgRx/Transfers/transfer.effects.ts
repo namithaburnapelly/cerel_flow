@@ -25,7 +25,7 @@ export class TransferEffects {
   loadTransfers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadTransfers),
-      tap((action) => console.log('🔹 Action Dispatched:', action)), // Logs action
+      // tap((action) => console.log('🔹 Action Dispatched:', action)), // Logs action
       switchMap((action) =>
         this.transferService
           .getTransfers(
@@ -35,7 +35,7 @@ export class TransferEffects {
             action.payload.sortOrder,
           )
           .pipe(
-            tap((response) => console.log('✅ API Response:', response)), // Logs successful API response
+            // tap((response) => console.log('✅ API Response:', response)), // Logs successful API response
             map((response) =>
               loadTransfersSuccess({
                 payload: {
@@ -52,7 +52,7 @@ export class TransferEffects {
                 },
               }),
             ),
-            tap(() => console.log('✅ Dispatching Success Action')), // Logs before success action is dispatched
+            // tap(() => console.log('✅ Dispatching Success Action')), // Logs before success action is dispatched
             catchError((error) => {
               console.error('❌ API Error:', error); // Logs error response
               return of(
@@ -69,12 +69,12 @@ export class TransferEffects {
   addTransfer$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTransfer),
-      tap((action) => console.log('🔹 Action Dispatched:', action)),
+      // tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transferService
           .addTransfer(payload.userId, payload.newTransfer)
           .pipe(
-            tap((response) => console.log('✅ API Response:', response)),
+            // tap((response) => console.log('✅ API Response:', response)),
             map((response) =>
               addTransferSuccess({
                 payload: {
@@ -83,7 +83,7 @@ export class TransferEffects {
                 },
               }),
             ),
-            tap(() => console.log('✅ Dispatching Success Action')),
+            // tap(() => console.log('✅ Dispatching Success Action')),
             catchError((error) => {
               console.error('❌ API Error:', error); // Logs error response
               return of(
@@ -100,7 +100,7 @@ export class TransferEffects {
   updateTransfer$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateTransfer),
-      tap((action) => console.log('🔹 Action Dispatched:', action)),
+      // tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transferService
           .updateTransfer(
@@ -109,7 +109,7 @@ export class TransferEffects {
             payload.changes,
           )
           .pipe(
-            tap(() => console.log('✅ Transfer updated Successfully')),
+            // tap(() => console.log('✅ Transfer updated Successfully')),
             map(() =>
               updateTransferSuccess({
                 payload: {
@@ -119,7 +119,7 @@ export class TransferEffects {
                 },
               }),
             ),
-            tap(() => console.log('✅ Dispatching Success Action')),
+            // tap(() => console.log('✅ Dispatching Success Action')),
             catchError((error) => {
               console.error('❌ API Error:', error);
               return of(
@@ -136,12 +136,12 @@ export class TransferEffects {
   deleteTransfer$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteTransfer),
-      tap((action) => console.log('🔹 Action Dispatched:', action)),
+      // tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transferService
           .deleteTransfer(payload.userId, payload.transaction_id)
           .pipe(
-            tap(() => console.log('✅ Transfer Deleted Successfully')),
+            // tap(() => console.log('✅ Transfer Deleted Successfully')),
             map(() =>
               deleteTransferSuccess({
                 payload: {

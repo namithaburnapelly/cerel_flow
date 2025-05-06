@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         .Login(this.loginForm.value.email, this.loginForm.value.password)
         .subscribe({
           next: (result) => {
-            console.log(result, ' successfully login');
+            // console.log(result, ' successfully login');
             this.router.navigateByUrl('/expense');
           },
           error: (err) => {
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
           },
         });
     } else {
-      console.log('Invalid form');
+      // console.log('Invalid form');
       this.loginForm.markAllAsTouched();
     }
   }

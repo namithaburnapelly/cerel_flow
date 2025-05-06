@@ -19,12 +19,12 @@ export class TransactionService {
     pageSize: number,
     sortOrder: string,
   ): Observable<TransactionState> {
-    console.log('Service 🟡 Fetching Transactions:', {
-      userId,
-      page,
-      pageSize,
-      sortOrder,
-    });
+    // console.log('Service 🟡 Fetching Transactions:', {
+    //   userId,
+    //   page,
+    //   pageSize,
+    //   sortOrder,
+    // });
 
     const params = new HttpParams()
       .set('page', page)
@@ -43,7 +43,7 @@ export class TransactionService {
     userId: string,
     newTransaction: Transaction,
   ): Observable<{ message: string; newTransaction: Transaction }> {
-    console.log('service 🟢 Adding Transaction:', { userId, newTransaction });
+    // console.log('service 🟢 Adding Transaction:', { userId, newTransaction });
 
     return this.http.post<{ message: string; newTransaction: Transaction }>(
       `${this._transactionsUrl}/${userId}`,
@@ -56,11 +56,11 @@ export class TransactionService {
     transaction_id: string,
     changes: Partial<Transaction>,
   ): Observable<{ message: string; updatedTransaction: Transaction }> {
-    console.log('service 🟢 updating Transaction:', {
-      userId,
-      transaction_id,
-      changes,
-    });
+    // console.log('service 🟢 updating Transaction:', {
+    //   userId,
+    //   transaction_id,
+    //   changes,
+    // });
 
     return this.http.patch<{
       message: string;
@@ -72,10 +72,10 @@ export class TransactionService {
     userId: string,
     transaction_id: string,
   ): Observable<{ message: string }> {
-    console.log('service ❌ updating Transaction:', {
-      userId,
-      transaction_id,
-    });
+    // console.log('service ❌ updating Transaction:', {
+    //   userId,
+    //   transaction_id,
+    // });
 
     return this.http.delete<{ message: string }>(
       `${this._transactionsUrl}/${userId}/${transaction_id}`,

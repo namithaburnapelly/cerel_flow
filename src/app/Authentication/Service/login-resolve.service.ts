@@ -27,7 +27,7 @@ export class LoginResolve implements Resolve<boolean> {
           return true;
         }
         if (user && user.accessToken) {
-          console.log(user, 'from login resolve');
+          // console.log(user, 'from login resolve');
           this.router.navigateByUrl('/expense');
           return false;
         }

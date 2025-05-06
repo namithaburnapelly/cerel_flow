@@ -66,7 +66,7 @@ export class FilterComponent implements OnInit {
         this.sortOptions.find((o) => o.key === this.selectedSort)?.iconDesc ||
         'desc';
     }
-    console.log(this.isAsc);
+    // console.log(this.isAsc);
 
     const sortValue = `${this.selectedSort}_${this.isAsc ? 'asc' : 'desc'}`;
     this.sortChanged.emit(sortValue);

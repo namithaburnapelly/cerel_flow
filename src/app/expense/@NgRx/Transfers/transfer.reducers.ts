@@ -29,7 +29,7 @@ export const transferReducer = createReducer(
 
   //load transfers
   on(loadTransfers, (state, { payload }) => {
-    console.log('reducer 🟡 Dispatching loadTransfer action');
+    // console.log('reducer 🟡 Dispatching loadTransfer action');
     return handleStateChange(state, {
       loading: true,
       error: null,
@@ -37,7 +37,7 @@ export const transferReducer = createReducer(
     });
   }),
   on(loadTransfersSuccess, (state, { payload }) => {
-    console.log('reducer ✅ loadTransferSuccess action received', payload);
+    // console.log('reducer ✅ loadTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: payload.transfers,
       pagination: payload.pagination,
@@ -61,11 +61,11 @@ export const transferReducer = createReducer(
 
   //add transfer transaction
   on(addTransfer, (state) => {
-    console.log('reducer 🟡 Dispatching addTransfer action');
+    // console.log('reducer 🟡 Dispatching addTransfer action');
     return handleStateChange(state, { loading: true, error: null });
   }),
   on(addTransferSuccess, (state, { payload }) => {
-    console.log('reducer ✅ addTransferSuccess action received', payload);
+    // console.log('reducer ✅ addTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: [...state.transfers, payload.newTransfer],
       loading: false,
@@ -85,11 +85,11 @@ export const transferReducer = createReducer(
 
   //on updation of transfer transaction
   on(updateTransfer, (state) => {
-    console.log('reducer 🟡 Dispatching updateTransfer action');
+    // console.log('reducer 🟡 Dispatching updateTransfer action');
     return handleStateChange(state, { loading: true, error: null });
   }),
   on(updateTransferSuccess, (state, { payload }) => {
-    console.log('reducer ✅ updateTransferSuccess action received', payload);
+    // console.log('reducer ✅ updateTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: state.transfers.map((transaction) =>
         transaction.transaction_id === payload.transaction_id
@@ -113,11 +113,11 @@ export const transferReducer = createReducer(
 
   //delete transfer transaction
   on(deleteTransfer, (state) => {
-    console.log('reducer 🟡 Dispatching deleteTransfer action');
+    // console.log('reducer 🟡 Dispatching deleteTransfer action');
     return handleStateChange(state, { loading: true, error: null });
   }),
   on(deleteTransferSuccess, (state, { payload }) => {
-    console.log('reducer ✅ deleteTransferSuccess action received', payload);
+    // console.log('reducer ✅ deleteTransferSuccess action received', payload);
     return handleStateChange(state, {
       transfers: state.transfers.filter(
         (transactions) =>

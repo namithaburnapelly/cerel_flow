@@ -38,7 +38,7 @@ export class TransactionEffects {
   loadTransactions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadTransactions),
-      tap((action) => console.log('🔹 Action Dispatched:', action)), // Logs action
+      // tap((action) => console.log('🔹 Action Dispatched:', action)), // Logs action
       //switch map cancels the previous inner observable when new one arrives.
       switchMap((action) =>
         this.transactionService
@@ -49,7 +49,7 @@ export class TransactionEffects {
             action.payload.sortOrder,
           )
           .pipe(
-            tap((response) => console.log('✅ API Response:', response)), // Logs successful API response
+            // tap((response) => console.log('✅ API Response:', response)), // Logs successful API response
             // delay(10000),
             map((response) =>
               loadTransactionsSuccess({
@@ -67,7 +67,7 @@ export class TransactionEffects {
                 },
               }),
             ),
-            tap(() => console.log('✅ Dispatching Success Action')), // Logs before success action is dispatched
+            // tap(() => console.log('✅ Dispatching Success Action')), // Logs before success action is dispatched
             catchError((error) => {
               console.error('❌ API Error:', error); // Logs error response
               return of(
@@ -84,13 +84,13 @@ export class TransactionEffects {
   addTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addTransaction),
-      tap((action) => console.log('🔹 Action Dispatched:', action)),
+      // tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transactionService
           .addTransaction(payload.userId, payload.newTransaction)
           .pipe(
-            tap((response) => console.log('✅ API Response:', response)),
-            map((response) =>
+            // tap((response) => console.log('✅ API Response:', response)),
+            map(() =>
               addTransactionSuccess({
                 payload: {
                   userId: payload.userId,
@@ -98,7 +98,7 @@ export class TransactionEffects {
                 },
               }),
             ),
-            tap(() => console.log('✅ Dispatching Success Action')),
+            // tap(() => console.log('✅ Dispatching Success Action')),
             catchError((error) => {
               console.error('❌ API Error:', error); // Logs error response
               return of(
@@ -115,7 +115,7 @@ export class TransactionEffects {
   updateTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateTransaction),
-      tap((action) => console.log('🔹 Action Dispatched:', action)),
+      // tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transactionService
           .updateTransaction(
@@ -124,7 +124,7 @@ export class TransactionEffects {
             payload.changes,
           )
           .pipe(
-            tap(() => console.log('✅ Transfer updated Successfully')),
+            // tap(() => console.log('✅ Transfer updated Successfully')),
             map(() =>
               updateTransactionSuccess({
                 payload: {
@@ -134,7 +134,7 @@ export class TransactionEffects {
                 },
               }),
             ),
-            tap(() => console.log('✅ Dispatching Success Action')),
+            // tap(() => console.log('✅ Dispatching Success Action')),
             catchError((error) => {
               console.error('❌ API Error:', error);
               return of(
@@ -151,12 +151,12 @@ export class TransactionEffects {
   deleteTransaction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteTransaction),
-      tap((action) => console.log('🔹 Action Dispatched:', action)),
+      // tap((action) => console.log('🔹 Action Dispatched:', action)),
       mergeMap(({ payload }) =>
         this.transactionService
           .deleteTransaction(payload.userId, payload.transaction_id)
           .pipe(
-            tap(() => console.log('✅ Transfer Deleted Successfully')),
+            // tap(() => console.log('✅ Transfer Deleted Successfully')),
             map(() =>
               deleteTransactionSuccess({
                 payload: {

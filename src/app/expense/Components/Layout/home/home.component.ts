@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../Model/transaction.model';
 import { Transfer } from '../../../Model/transfer.model';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { selectTransactions } from '../../../@NgRx/Transactions/transaction.selectors';
 import { selectTransfers } from '../../../@NgRx/Transfers/transfer.selectors';
 import {

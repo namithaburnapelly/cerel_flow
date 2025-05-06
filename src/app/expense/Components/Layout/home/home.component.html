@@ -23,6 +23,17 @@
       </p>
     </div>
   </div>
+  <div>
+    <div style="display: block; width: 400px; height: 400px">
+      <canvas
+        baseChart
+        [data]="doughnutChartData"
+        [type]="doughnutChartType"
+        [options]="doughnutChartOptions"
+      >
+      </canvas>
+    </div>
+  </div>
 
   <!-- Transactions and Transfers Section -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

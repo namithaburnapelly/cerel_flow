@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
       payload: { _id: data._id, username: data.username, email: data.email },
     });
   } catch (err) {
-    console.log(err.message);
+    console.err(err.message);
     //internal server error - server does not know how to handle the error
     return res.status(500).json({ message: "Server error." });
   }
@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
       expiresAt: "12h", // 15days //12hour
     });
   } catch (err) {
-    console.log(err);
+    console.err(err);
     return res.status(500).json({ message: "server error." }); //internal server error
   }
 });
